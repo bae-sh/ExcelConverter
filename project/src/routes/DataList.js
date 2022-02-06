@@ -1,6 +1,33 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-
+import exceljs from "../excel";
+let obj = [
+    {
+        // photo: url(
+        //     "https://image2.coupangcdn.com/image/retail/images/8246913542454378-67b4060d-53a7-4de4-a3e9-1601a8b279d4.jpg"
+        // ),
+        ko: "John Doe",
+        en: "John Doe",
+        texture: "texture",
+        mount: "mount",
+        number: "number",
+        price: "price",
+        hscode: "hscode",
+    },
+    {
+        // photo: url(
+        //     "https://image2.coupangcdn.com/image/retail/images/8246913542454378-67b4060d-53a7-4de4-a3e9-1601a8b279d4.jpg"
+        // ),
+        ko: "John Doe",
+        en: "John Doe",
+        texture: "texture",
+        mount: "mount",
+        number: "number",
+        price: "price",
+        hscode: "hscode",
+    },
+];
 const Main = styled.div`
     /* background-color: tomato; */
     display: flex;
@@ -63,40 +90,52 @@ const Img = styled.td`
         }
     }
 `;
-const dataRows = () => {
+const Input = styled.input`
+    text-align: center;
+    :read-only {
+        background-color: white;
+        border: none;
+        outline: none;
+        cursor: auto;
+    }
+`;
+const EditBtn = styled.button``;
+const dataRows = (editable) => {
     let rows = [];
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < 5; i++) {
         rows.push(
             <Row key={i} id={i}>
                 <td>
-                    <input type={"checkbox"} />
+                    <Input type={"checkbox"} />
                 </td>
                 <Img>
-                    <button onClick={selectImg}>수정하기</button>
+                    <EditBtn onClick={selectImg} editable={editable}>
+                        {editable ? "수정" : `이미지`}
+                    </EditBtn>
                 </Img>
                 <td>
-                    <input></input>
+                    <Input readOnly={!editable}></Input>
                 </td>
                 <td>
-                    <input></input>
+                    <Input readOnly={!editable}></Input>
                 </td>
                 <td>
-                    <input></input>
+                    <Input readOnly={!editable}></Input>
                 </td>
                 <td>
-                    <input size={15}></input>
+                    <Input size={15} readOnly={!editable}></Input>
                 </td>
                 <td>
-                    <input size={10}></input>
+                    <Input size={10} readOnly={!editable}></Input>
                 </td>
                 <td>
-                    <input size={10}></input>
+                    <Input size={10} readOnly={!editable}></Input>
                 </td>
                 <td>
-                    <input size={10}></input>
+                    <Input size={10} readOnly={!editable}></Input>
                 </td>
                 <td>
-                    <input></input>
+                    <Input readOnly={!editable}></Input>
                 </td>
             </Row>
         );
@@ -105,13 +144,16 @@ const dataRows = () => {
 };
 
 const selectImg = (e) => {
-    let img = prompt("이미지 주소");
-    if (img !== null) {
-        e.target.style.background = `no-repeat center/100% url(${img})`;
+    if (e.target.innerText === "수정") {
+        let img = prompt("이미지 주소");
+        if (img !== null) {
+            e.target.style.background = `no-repeat center/100% url(${img})`;
+        }
     }
     //https://image2.coupangcdn.com/image/retail/images/8246913542454378-67b4060d-53a7-4de4-a3e9-1601a8b279d4.jpg
 };
 const DataList = () => {
+    const [editable, setEditable] = useState(false);
     return (
         <Main>
             <Title>
@@ -122,8 +164,15 @@ const DataList = () => {
                         <Link to="/">뒤로가기</Link>
                     </button>
                     <div>
-                        <button>수정하기</button>
-                        <button>Excel</button>
+                        {editable && <button>삭제</button>}
+                        <button
+                            onClick={() => {
+                                setEditable((prev) => !prev);
+                            }}
+                        >
+                            {editable ? "저장하기" : "수정하기"}
+                        </button>
+                        <button onClick={exceljs}>Excel</button>
                     </div>
                 </SaveDiv>
             </Title>
@@ -142,10 +191,10 @@ const DataList = () => {
                         <th>HS코드</th>
                     </Row>
                 </thead>
-                <tbody>{dataRows()}</tbody>
+                <tbody>{dataRows(editable)}</tbody>
             </Table>
         </Main>
     );
 };
 
-export default DataList;
+export { DataList, obj };
