@@ -71,7 +71,11 @@ const dataRows = () => {
                 <td>{i + 1}</td>
                 <td>
                     <ImgBox>
-                        <img src="" alt="수정하기" onClick={selectImg} />
+                        <img
+                            src="./img.jpeg"
+                            alt="수정하기"
+                            onClick={selectImg}
+                        />
                     </ImgBox>
                 </td>
 

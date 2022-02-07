@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import exceljs from "../excel";
+
 let obj = [
     {
         photo: "https://image2.coupangcdn.com/image/retail/images/8246913542454378-67b4060d-53a7-4de4-a3e9-1601a8b279d4.jpg",
@@ -74,11 +75,9 @@ const SaveDiv = styled.div`
     }
 `;
 const ImgBox = styled.div`
-    width: 80px;
-    height: 80px;
     img {
-        width: 100%;
-        height: 100%;
+        width: 100px;
+        height: 100px;
         border: none;
         :hover {
             cursor: ${(props) => (props.editable ? "pointer" : "auto")};
@@ -104,7 +103,12 @@ const dataRows = (editable) => {
                 </td>
                 <td>
                     <ImgBox editable={editable}>
-                        <img src="" alt="수정하기" onClick={selectImg} />
+                        <img
+                            src="img.png"
+                            alt="수정하기"
+                            onClick={selectImg}
+                            id={`img${i}`}
+                        />
                     </ImgBox>
                 </td>
                 <td>
@@ -154,6 +158,7 @@ const DataList = () => {
             <Title>
                 <h1>데이터 목록</h1>
                 <hr></hr>
+                <img src="img.png" alt="수정하기" />
                 <SaveDiv>
                     <button>
                         <Link to="/">뒤로가기</Link>

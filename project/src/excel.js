@@ -1,4 +1,5 @@
 import { obj } from "./routes/DataList";
+import html2canvas from "html2canvas";
 const exceljs = async () => {
     const ExcelJS = require("exceljs");
     const workbook = new ExcelJS.Workbook();
@@ -18,15 +19,28 @@ const exceljs = async () => {
     ];
 
     obj.forEach((myobj, idx) => {
-        let imgId2 = workbook.addImage({
-            filename: "./img/to/luxi.jpeg",
-            extension: "jpeg",
-        });
-        console.log(imgId2);
         worksheet.addRow(myobj);
         worksheet.getRow(idx + 2).height = 100;
-        // worksheet.addImage(imgId2, "B2");
     });
+
+    let promise = [];
+    let li = document.querySelector("#img0");
+    promise.push(
+        html2canvas(document.body).then((canvas) => {
+            console.log(li);
+            console.log(canvas);
+            console.log(canvas.toDataURL("image/png"));
+            document.body.appendChild(canvas);
+            let imageURL = canvas.toDataURL();
+            const imageId2 = workbook.addImage({
+                base64: imageURL,
+                extension: "png",
+            });
+            console.log(imageId2);
+            worksheet.addImage(imageId2, "B2:B2");
+        })
+    );
+
     const row = worksheet.getRow(1);
 
     row.height = 40;
@@ -53,13 +67,20 @@ const exceljs = async () => {
         bold: true,
         size: 15,
     };
-    const uint8Array = await workbook.xlsx.writeBuffer();
-    const blob = new Blob([uint8Array], { type: "application/octet-binary" });
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "sampleData.xlsx";
-    a.click();
-    a.remove();
+
+    Promise.all(promise).then(() => {
+        workbook.xlsx.writeBuffer().then((b) => {
+            let a = new Blob([b]);
+            let url = window.URL.createObjectURL(a);
+
+            let elem = document.createElement("a");
+            elem.href = url;
+            elem.download = `test.xlsx`;
+            document.body.appendChild(elem);
+            elem.style = "display: none";
+            elem.click();
+            elem.remove();
+        });
+    });
 };
 export default exceljs;
