@@ -1,6 +1,5 @@
-import { obj } from "./routes/DataList";
 import html2canvas from "html2canvas";
-const exceljs = async () => {
+const exceljs = async (productList) => {
     const ExcelJS = require("exceljs");
     const workbook = new ExcelJS.Workbook();
     const worksheet = workbook.addWorksheet("My Sheet");
@@ -9,7 +8,8 @@ const exceljs = async () => {
         { header: "특이사항/特别事项", key: "exception", width: 30 },
         { header: "사진/照片", key: "png", width: 20 },
         { header: "제품이름/产品名", key: "ko", width: 22 },
-        { header: "중국어이름/中文名", key: "en", width: 22 },
+        { header: "영어이름/英文名", key: "en", width: 22 },
+        { header: "중국어이름/中文名", key: "ch", width: 22 },
         { header: "재질/材质", key: "texture", width: 20 },
         { header: "수량/数量", key: "mount", width: 20 },
         { header: "국내운송장번호/国内快递单号", key: "number", width: 40 },
@@ -17,27 +17,21 @@ const exceljs = async () => {
         { header: "HS CODE/海关编码", key: "hscode", width: 30 },
         { header: "박스번호라벨/发货编号", key: "boxnumber", width: 30 },
     ];
-
-    obj.forEach((myobj, idx) => {
+    let promise = [];
+    productList.forEach((myobj, idx) => {
         worksheet.addRow(myobj);
         worksheet.getRow(idx + 2).height = 100;
+        promise.push(
+            html2canvas(document.querySelector(`#img${idx}`)).then((canvas) => {
+                let imageURL = canvas.toDataURL();
+                const imageId2 = workbook.addImage({
+                    base64: imageURL,
+                    extension: "png",
+                });
+                worksheet.addImage(imageId2, `B${idx + 2}:B${idx + 2}`);
+            })
+        );
     });
-
-    let promise = [];
-    promise.push(
-        html2canvas(document.querySelector("#img0")).then((canvas) => {
-            console.log(canvas);
-            console.log(canvas.toDataURL("image/png"));
-            document.body.appendChild(canvas);
-            let imageURL = canvas.toDataURL();
-            const imageId2 = workbook.addImage({
-                base64: imageURL,
-                extension: "png",
-            });
-            console.log(imageId2);
-            worksheet.addImage(imageId2, "B2:B2");
-        })
-    );
 
     const row = worksheet.getRow(1);
 

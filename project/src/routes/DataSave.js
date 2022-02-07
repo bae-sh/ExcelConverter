@@ -1,5 +1,9 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { doc, setDoc } from "firebase/firestore";
+import { dbService } from "../firebase";
+import { getStorage, ref, uploadBytes } from "firebase/storage";
+import { v4 as uuidv4 } from "uuid";
 
 const Main = styled.div`
     display: flex;
@@ -69,11 +73,13 @@ const LableForIgmBtn = styled.label`
         cursor: pointer;
     }
 `;
-
-let arr = [];
+const Input = styled.input`
+    text-align: center;
+`;
 
 const dataRows = () => {
     let rows = [];
+
     for (let i = 0; i < 20; i++) {
         rows.push(
             <Row key={i} id={i}>
@@ -86,27 +92,27 @@ const dataRows = () => {
                     <ImgBtn
                         type="file"
                         id={`file${i}`}
-                        onChange={selectImg}
+                        onChange={(img) => selectImg(img, i)}
                     ></ImgBtn>
                 </td>
 
                 <td>
-                    <input></input>
+                    <Input></Input>
                 </td>
                 <td>
-                    <input></input>
+                    <Input></Input>
                 </td>
                 <td>
-                    <input></input>
+                    <Input></Input>
                 </td>
                 <td>
-                    <input size={10}></input>
+                    <Input size={10}></Input>
                 </td>
                 <td>
-                    <input size={10}></input>
+                    <Input size={10}></Input>
                 </td>
                 <td>
-                    <input></input>
+                    <Input></Input>
                 </td>
             </Row>
         );
@@ -114,16 +120,18 @@ const dataRows = () => {
     return rows;
 };
 
-const selectImg = (img) => {
-    console.log(img.target);
+const selectImg = (img, i) => {
     let preview = new FileReader();
+    console.log(preview);
     preview.onload = (e) => {
-        document.getElementById("img0").src = e.target.result;
+        document.getElementById(`img${i}`).src = e.target.result;
     };
     preview.readAsDataURL(img.target.files[0]);
 };
 
-const onClick = () => {
+const onClick = async () => {
+    const storage = getStorage();
+
     for (let i = 0; i < 20; i++) {
         let rows = document.getElementById(i);
         let file = rows.childNodes[1].childNodes[2].files[0];
@@ -133,22 +141,27 @@ const onClick = () => {
         let texture = rows.childNodes[4].childNodes[0].value;
         let price = rows.childNodes[5].childNodes[0].value;
         let hscode = rows.childNodes[6].childNodes[0].value;
+        let id = uuidv4();
+        const storageRef = ref(storage, id);
 
+        console.log(rows.childNodes[1].childNodes[2].files[0]);
         if (ko === "") {
             continue;
         }
 
         let obj = {
-            file: file,
             ko: ko,
             en: en,
             ch: ch,
             texture: texture,
             price: price,
             hscode: hscode,
+            id: id,
         };
-        arr.push(obj);
+        await setDoc(doc(dbService, "items", id), obj);
+        uploadBytes(storageRef, file);
     }
+    alert("저장되었습니다.");
 };
 
 const DataSave = () => {

@@ -1,30 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import exceljs from "../excel";
-import img from "../img/img.jpeg";
-let obj = [
-    {
-        photo: "https://image2.coupangcdn.com/image/retail/images/8246913542454378-67b4060d-53a7-4de4-a3e9-1601a8b279d4.jpg",
-        ko: "John Doe",
-        en: "John Doe",
-        texture: "texture",
-        mount: "mount",
-        number: "number",
-        price: "price",
-        hscode: "hscode",
-    },
-    {
-        photo: "https://image2.coupangcdn.com/image/retail/images/8246913542454378-67b4060d-53a7-4de4-a3e9-1601a8b279d4.jpg",
-        ko: "John Doe",
-        en: "John Doe",
-        texture: "texture",
-        mount: "mount",
-        number: "number",
-        price: "price",
-        hscode: "hscode",
-    },
-];
+import { collection, query, getDocs, doc, setDoc } from "firebase/firestore";
+import { dbService } from "../firebase";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+
 const Main = styled.div`
     /* background-color: tomato; */
     display: flex;
@@ -75,13 +56,12 @@ const SaveDiv = styled.div`
     }
 `;
 const ImgBox = styled.div`
+    width: 80px;
+    height: 80px;
+
     img {
-        width: 100px;
-        height: 100px;
-        border: none;
-        :hover {
-            cursor: ${(props) => (props.editable ? "pointer" : "auto")};
-        }
+        width: 100%;
+        height: 100%;
     }
 `;
 const Input = styled.input`
@@ -93,66 +73,229 @@ const Input = styled.input`
         cursor: auto;
     }
 `;
-const dataRows = (editable) => {
+const ImgBtn = styled.input`
+    display: none;
+`;
+const LableForIgmBtn = styled.label`
+    border: 1px solid #767676;
+    border-radius: 5px;
+    padding: 0px 3px;
+    background-color: #efefef;
+    :hover {
+        cursor: pointer;
+    }
+    display: ${(props) => {
+        if (!props.editable) {
+            return "none";
+        }
+    }};
+`;
+const dataRows = (editable, productList, setProductList) => {
     let rows = [];
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < productList.length; i++) {
         rows.push(
             <Row key={i} id={i}>
                 <td>
                     <Input type={"checkbox"} />
                 </td>
                 <td>
-                    <ImgBox editable={editable}>
-                        <img
-                            src={img}
-                            alt="수정하기"
-                            onClick={selectImg}
-                            id={`img${i}`}
-                        />
+                    <ImgBox>
+                        <img src="" alt="" id={`img${i}`} />
                     </ImgBox>
+                    <LableForIgmBtn htmlFor={`file${i}`} editable={editable}>
+                        업로드
+                    </LableForIgmBtn>
+                    <ImgBtn
+                        type="file"
+                        id={`file${i}`}
+                        onChange={(e) => {
+                            selectImg(e, i);
+                        }}
+                    ></ImgBtn>
                 </td>
                 <td>
-                    <Input readOnly={!editable}></Input>
+                    <Input
+                        type="text"
+                        readOnly={!editable}
+                        onChange={(e) =>
+                            inputChange(e, productList, setProductList, i)
+                        }
+                        id={`ko${i}`}
+                        value={productList[i]["ko"]}
+                    ></Input>
                 </td>
                 <td>
-                    <Input readOnly={!editable}></Input>
+                    <Input
+                        readOnly={!editable}
+                        onChange={(e) =>
+                            inputChange(e, productList, setProductList, i)
+                        }
+                        id={`en${i}`}
+                        value={productList[i]["en"]}
+                    ></Input>
                 </td>
                 <td>
-                    <Input readOnly={!editable}></Input>
+                    <Input
+                        readOnly={!editable}
+                        onChange={(e) =>
+                            inputChange(e, productList, setProductList, i)
+                        }
+                        id={`ch${i}`}
+                        value={productList[i]["ch"]}
+                    ></Input>
                 </td>
                 <td>
-                    <Input size={15} readOnly={!editable}></Input>
+                    <Input
+                        size={15}
+                        readOnly={!editable}
+                        id={`number${i}`}
+                    ></Input>
                 </td>
                 <td>
-                    <Input size={10} readOnly={!editable}></Input>
+                    <Input
+                        size={10}
+                        readOnly={!editable}
+                        onChange={(e) =>
+                            inputChange(e, productList, setProductList, i)
+                        }
+                        id={`texture${i}`}
+                        value={productList[i]["texture"]}
+                    ></Input>
                 </td>
                 <td>
-                    <Input size={10} readOnly={!editable}></Input>
+                    <Input
+                        size={10}
+                        readOnly={!editable}
+                        onChange={(e) =>
+                            inputChange(e, productList, setProductList, i)
+                        }
+                        id={`amount${i}`}
+                    ></Input>
                 </td>
                 <td>
-                    <Input size={10} readOnly={!editable}></Input>
+                    <Input
+                        size={10}
+                        readOnly={!editable}
+                        onChange={(e) =>
+                            inputChange(e, productList, setProductList, i)
+                        }
+                        id={`price${i}`}
+                        value={productList[i]["price"]}
+                    ></Input>
                 </td>
                 <td>
-                    <Input readOnly={!editable}></Input>
+                    <Input
+                        readOnly={!editable}
+                        onChange={(e) =>
+                            inputChange(e, productList, setProductList, i)
+                        }
+                        id={`hscode${i}`}
+                        value={productList[i]["hscode"]}
+                    ></Input>
                 </td>
             </Row>
         );
+        if (!editable) {
+            downloadImg(productList, i);
+        }
     }
     return rows;
 };
 
-const selectImg = (e) => {
-    let isEditable = document.querySelector("#saveBtn");
-    if (isEditable.innerHTML === "저장하기") {
-        let img = prompt("이미지 주소");
-        if (img !== null) {
-            e.target.src = img;
-        }
-        //https://image2.coupangcdn.com/image/retail/images/8246913542454378-67b4060d-53a7-4de4-a3e9-1601a8b279d4.jpg
-    }
+const selectImg = (img, idx) => {
+    let preview = new FileReader();
+    preview.onload = (e) => {
+        document.getElementById(`img${idx}`).src = e.target.result;
+    };
+    preview.readAsDataURL(img.target.files[0]);
 };
-const DataList = () => {
+const getObj = async (productList, setProductList) => {
+    const q = query(collection(dbService, "items"));
+    const querySnapshot = await getDocs(q);
+    const obj = [];
+    querySnapshot.forEach((doc) => {
+        obj.push(doc.data());
+    });
+    setProductList(obj);
+};
+const downloadImg = (productList, i) => {
+    const storage = getStorage();
+    const starsRef = ref(storage, productList[i].id);
+    getDownloadURL(starsRef)
+        .then(async (url) => {
+            const response = await fetch(url);
+            const data = await response.blob();
+            let f = new File([data], "null", { type: data.type });
+            let preview = new FileReader();
+            preview.onload = (e) => {
+                document.getElementById(`img${i}`).src = e.target.result;
+                i += 1;
+            };
+            preview.readAsDataURL(f);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+};
+const inputChange = (e, productList, setProductList, i) => {
+    let newProductList = [...productList];
+    console.log(newProductList);
+    if (e.target.id[0] === "k") {
+        newProductList[i]["ko"] = e.target.value;
+    } else if (e.target.id[0] === "e") {
+        newProductList[i]["en"] = e.target.value;
+    } else if (e.target.id[0] === "c") {
+        newProductList[i]["ch"] = e.target.value;
+    } else if (e.target.id[0] === "t") {
+        newProductList[i]["texture"] = e.target.value;
+    } else if (e.target.id[0] === "p") {
+        newProductList[i]["price"] = e.target.value;
+    } else if (e.target.id[0] === "h") {
+        newProductList[i]["hscode"] = e.target.value;
+    }
+    setProductList(newProductList);
+};
+const onSave = async (productList) => {
+    const storage = getStorage();
+
+    for (let i = 0; i < productList.length; i++) {
+        let rows = document.getElementById(i);
+        let file = rows.childNodes[1].childNodes[2].files[0];
+        let ko = rows.childNodes[2].childNodes[0].value;
+        let en = rows.childNodes[3].childNodes[0].value;
+        let ch = rows.childNodes[4].childNodes[0].value;
+        let texture = rows.childNodes[6].childNodes[0].value;
+        let price = rows.childNodes[8].childNodes[0].value;
+        let hscode = rows.childNodes[9].childNodes[0].value;
+        let id = productList[i].id;
+        const storageRef = ref(storage, id);
+        console.log(file);
+        if (ko === "") {
+            continue;
+        }
+
+        let obj = {
+            ko: ko,
+            en: en,
+            ch: ch,
+            texture: texture,
+            price: price,
+            hscode: hscode,
+            id: id,
+        };
+        if (file) {
+            uploadBytes(storageRef, file);
+        }
+        await setDoc(doc(dbService, "items", id), obj);
+    }
+    alert("저장되었습니다.");
+};
+const DataList = ({ productList, setProductList }) => {
     const [editable, setEditable] = useState(false);
+
+    useEffect(() => {
+        getObj(productList, setProductList);
+    }, []);
     return (
         <Main>
             <Title>
@@ -168,11 +311,27 @@ const DataList = () => {
                             id="saveBtn"
                             onClick={() => {
                                 setEditable((prev) => !prev);
+                                if (editable) {
+                                    getObj(setProductList);
+                                }
                             }}
                         >
-                            {editable ? "저장하기" : "수정하기"}
+                            {editable ? "취소" : "수정하기"}
                         </button>
-                        <button onClick={exceljs}>Excel</button>
+                        {editable ? (
+                            <button
+                                onClick={() => {
+                                    setEditable((prev) => !prev);
+                                    onSave(productList);
+                                }}
+                            >
+                                저장하기
+                            </button>
+                        ) : (
+                            <button onClick={() => exceljs(productList)}>
+                                Excel
+                            </button>
+                        )}
                     </div>
                 </SaveDiv>
             </Title>
@@ -191,10 +350,10 @@ const DataList = () => {
                         <th>HS코드</th>
                     </Row>
                 </thead>
-                <tbody>{dataRows(editable)}</tbody>
+                <tbody>{dataRows(editable, productList, setProductList)}</tbody>
             </Table>
         </Main>
     );
 };
 
-export { DataList, obj };
+export { DataList };

@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-
 const Main = styled.div`
     display: flex;
     flex-direction: column;
@@ -27,6 +26,7 @@ const NavBox = styled.div`
         align-items: center;
     }
 `;
+
 const Home = () => {
     return (
         <Main>
