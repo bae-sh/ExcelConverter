@@ -51,14 +51,13 @@ const SaveDiv = styled.div`
         margin-right: 20px;
     }
 `;
-const Img = styled.td`
+const ImgBox = styled.div`
     width: 80px;
     height: 80px;
-    button {
+    img {
         width: 100%;
         height: 100%;
         border: none;
-        background-color: white;
         :hover {
             cursor: pointer;
         }
@@ -70,9 +69,12 @@ const dataRows = () => {
         rows.push(
             <Row key={i} id={i}>
                 <td>{i + 1}</td>
-                <Img>
-                    <button onClick={selectImg}>수정하기</button>
-                </Img>
+                <td>
+                    <ImgBox>
+                        <img src="" alt="수정하기" onClick={selectImg} />
+                    </ImgBox>
+                </td>
+
                 <td>
                     <input></input>
                 </td>
@@ -100,7 +102,7 @@ const dataRows = () => {
 const selectImg = (e) => {
     let img = prompt("이미지 주소");
     if (img !== null) {
-        e.target.style.background = `no-repeat center/100% url(${img})`;
+        e.target.src = img;
     }
     //https://image2.coupangcdn.com/image/retail/images/8246913542454378-67b4060d-53a7-4de4-a3e9-1601a8b279d4.jpg
 };
