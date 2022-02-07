@@ -24,10 +24,8 @@ const exceljs = async () => {
     });
 
     let promise = [];
-    let li = document.querySelector("#img0");
     promise.push(
-        html2canvas(document.body).then((canvas) => {
-            console.log(li);
+        html2canvas(document.querySelector("#img0")).then((canvas) => {
             console.log(canvas);
             console.log(canvas.toDataURL("image/png"));
             document.body.appendChild(canvas);

@@ -1,16 +1,13 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-let obj = [];
 const Main = styled.div`
-    /* background-color: tomato; */
     display: flex;
     flex-direction: column;
     align-items: center;
     padding-bottom: 30px;
 `;
 const Title = styled.div`
-    /* background-color: blue; */
     width: 70%;
     margin-top: 100px;
 `;
@@ -54,15 +51,27 @@ const SaveDiv = styled.div`
 const ImgBox = styled.div`
     width: 80px;
     height: 80px;
+
     img {
         width: 100%;
         height: 100%;
-        border: none;
-        :hover {
-            cursor: pointer;
-        }
     }
 `;
+const ImgBtn = styled.input`
+    display: none;
+`;
+const LableForIgmBtn = styled.label`
+    border: 1px solid #767676;
+    border-radius: 5px;
+    padding: 0px 3px;
+    background-color: #efefef;
+    :hover {
+        cursor: pointer;
+    }
+`;
+
+let arr = [];
+
 const dataRows = () => {
     let rows = [];
     for (let i = 0; i < 20; i++) {
@@ -71,12 +80,14 @@ const dataRows = () => {
                 <td>{i + 1}</td>
                 <td>
                     <ImgBox>
-                        <img
-                            src="./img.jpeg"
-                            alt="수정하기"
-                            onClick={selectImg}
-                        />
+                        <img src="" alt="" id={`img${i}`} />
                     </ImgBox>
+                    <LableForIgmBtn htmlFor={`file${i}`}>업로드</LableForIgmBtn>
+                    <ImgBtn
+                        type="file"
+                        id={`file${i}`}
+                        onChange={selectImg}
+                    ></ImgBtn>
                 </td>
 
                 <td>
@@ -103,34 +114,19 @@ const dataRows = () => {
     return rows;
 };
 
-const selectImg = (e) => {
-    let img = prompt("이미지 주소");
-    if (img !== null) {
-        e.target.src = img;
-    }
-    //https://image2.coupangcdn.com/image/retail/images/8246913542454378-67b4060d-53a7-4de4-a3e9-1601a8b279d4.jpg
+const selectImg = (img) => {
+    console.log(img.target);
+    let preview = new FileReader();
+    preview.onload = (e) => {
+        document.getElementById("img0").src = e.target.result;
+    };
+    preview.readAsDataURL(img.target.files[0]);
 };
 
-const getUrl = (url) => {
-    let address = "";
-    let check = false;
-    for (let i = 0; i < url.length; i++) {
-        if (url[i] === '"') {
-            check = !check;
-        } else {
-            if (check) {
-                address += url[i];
-            }
-        }
-    }
-    return address;
-};
 const onClick = () => {
-    let arr = [];
-
     for (let i = 0; i < 20; i++) {
         let rows = document.getElementById(i);
-        let url = getUrl(rows.childNodes[1].childNodes[0].style.background);
+        let file = rows.childNodes[1].childNodes[2].files[0];
         let ko = rows.childNodes[2].childNodes[0].value;
         let en = rows.childNodes[3].childNodes[0].value;
         let ch = rows.childNodes[4].childNodes[0].value;
@@ -143,7 +139,7 @@ const onClick = () => {
         }
 
         let obj = {
-            url: url,
+            file: file,
             ko: ko,
             en: en,
             ch: ch,
@@ -154,6 +150,7 @@ const onClick = () => {
         arr.push(obj);
     }
 };
+
 const DataSave = () => {
     return (
         <Main>

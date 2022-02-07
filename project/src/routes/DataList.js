@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import exceljs from "../excel";
-
+import img from "../img/img.jpeg";
 let obj = [
     {
         photo: "https://image2.coupangcdn.com/image/retail/images/8246913542454378-67b4060d-53a7-4de4-a3e9-1601a8b279d4.jpg",
@@ -104,7 +104,7 @@ const dataRows = (editable) => {
                 <td>
                     <ImgBox editable={editable}>
                         <img
-                            src="img.png"
+                            src={img}
                             alt="수정하기"
                             onClick={selectImg}
                             id={`img${i}`}
@@ -158,7 +158,6 @@ const DataList = () => {
             <Title>
                 <h1>데이터 목록</h1>
                 <hr></hr>
-                <img src="img.png" alt="수정하기" />
                 <SaveDiv>
                     <button>
                         <Link to="/">뒤로가기</Link>
