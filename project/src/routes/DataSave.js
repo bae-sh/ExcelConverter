@@ -4,6 +4,31 @@ import { doc, setDoc } from "firebase/firestore";
 import { dbService } from "../firebase";
 import { getStorage, ref, uploadBytes } from "firebase/storage";
 import { v4 as uuidv4 } from "uuid";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+
+let temp = [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+];
 
 const Main = styled.div`
     display: flex;
@@ -73,11 +98,17 @@ const LableForIgmBtn = styled.label`
         cursor: pointer;
     }
 `;
-const Input = styled.input`
+const Input = styled.textarea`
     text-align: center;
+    resize: none;
+    width: 100%;
 `;
-
-const dataRows = () => {
+const PriceInput = styled.input`
+    text-align: center;
+    resize: none;
+    width: 80%;
+`;
+const dataRows = (hscodes, setHscodes) => {
     let rows = [];
 
     for (let i = 0; i < 20; i++) {
@@ -109,27 +140,49 @@ const dataRows = () => {
                     <Input size={10}></Input>
                 </td>
                 <td>
-                    <Input size={10}></Input>
+                    <span>¥</span>
+                    <PriceInput size={10}></PriceInput>
                 </td>
                 <td>
-                    <Input></Input>
+                    <Input
+                        value={hscodes[i]}
+                        onChange={(e) => inputChange(e, hscodes, setHscodes, i)}
+                    ></Input>
                 </td>
             </Row>
         );
     }
     return rows;
 };
-
+const inputChange = (e, hscodes, setHscodes, i) => {
+    let newcodes = [...hscodes];
+    newcodes[i] = e.target.value;
+    if (newcodes[i].length === 5) {
+        if (newcodes[i][4] !== ".") {
+            newcodes[i] =
+                newcodes[i].substring(0, 4) + "." + newcodes[i].substring(4);
+        } else {
+            newcodes[i] = newcodes[i].substring(0, 4);
+        }
+    } else if (newcodes[i].length === 8) {
+        if (newcodes[i][7] !== "-") {
+            newcodes[i] =
+                newcodes[i].substring(0, 7) + "-" + newcodes[i].substring(7);
+        } else {
+            newcodes[i] = newcodes[i].substring(0, 7);
+        }
+    }
+    setHscodes(newcodes);
+};
 const selectImg = (img, i) => {
     let preview = new FileReader();
-    console.log(preview);
     preview.onload = (e) => {
         document.getElementById(`img${i}`).src = e.target.result;
     };
     preview.readAsDataURL(img.target.files[0]);
 };
 
-const onClick = async () => {
+const onClick = async (navigate) => {
     const storage = getStorage();
 
     for (let i = 0; i < 20; i++) {
@@ -138,33 +191,35 @@ const onClick = async () => {
         let ko = rows.childNodes[2].childNodes[0].value;
         let en = rows.childNodes[3].childNodes[0].value;
         let ch = rows.childNodes[4].childNodes[0].value;
-        let texture = rows.childNodes[4].childNodes[0].value;
-        let price = rows.childNodes[5].childNodes[0].value;
-        let hscode = rows.childNodes[6].childNodes[0].value;
+        let texture = rows.childNodes[5].childNodes[0].value;
+        let price = rows.childNodes[6].childNodes[1].value;
+        let hscode = rows.childNodes[7].childNodes[0].value;
         let id = uuidv4();
+        let date = new Date();
         const storageRef = ref(storage, id);
 
-        console.log(rows.childNodes[1].childNodes[2].files[0]);
-        if (ko === "") {
-            continue;
+        if (file) {
+            let obj = {
+                ko: ko,
+                en: en,
+                ch: ch,
+                texture: texture,
+                price: price,
+                hscode: hscode,
+                id: id,
+                date: date,
+            };
+            await setDoc(doc(dbService, "items", id), obj);
+            uploadBytes(storageRef, file);
         }
-
-        let obj = {
-            ko: ko,
-            en: en,
-            ch: ch,
-            texture: texture,
-            price: price,
-            hscode: hscode,
-            id: id,
-        };
-        await setDoc(doc(dbService, "items", id), obj);
-        uploadBytes(storageRef, file);
     }
     alert("저장되었습니다.");
+    navigate("/");
 };
 
 const DataSave = () => {
+    const navigate = useNavigate();
+    const [hscodes, setHscodes] = useState(temp);
     return (
         <Main>
             <Title>
@@ -175,7 +230,7 @@ const DataSave = () => {
                         <Link to="/">뒤로가기</Link>
                     </button>
 
-                    <button onClick={onClick}>저장</button>
+                    <button onClick={() => onClick(navigate)}>저장</button>
                 </SaveDiv>
             </Title>
             <Table>
@@ -191,7 +246,7 @@ const DataSave = () => {
                         <th>HS코드</th>
                     </Row>
                 </thead>
-                <tbody>{dataRows()}</tbody>
+                <tbody>{dataRows(hscodes, setHscodes)}</tbody>
             </Table>
         </Main>
     );

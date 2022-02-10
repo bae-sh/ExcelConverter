@@ -2,9 +2,24 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import exceljs from "../excel";
-import { collection, query, getDocs, doc, setDoc } from "firebase/firestore";
+import {
+    collection,
+    query,
+    getDocs,
+    doc,
+    setDoc,
+    orderBy,
+    deleteDoc,
+} from "firebase/firestore";
 import { dbService } from "../firebase";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import {
+    getStorage,
+    ref,
+    uploadBytes,
+    getDownloadURL,
+    deleteObject,
+} from "firebase/storage";
+import { getExchangeRate } from "../getExchangeRate";
 
 const Main = styled.div`
     /* background-color: tomato; */
@@ -64,8 +79,21 @@ const ImgBox = styled.div`
         height: 100%;
     }
 `;
-const Input = styled.input`
+const Input = styled.textarea`
     text-align: center;
+    resize: none;
+    width: 100%;
+    :read-only {
+        background-color: white;
+        border: none;
+        outline: none;
+        cursor: auto;
+    }
+`;
+const PriceInput = styled.input`
+    text-align: center;
+    resize: none;
+    width: 80%;
     :read-only {
         background-color: white;
         border: none;
@@ -90,13 +118,29 @@ const LableForIgmBtn = styled.label`
         }
     }};
 `;
+const ExchangeBox = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 30%;
+    div {
+        width: 50%;
+        text-align: center;
+    }
+    div:nth-child(1) {
+        border-bottom: 1px solid gray;
+        padding-bottom: 5px;
+        margin-bottom: 5px;
+    }
+`;
 const dataRows = (editable, productList, setProductList) => {
     let rows = [];
     for (let i = 0; i < productList.length; i++) {
         rows.push(
             <Row key={i} id={i}>
                 <td>
-                    <Input type={"checkbox"} />
+                    <input type={"checkbox"} />
                 </td>
                 <td>
                     <ImgBox>
@@ -173,7 +217,8 @@ const dataRows = (editable, productList, setProductList) => {
                     ></Input>
                 </td>
                 <td>
-                    <Input
+                    <span>¥</span>
+                    <PriceInput
                         size={10}
                         readOnly={!editable}
                         onChange={(e) =>
@@ -181,7 +226,7 @@ const dataRows = (editable, productList, setProductList) => {
                         }
                         id={`price${i}`}
                         value={productList[i]["price"]}
-                    ></Input>
+                    ></PriceInput>
                 </td>
                 <td>
                     <Input
@@ -207,10 +252,12 @@ const selectImg = (img, idx) => {
     preview.onload = (e) => {
         document.getElementById(`img${idx}`).src = e.target.result;
     };
-    preview.readAsDataURL(img.target.files[0]);
+    if (img.target.files[0]) {
+        preview.readAsDataURL(img.target.files[0]);
+    }
 };
-const getObj = async (productList, setProductList) => {
-    const q = query(collection(dbService, "items"));
+const getObj = async (setProductList) => {
+    const q = query(collection(dbService, "items"), orderBy("date"));
     const querySnapshot = await getDocs(q);
     const obj = [];
     querySnapshot.forEach((doc) => {
@@ -234,12 +281,11 @@ const downloadImg = (productList, i) => {
             preview.readAsDataURL(f);
         })
         .catch((error) => {
-            console.log(error);
+            // console.log(error);
         });
 };
 const inputChange = (e, productList, setProductList, i) => {
     let newProductList = [...productList];
-    console.log(newProductList);
     if (e.target.id[0] === "k") {
         newProductList[i]["ko"] = e.target.value;
     } else if (e.target.id[0] === "e") {
@@ -252,12 +298,34 @@ const inputChange = (e, productList, setProductList, i) => {
         newProductList[i]["price"] = e.target.value;
     } else if (e.target.id[0] === "h") {
         newProductList[i]["hscode"] = e.target.value;
+        if (newProductList[i]["hscode"].length === 5) {
+            if (newProductList[i]["hscode"][4] !== ".") {
+                newProductList[i]["hscode"] =
+                    newProductList[i]["hscode"].substring(0, 4) +
+                    "." +
+                    newProductList[i]["hscode"].substring(4);
+            } else {
+                newProductList[i]["hscode"] = newProductList[i][
+                    "hscode"
+                ].substring(0, 4);
+            }
+        } else if (newProductList[i]["hscode"].length === 8) {
+            if (newProductList[i]["hscode"][7] !== "-") {
+                newProductList[i]["hscode"] =
+                    newProductList[i]["hscode"].substring(0, 7) +
+                    "-" +
+                    newProductList[i]["hscode"].substring(7);
+            } else {
+                newProductList[i]["hscode"] = newProductList[i][
+                    "hscode"
+                ].substring(0, 7);
+            }
+        }
     }
     setProductList(newProductList);
 };
 const onSave = async (productList) => {
     const storage = getStorage();
-
     for (let i = 0; i < productList.length; i++) {
         let rows = document.getElementById(i);
         let file = rows.childNodes[1].childNodes[2].files[0];
@@ -265,14 +333,11 @@ const onSave = async (productList) => {
         let en = rows.childNodes[3].childNodes[0].value;
         let ch = rows.childNodes[4].childNodes[0].value;
         let texture = rows.childNodes[6].childNodes[0].value;
-        let price = rows.childNodes[8].childNodes[0].value;
+        let price = rows.childNodes[8].childNodes[1].value;
         let hscode = rows.childNodes[9].childNodes[0].value;
         let id = productList[i].id;
+        let date = productList[i].date;
         const storageRef = ref(storage, id);
-        console.log(file);
-        if (ko === "") {
-            continue;
-        }
 
         let obj = {
             ko: ko,
@@ -282,31 +347,110 @@ const onSave = async (productList) => {
             price: price,
             hscode: hscode,
             id: id,
+            date: date,
         };
         if (file) {
             uploadBytes(storageRef, file);
         }
+
         await setDoc(doc(dbService, "items", id), obj);
+        downloadImg(productList, i);
     }
     alert("저장되었습니다.");
 };
+const onDelete = async (productList, setProductList, setEditable) => {
+    if (window.confirm("삭제하시겠습니까?")) {
+        const storage = getStorage();
+
+        for (let i = 0; i < productList.length; i++) {
+            let rows = document.getElementById(i);
+            let check = rows.childNodes[0].childNodes[0].checked;
+            let id = productList[i].id;
+            if (check) {
+                const desertRef = ref(storage, id);
+                rows.childNodes[0].childNodes[0].checked = false;
+                deleteObject(desertRef)
+                    .then(() => {
+                        console.log("delete");
+                    })
+                    .catch((error) => {
+                        // Uh-oh, an error occurred!
+                    });
+                await deleteDoc(doc(dbService, "items", id));
+            }
+        }
+        getObj(setProductList);
+        alert("삭제되었습니다.");
+        setEditable((prev) => !prev);
+    }
+};
+const onClickExcel = (productList, exchange) => {
+    let newObj = [];
+    productList.forEach((e, i) => {
+        let rows = document.getElementById(i);
+        let obj = JSON.parse(JSON.stringify(e));
+        if (rows.childNodes[0].childNodes[0].checked) {
+            let number = rows.childNodes[5].childNodes[0].value;
+            let amount = rows.childNodes[7].childNodes[0].value;
+            let price = rows.childNodes[8].childNodes[1].value;
+            obj["number"] = number;
+            obj["amount"] = amount;
+            obj["price"] = `$ ${(
+                (Number(price) * Number(exchange["CNY"])) /
+                Number(exchange["USD"])
+            ).toFixed(2)}`;
+            obj["idx"] = i;
+            newObj.push(obj);
+        }
+    });
+    exceljs(newObj);
+};
 const DataList = ({ productList, setProductList }) => {
     const [editable, setEditable] = useState(false);
+    const [exchange, setExchange] = useState({ CNY: 0, USD: 0 });
 
     useEffect(() => {
-        getObj(productList, setProductList);
+        getObj(setProductList);
     }, []);
+    useEffect(() => {
+        if (!editable) {
+            for (let i = 0; i < productList.length; i++) {
+                downloadImg(productList, i);
+            }
+        }
+        getExchangeRate(setExchange);
+    }, [productList, editable]);
     return (
         <Main>
             <Title>
                 <h1>데이터 목록</h1>
                 <hr></hr>
                 <SaveDiv>
-                    <button>
-                        <Link to="/">뒤로가기</Link>
-                    </button>
                     <div>
-                        {editable && <button>삭제</button>}
+                        <button>
+                            <Link to="/">뒤로가기</Link>
+                        </button>
+                    </div>
+
+                    <ExchangeBox>
+                        <div>현재 환율 정보</div>
+                        <div>미국(USD) : {exchange.USD}</div>
+                        <div>중국(CNY) : {exchange.CNY}</div>
+                    </ExchangeBox>
+                    <div>
+                        {editable && (
+                            <button
+                                onClick={() => {
+                                    onDelete(
+                                        productList,
+                                        setProductList,
+                                        setEditable
+                                    );
+                                }}
+                            >
+                                삭제
+                            </button>
+                        )}
                         <button
                             id="saveBtn"
                             onClick={() => {
@@ -328,7 +472,11 @@ const DataList = ({ productList, setProductList }) => {
                                 저장하기
                             </button>
                         ) : (
-                            <button onClick={() => exceljs(productList)}>
+                            <button
+                                onClick={() =>
+                                    onClickExcel(productList, exchange)
+                                }
+                            >
                                 Excel
                             </button>
                         )}

@@ -1,0 +1,2240 @@
+{
+    "declaration": {
+        "attributes": {
+            "version": "1.0",
+            "encoding": "UTF-8",
+            "standalone": "yes"
+        }
+    },
+    "elements": [
+        {
+            "type": "element",
+            "name": "trifFxrtInfoQryRtnVo",
+            "elements": [
+                { "type": "element", "name": "ntceInfo" },
+                {
+                    "type": "element",
+                    "name": "tCnt",
+                    "elements": [{ "type": "text", "text": "59" }]
+                },
+                {
+                    "type": "element",
+                    "name": "trifFxrtInfoQryRsltVo",
+                    "elements": [
+                        {
+                            "type": "element",
+                            "name": "cntySgn",
+                            "elements": [{ "type": "text", "text": "AE" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "mtryUtNm",
+                            "elements": [
+                                { "type": "text", "text": "UAE Dirham" }
+                            ]
+                        },
+                        {
+                            "type": "element",
+                            "name": "fxrt",
+                            "elements": [{ "type": "text", "text": "331.5" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "currSgn",
+                            "elements": [{ "type": "text", "text": "AED" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "aplyBgnDt",
+                            "elements": [{ "type": "text", "text": "20220206" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "imexTp",
+                            "elements": [{ "type": "text", "text": "2" }]
+                        }
+                    ]
+                },
+                {
+                    "type": "element",
+                    "name": "trifFxrtInfoQryRsltVo",
+                    "elements": [
+                        {
+                            "type": "element",
+                            "name": "cntySgn",
+                            "elements": [{ "type": "text", "text": "AT" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "mtryUtNm",
+                            "elements": [
+                                { "type": "text", "text": "Schilling" }
+                            ]
+                        },
+                        {
+                            "type": "element",
+                            "name": "fxrt",
+                            "elements": [{ "type": "text", "text": "100.62" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "currSgn",
+                            "elements": [{ "type": "text", "text": "ATS" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "aplyBgnDt",
+                            "elements": [{ "type": "text", "text": "20220206" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "imexTp",
+                            "elements": [{ "type": "text", "text": "2" }]
+                        }
+                    ]
+                },
+                {
+                    "type": "element",
+                    "name": "trifFxrtInfoQryRsltVo",
+                    "elements": [
+                        {
+                            "type": "element",
+                            "name": "cntySgn",
+                            "elements": [{ "type": "text", "text": "AU" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "mtryUtNm",
+                            "elements": [
+                                { "type": "text", "text": "Australian Dollar" }
+                            ]
+                        },
+                        {
+                            "type": "element",
+                            "name": "fxrt",
+                            "elements": [{ "type": "text", "text": "868.97" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "currSgn",
+                            "elements": [{ "type": "text", "text": "AUD" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "aplyBgnDt",
+                            "elements": [{ "type": "text", "text": "20220206" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "imexTp",
+                            "elements": [{ "type": "text", "text": "2" }]
+                        }
+                    ]
+                },
+                {
+                    "type": "element",
+                    "name": "trifFxrtInfoQryRsltVo",
+                    "elements": [
+                        {
+                            "type": "element",
+                            "name": "cntySgn",
+                            "elements": [{ "type": "text", "text": "BD" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "mtryUtNm",
+                            "elements": [{ "type": "text", "text": "Taka" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "fxrt",
+                            "elements": [{ "type": "text", "text": "14.19" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "currSgn",
+                            "elements": [{ "type": "text", "text": "BDT" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "aplyBgnDt",
+                            "elements": [{ "type": "text", "text": "20220206" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "imexTp",
+                            "elements": [{ "type": "text", "text": "2" }]
+                        }
+                    ]
+                },
+                {
+                    "type": "element",
+                    "name": "trifFxrtInfoQryRsltVo",
+                    "elements": [
+                        {
+                            "type": "element",
+                            "name": "cntySgn",
+                            "elements": [{ "type": "text", "text": "BE" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "mtryUtNm",
+                            "elements": [
+                                { "type": "text", "text": "Belgian Franc" }
+                            ]
+                        },
+                        {
+                            "type": "element",
+                            "name": "fxrt",
+                            "elements": [{ "type": "text", "text": "34.32" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "currSgn",
+                            "elements": [{ "type": "text", "text": "BEF" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "aplyBgnDt",
+                            "elements": [{ "type": "text", "text": "20220206" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "imexTp",
+                            "elements": [{ "type": "text", "text": "2" }]
+                        }
+                    ]
+                },
+                {
+                    "type": "element",
+                    "name": "trifFxrtInfoQryRsltVo",
+                    "elements": [
+                        {
+                            "type": "element",
+                            "name": "cntySgn",
+                            "elements": [{ "type": "text", "text": "BH" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "mtryUtNm",
+                            "elements": [
+                                { "type": "text", "text": "Bahraini Dinar" }
+                            ]
+                        },
+                        {
+                            "type": "element",
+                            "name": "fxrt",
+                            "elements": [{ "type": "text", "text": "3229.38" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "currSgn",
+                            "elements": [{ "type": "text", "text": "BHD" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "aplyBgnDt",
+                            "elements": [{ "type": "text", "text": "20220206" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "imexTp",
+                            "elements": [{ "type": "text", "text": "2" }]
+                        }
+                    ]
+                },
+                {
+                    "type": "element",
+                    "name": "trifFxrtInfoQryRsltVo",
+                    "elements": [
+                        {
+                            "type": "element",
+                            "name": "cntySgn",
+                            "elements": [{ "type": "text", "text": "BN" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "mtryUtNm",
+                            "elements": [
+                                { "type": "text", "text": "Brunei Dollar" }
+                            ]
+                        },
+                        {
+                            "type": "element",
+                            "name": "fxrt",
+                            "elements": [{ "type": "text", "text": "931.91" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "currSgn",
+                            "elements": [{ "type": "text", "text": "BND" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "aplyBgnDt",
+                            "elements": [{ "type": "text", "text": "20220206" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "imexTp",
+                            "elements": [{ "type": "text", "text": "2" }]
+                        }
+                    ]
+                },
+                {
+                    "type": "element",
+                    "name": "trifFxrtInfoQryRsltVo",
+                    "elements": [
+                        {
+                            "type": "element",
+                            "name": "cntySgn",
+                            "elements": [{ "type": "text", "text": "BR" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "mtryUtNm",
+                            "elements": [
+                                { "type": "text", "text": "Brazilian Real" }
+                            ]
+                        },
+                        {
+                            "type": "element",
+                            "name": "fxrt",
+                            "elements": [{ "type": "text", "text": "231.35" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "currSgn",
+                            "elements": [{ "type": "text", "text": "BRL" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "aplyBgnDt",
+                            "elements": [{ "type": "text", "text": "20220206" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "imexTp",
+                            "elements": [{ "type": "text", "text": "2" }]
+                        }
+                    ]
+                },
+                {
+                    "type": "element",
+                    "name": "trifFxrtInfoQryRsltVo",
+                    "elements": [
+                        {
+                            "type": "element",
+                            "name": "cntySgn",
+                            "elements": [{ "type": "text", "text": "CA" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "mtryUtNm",
+                            "elements": [
+                                { "type": "text", "text": "Canadian Dollar" }
+                            ]
+                        },
+                        {
+                            "type": "element",
+                            "name": "fxrt",
+                            "elements": [{ "type": "text", "text": "960.53" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "currSgn",
+                            "elements": [{ "type": "text", "text": "CAD" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "aplyBgnDt",
+                            "elements": [{ "type": "text", "text": "20220206" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "imexTp",
+                            "elements": [{ "type": "text", "text": "2" }]
+                        }
+                    ]
+                },
+                {
+                    "type": "element",
+                    "name": "trifFxrtInfoQryRsltVo",
+                    "elements": [
+                        {
+                            "type": "element",
+                            "name": "cntySgn",
+                            "elements": [{ "type": "text", "text": "CH" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "mtryUtNm",
+                            "elements": [
+                                { "type": "text", "text": "Swiss Franc" }
+                            ]
+                        },
+                        {
+                            "type": "element",
+                            "name": "fxrt",
+                            "elements": [{ "type": "text", "text": "1323.86" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "currSgn",
+                            "elements": [{ "type": "text", "text": "CHF" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "aplyBgnDt",
+                            "elements": [{ "type": "text", "text": "20220206" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "imexTp",
+                            "elements": [{ "type": "text", "text": "2" }]
+                        }
+                    ]
+                },
+                {
+                    "type": "element",
+                    "name": "trifFxrtInfoQryRsltVo",
+                    "elements": [
+                        {
+                            "type": "element",
+                            "name": "cntySgn",
+                            "elements": [{ "type": "text", "text": "CL" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "mtryUtNm",
+                            "elements": [
+                                { "type": "text", "text": "Chilean Peso" }
+                            ]
+                        },
+                        {
+                            "type": "element",
+                            "name": "fxrt",
+                            "elements": [{ "type": "text", "text": "1.49" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "currSgn",
+                            "elements": [{ "type": "text", "text": "CLP" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "aplyBgnDt",
+                            "elements": [{ "type": "text", "text": "20220206" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "imexTp",
+                            "elements": [{ "type": "text", "text": "2" }]
+                        }
+                    ]
+                },
+                {
+                    "type": "element",
+                    "name": "trifFxrtInfoQryRsltVo",
+                    "elements": [
+                        {
+                            "type": "element",
+                            "name": "cntySgn",
+                            "elements": [{ "type": "text", "text": "CN" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "mtryUtNm",
+                            "elements": [
+                                { "type": "text", "text": "Yuan Renminbi" }
+                            ]
+                        },
+                        {
+                            "type": "element",
+                            "name": "fxrt",
+                            "elements": [{ "type": "text", "text": "191.38" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "currSgn",
+                            "elements": [{ "type": "text", "text": "CNY" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "aplyBgnDt",
+                            "elements": [{ "type": "text", "text": "20220206" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "imexTp",
+                            "elements": [{ "type": "text", "text": "2" }]
+                        }
+                    ]
+                },
+                {
+                    "type": "element",
+                    "name": "trifFxrtInfoQryRsltVo",
+                    "elements": [
+                        {
+                            "type": "element",
+                            "name": "cntySgn",
+                            "elements": [{ "type": "text", "text": "CZ" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "mtryUtNm",
+                            "elements": [
+                                { "type": "text", "text": "Czech Koruna" }
+                            ]
+                        },
+                        {
+                            "type": "element",
+                            "name": "fxrt",
+                            "elements": [{ "type": "text", "text": "57.15" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "currSgn",
+                            "elements": [{ "type": "text", "text": "CZK" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "aplyBgnDt",
+                            "elements": [{ "type": "text", "text": "20220206" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "imexTp",
+                            "elements": [{ "type": "text", "text": "2" }]
+                        }
+                    ]
+                },
+                {
+                    "type": "element",
+                    "name": "trifFxrtInfoQryRsltVo",
+                    "elements": [
+                        {
+                            "type": "element",
+                            "name": "cntySgn",
+                            "elements": [{ "type": "text", "text": "DE" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "mtryUtNm",
+                            "elements": [
+                                { "type": "text", "text": "Deutsche Mark" }
+                            ]
+                        },
+                        {
+                            "type": "element",
+                            "name": "fxrt",
+                            "elements": [{ "type": "text", "text": "707.88" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "currSgn",
+                            "elements": [{ "type": "text", "text": "DEM" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "aplyBgnDt",
+                            "elements": [{ "type": "text", "text": "20220206" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "imexTp",
+                            "elements": [{ "type": "text", "text": "2" }]
+                        }
+                    ]
+                },
+                {
+                    "type": "element",
+                    "name": "trifFxrtInfoQryRsltVo",
+                    "elements": [
+                        {
+                            "type": "element",
+                            "name": "cntySgn",
+                            "elements": [{ "type": "text", "text": "DK" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "mtryUtNm",
+                            "elements": [
+                                { "type": "text", "text": "Danish Krone" }
+                            ]
+                        },
+                        {
+                            "type": "element",
+                            "name": "fxrt",
+                            "elements": [{ "type": "text", "text": "186.06" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "currSgn",
+                            "elements": [{ "type": "text", "text": "DKK" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "aplyBgnDt",
+                            "elements": [{ "type": "text", "text": "20220206" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "imexTp",
+                            "elements": [{ "type": "text", "text": "2" }]
+                        }
+                    ]
+                },
+                {
+                    "type": "element",
+                    "name": "trifFxrtInfoQryRsltVo",
+                    "elements": [
+                        {
+                            "type": "element",
+                            "name": "cntySgn",
+                            "elements": [{ "type": "text", "text": "EG" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "mtryUtNm",
+                            "elements": [
+                                { "type": "text", "text": "Egyptian Pound" }
+                            ]
+                        },
+                        {
+                            "type": "element",
+                            "name": "fxrt",
+                            "elements": [{ "type": "text", "text": "77.6" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "currSgn",
+                            "elements": [{ "type": "text", "text": "EGP" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "aplyBgnDt",
+                            "elements": [{ "type": "text", "text": "20220206" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "imexTp",
+                            "elements": [{ "type": "text", "text": "2" }]
+                        }
+                    ]
+                },
+                {
+                    "type": "element",
+                    "name": "trifFxrtInfoQryRsltVo",
+                    "elements": [
+                        {
+                            "type": "element",
+                            "name": "cntySgn",
+                            "elements": [{ "type": "text", "text": "ES" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "mtryUtNm",
+                            "elements": [
+                                { "type": "text", "text": "Spanish Peseta" }
+                            ]
+                        },
+                        {
+                            "type": "element",
+                            "name": "fxrt",
+                            "elements": [{ "type": "text", "text": "8.3211" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "currSgn",
+                            "elements": [{ "type": "text", "text": "ESP" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "aplyBgnDt",
+                            "elements": [{ "type": "text", "text": "20220206" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "imexTp",
+                            "elements": [{ "type": "text", "text": "2" }]
+                        }
+                    ]
+                },
+                {
+                    "type": "element",
+                    "name": "trifFxrtInfoQryRsltVo",
+                    "elements": [
+                        {
+                            "type": "element",
+                            "name": "cntySgn",
+                            "elements": [{ "type": "text", "text": "EU" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "mtryUtNm",
+                            "elements": [{ "type": "text", "text": "유로화" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "fxrt",
+                            "elements": [{ "type": "text", "text": "1384.41" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "currSgn",
+                            "elements": [{ "type": "text", "text": "EUR" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "aplyBgnDt",
+                            "elements": [{ "type": "text", "text": "20220206" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "imexTp",
+                            "elements": [{ "type": "text", "text": "2" }]
+                        }
+                    ]
+                },
+                {
+                    "type": "element",
+                    "name": "trifFxrtInfoQryRsltVo",
+                    "elements": [
+                        {
+                            "type": "element",
+                            "name": "cntySgn",
+                            "elements": [{ "type": "text", "text": "FI" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "mtryUtNm",
+                            "elements": [{ "type": "text", "text": "Markka" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "fxrt",
+                            "elements": [{ "type": "text", "text": "232.86" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "currSgn",
+                            "elements": [{ "type": "text", "text": "FIM" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "aplyBgnDt",
+                            "elements": [{ "type": "text", "text": "20220206" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "imexTp",
+                            "elements": [{ "type": "text", "text": "2" }]
+                        }
+                    ]
+                },
+                {
+                    "type": "element",
+                    "name": "trifFxrtInfoQryRsltVo",
+                    "elements": [
+                        {
+                            "type": "element",
+                            "name": "cntySgn",
+                            "elements": [{ "type": "text", "text": "FJ" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "mtryUtNm",
+                            "elements": [
+                                { "type": "text", "text": "Fiji Dollar" }
+                            ]
+                        },
+                        {
+                            "type": "element",
+                            "name": "fxrt",
+                            "elements": [{ "type": "text", "text": "603.53" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "currSgn",
+                            "elements": [{ "type": "text", "text": "FJD" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "aplyBgnDt",
+                            "elements": [{ "type": "text", "text": "20220206" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "imexTp",
+                            "elements": [{ "type": "text", "text": "2" }]
+                        }
+                    ]
+                },
+                {
+                    "type": "element",
+                    "name": "trifFxrtInfoQryRsltVo",
+                    "elements": [
+                        {
+                            "type": "element",
+                            "name": "cntySgn",
+                            "elements": [{ "type": "text", "text": "FR" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "mtryUtNm",
+                            "elements": [
+                                { "type": "text", "text": "French Franc" }
+                            ]
+                        },
+                        {
+                            "type": "element",
+                            "name": "fxrt",
+                            "elements": [{ "type": "text", "text": "211.06" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "currSgn",
+                            "elements": [{ "type": "text", "text": "FRF" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "aplyBgnDt",
+                            "elements": [{ "type": "text", "text": "20220206" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "imexTp",
+                            "elements": [{ "type": "text", "text": "2" }]
+                        }
+                    ]
+                },
+                {
+                    "type": "element",
+                    "name": "trifFxrtInfoQryRsltVo",
+                    "elements": [
+                        {
+                            "type": "element",
+                            "name": "cntySgn",
+                            "elements": [{ "type": "text", "text": "GB" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "mtryUtNm",
+                            "elements": [
+                                { "type": "text", "text": "Pound Sterling" }
+                            ]
+                        },
+                        {
+                            "type": "element",
+                            "name": "fxrt",
+                            "elements": [{ "type": "text", "text": "1654.22" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "currSgn",
+                            "elements": [{ "type": "text", "text": "GBP" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "aplyBgnDt",
+                            "elements": [{ "type": "text", "text": "20220206" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "imexTp",
+                            "elements": [{ "type": "text", "text": "2" }]
+                        }
+                    ]
+                },
+                {
+                    "type": "element",
+                    "name": "trifFxrtInfoQryRsltVo",
+                    "elements": [
+                        {
+                            "type": "element",
+                            "name": "cntySgn",
+                            "elements": [{ "type": "text", "text": "HK" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "mtryUtNm",
+                            "elements": [
+                                { "type": "text", "text": "Hong Kong Dollar" }
+                            ]
+                        },
+                        {
+                            "type": "element",
+                            "name": "fxrt",
+                            "elements": [{ "type": "text", "text": "156.2" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "currSgn",
+                            "elements": [{ "type": "text", "text": "HKD" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "aplyBgnDt",
+                            "elements": [{ "type": "text", "text": "20220206" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "imexTp",
+                            "elements": [{ "type": "text", "text": "2" }]
+                        }
+                    ]
+                },
+                {
+                    "type": "element",
+                    "name": "trifFxrtInfoQryRsltVo",
+                    "elements": [
+                        {
+                            "type": "element",
+                            "name": "cntySgn",
+                            "elements": [{ "type": "text", "text": "HU" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "mtryUtNm",
+                            "elements": [{ "type": "text", "text": "Forint" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "fxrt",
+                            "elements": [{ "type": "text", "text": "3.91" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "currSgn",
+                            "elements": [{ "type": "text", "text": "HUF" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "aplyBgnDt",
+                            "elements": [{ "type": "text", "text": "20220206" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "imexTp",
+                            "elements": [{ "type": "text", "text": "2" }]
+                        }
+                    ]
+                },
+                {
+                    "type": "element",
+                    "name": "trifFxrtInfoQryRsltVo",
+                    "elements": [
+                        {
+                            "type": "element",
+                            "name": "cntySgn",
+                            "elements": [{ "type": "text", "text": "ID" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "mtryUtNm",
+                            "elements": [{ "type": "text", "text": "Rupiah" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "fxrt",
+                            "elements": [{ "type": "text", "text": "0.0847" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "currSgn",
+                            "elements": [{ "type": "text", "text": "IDR" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "aplyBgnDt",
+                            "elements": [{ "type": "text", "text": "20220206" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "imexTp",
+                            "elements": [{ "type": "text", "text": "2" }]
+                        }
+                    ]
+                },
+                {
+                    "type": "element",
+                    "name": "trifFxrtInfoQryRsltVo",
+                    "elements": [
+                        {
+                            "type": "element",
+                            "name": "cntySgn",
+                            "elements": [{ "type": "text", "text": "IL" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "mtryUtNm",
+                            "elements": [{ "type": "text", "text": "Shekel" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "fxrt",
+                            "elements": [{ "type": "text", "text": "383.59" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "currSgn",
+                            "elements": [{ "type": "text", "text": "ILS" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "aplyBgnDt",
+                            "elements": [{ "type": "text", "text": "20220206" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "imexTp",
+                            "elements": [{ "type": "text", "text": "2" }]
+                        }
+                    ]
+                },
+                {
+                    "type": "element",
+                    "name": "trifFxrtInfoQryRsltVo",
+                    "elements": [
+                        {
+                            "type": "element",
+                            "name": "cntySgn",
+                            "elements": [{ "type": "text", "text": "IN" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "mtryUtNm",
+                            "elements": [
+                                { "type": "text", "text": "Indian Rupee" }
+                            ]
+                        },
+                        {
+                            "type": "element",
+                            "name": "fxrt",
+                            "elements": [{ "type": "text", "text": "16.31" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "currSgn",
+                            "elements": [{ "type": "text", "text": "INR" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "aplyBgnDt",
+                            "elements": [{ "type": "text", "text": "20220206" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "imexTp",
+                            "elements": [{ "type": "text", "text": "2" }]
+                        }
+                    ]
+                },
+                {
+                    "type": "element",
+                    "name": "trifFxrtInfoQryRsltVo",
+                    "elements": [
+                        {
+                            "type": "element",
+                            "name": "cntySgn",
+                            "elements": [{ "type": "text", "text": "IT" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "mtryUtNm",
+                            "elements": [
+                                { "type": "text", "text": "Italian Lira" }
+                            ]
+                        },
+                        {
+                            "type": "element",
+                            "name": "fxrt",
+                            "elements": [{ "type": "text", "text": "0.715" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "currSgn",
+                            "elements": [{ "type": "text", "text": "ITL" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "aplyBgnDt",
+                            "elements": [{ "type": "text", "text": "20220206" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "imexTp",
+                            "elements": [{ "type": "text", "text": "2" }]
+                        }
+                    ]
+                },
+                {
+                    "type": "element",
+                    "name": "trifFxrtInfoQryRsltVo",
+                    "elements": [
+                        {
+                            "type": "element",
+                            "name": "cntySgn",
+                            "elements": [{ "type": "text", "text": "JO" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "mtryUtNm",
+                            "elements": [
+                                { "type": "text", "text": "Jordanian Dinar" }
+                            ]
+                        },
+                        {
+                            "type": "element",
+                            "name": "fxrt",
+                            "elements": [{ "type": "text", "text": "1810.02" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "currSgn",
+                            "elements": [{ "type": "text", "text": "JOD" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "aplyBgnDt",
+                            "elements": [{ "type": "text", "text": "20220206" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "imexTp",
+                            "elements": [{ "type": "text", "text": "2" }]
+                        }
+                    ]
+                },
+                {
+                    "type": "element",
+                    "name": "trifFxrtInfoQryRsltVo",
+                    "elements": [
+                        {
+                            "type": "element",
+                            "name": "cntySgn",
+                            "elements": [{ "type": "text", "text": "JP" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "mtryUtNm",
+                            "elements": [{ "type": "text", "text": "Yen" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "fxrt",
+                            "elements": [{ "type": "text", "text": "10.6127" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "currSgn",
+                            "elements": [{ "type": "text", "text": "JPY" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "aplyBgnDt",
+                            "elements": [{ "type": "text", "text": "20220206" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "imexTp",
+                            "elements": [{ "type": "text", "text": "2" }]
+                        }
+                    ]
+                },
+                {
+                    "type": "element",
+                    "name": "trifFxrtInfoQryRsltVo",
+                    "elements": [
+                        {
+                            "type": "element",
+                            "name": "cntySgn",
+                            "elements": [{ "type": "text", "text": "KE" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "mtryUtNm",
+                            "elements": [
+                                { "type": "text", "text": "Kenyan Shilling" }
+                            ]
+                        },
+                        {
+                            "type": "element",
+                            "name": "fxrt",
+                            "elements": [{ "type": "text", "text": "10.74" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "currSgn",
+                            "elements": [{ "type": "text", "text": "KES" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "aplyBgnDt",
+                            "elements": [{ "type": "text", "text": "20220206" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "imexTp",
+                            "elements": [{ "type": "text", "text": "2" }]
+                        }
+                    ]
+                },
+                {
+                    "type": "element",
+                    "name": "trifFxrtInfoQryRsltVo",
+                    "elements": [
+                        {
+                            "type": "element",
+                            "name": "cntySgn",
+                            "elements": [{ "type": "text", "text": "KH" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "mtryUtNm",
+                            "elements": [{ "type": "text", "text": "Riel" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "fxrt",
+                            "elements": [{ "type": "text", "text": "0.321" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "currSgn",
+                            "elements": [{ "type": "text", "text": "KHR" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "aplyBgnDt",
+                            "elements": [{ "type": "text", "text": "20220206" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "imexTp",
+                            "elements": [{ "type": "text", "text": "2" }]
+                        }
+                    ]
+                },
+                {
+                    "type": "element",
+                    "name": "trifFxrtInfoQryRsltVo",
+                    "elements": [
+                        {
+                            "type": "element",
+                            "name": "cntySgn",
+                            "elements": [{ "type": "text", "text": "KR" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "mtryUtNm",
+                            "elements": [{ "type": "text", "text": "Won" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "fxrt",
+                            "elements": [{ "type": "text", "text": "1" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "currSgn",
+                            "elements": [{ "type": "text", "text": "KRW" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "aplyBgnDt",
+                            "elements": [{ "type": "text", "text": "20220206" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "imexTp",
+                            "elements": [{ "type": "text", "text": "2" }]
+                        }
+                    ]
+                },
+                {
+                    "type": "element",
+                    "name": "trifFxrtInfoQryRsltVo",
+                    "elements": [
+                        {
+                            "type": "element",
+                            "name": "cntySgn",
+                            "elements": [{ "type": "text", "text": "KW" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "mtryUtNm",
+                            "elements": [
+                                { "type": "text", "text": "Kuwaiti Dinar" }
+                            ]
+                        },
+                        {
+                            "type": "element",
+                            "name": "fxrt",
+                            "elements": [{ "type": "text", "text": "4026.54" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "currSgn",
+                            "elements": [{ "type": "text", "text": "KWD" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "aplyBgnDt",
+                            "elements": [{ "type": "text", "text": "20220206" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "imexTp",
+                            "elements": [{ "type": "text", "text": "2" }]
+                        }
+                    ]
+                },
+                {
+                    "type": "element",
+                    "name": "trifFxrtInfoQryRsltVo",
+                    "elements": [
+                        {
+                            "type": "element",
+                            "name": "cntySgn",
+                            "elements": [{ "type": "text", "text": "KZ" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "mtryUtNm",
+                            "elements": [
+                                { "type": "text", "text": "Kazakhstan tenge" }
+                            ]
+                        },
+                        {
+                            "type": "element",
+                            "name": "fxrt",
+                            "elements": [{ "type": "text", "text": "2.81" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "currSgn",
+                            "elements": [{ "type": "text", "text": "KZT" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "aplyBgnDt",
+                            "elements": [{ "type": "text", "text": "20220206" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "imexTp",
+                            "elements": [{ "type": "text", "text": "2" }]
+                        }
+                    ]
+                },
+                {
+                    "type": "element",
+                    "name": "trifFxrtInfoQryRsltVo",
+                    "elements": [
+                        {
+                            "type": "element",
+                            "name": "cntySgn",
+                            "elements": [{ "type": "text", "text": "MN" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "mtryUtNm",
+                            "elements": [{ "type": "text", "text": "Tugrik" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "fxrt",
+                            "elements": [{ "type": "text", "text": "0.42" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "currSgn",
+                            "elements": [{ "type": "text", "text": "MNT" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "aplyBgnDt",
+                            "elements": [{ "type": "text", "text": "20220206" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "imexTp",
+                            "elements": [{ "type": "text", "text": "2" }]
+                        }
+                    ]
+                },
+                {
+                    "type": "element",
+                    "name": "trifFxrtInfoQryRsltVo",
+                    "elements": [
+                        {
+                            "type": "element",
+                            "name": "cntySgn",
+                            "elements": [{ "type": "text", "text": "MO" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "mtryUtNm",
+                            "elements": [{ "type": "text", "text": "Pataca" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "fxrt",
+                            "elements": [{ "type": "text", "text": "151.88" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "currSgn",
+                            "elements": [{ "type": "text", "text": "MOP" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "aplyBgnDt",
+                            "elements": [{ "type": "text", "text": "20220206" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "imexTp",
+                            "elements": [{ "type": "text", "text": "2" }]
+                        }
+                    ]
+                },
+                {
+                    "type": "element",
+                    "name": "trifFxrtInfoQryRsltVo",
+                    "elements": [
+                        {
+                            "type": "element",
+                            "name": "cntySgn",
+                            "elements": [{ "type": "text", "text": "MX" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "mtryUtNm",
+                            "elements": [
+                                { "type": "text", "text": "Mexican Peso" }
+                            ]
+                        },
+                        {
+                            "type": "element",
+                            "name": "fxrt",
+                            "elements": [{ "type": "text", "text": "59.18" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "currSgn",
+                            "elements": [{ "type": "text", "text": "MXN" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "aplyBgnDt",
+                            "elements": [{ "type": "text", "text": "20220206" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "imexTp",
+                            "elements": [{ "type": "text", "text": "2" }]
+                        }
+                    ]
+                },
+                {
+                    "type": "element",
+                    "name": "trifFxrtInfoQryRsltVo",
+                    "elements": [
+                        {
+                            "type": "element",
+                            "name": "cntySgn",
+                            "elements": [{ "type": "text", "text": "MY" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "mtryUtNm",
+                            "elements": [
+                                { "type": "text", "text": "Malaysian Ringgit" }
+                            ]
+                        },
+                        {
+                            "type": "element",
+                            "name": "fxrt",
+                            "elements": [{ "type": "text", "text": "290.98" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "currSgn",
+                            "elements": [{ "type": "text", "text": "MYR" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "aplyBgnDt",
+                            "elements": [{ "type": "text", "text": "20220206" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "imexTp",
+                            "elements": [{ "type": "text", "text": "2" }]
+                        }
+                    ]
+                },
+                {
+                    "type": "element",
+                    "name": "trifFxrtInfoQryRsltVo",
+                    "elements": [
+                        {
+                            "type": "element",
+                            "name": "cntySgn",
+                            "elements": [{ "type": "text", "text": "NL" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "mtryUtNm",
+                            "elements": [
+                                {
+                                    "type": "text",
+                                    "text": "Netherlands Guilder"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "element",
+                            "name": "fxrt",
+                            "elements": [{ "type": "text", "text": "628.26" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "currSgn",
+                            "elements": [{ "type": "text", "text": "NLG" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "aplyBgnDt",
+                            "elements": [{ "type": "text", "text": "20220206" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "imexTp",
+                            "elements": [{ "type": "text", "text": "2" }]
+                        }
+                    ]
+                },
+                {
+                    "type": "element",
+                    "name": "trifFxrtInfoQryRsltVo",
+                    "elements": [
+                        {
+                            "type": "element",
+                            "name": "cntySgn",
+                            "elements": [{ "type": "text", "text": "NO" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "mtryUtNm",
+                            "elements": [
+                                { "type": "text", "text": "Norwegian Krone" }
+                            ]
+                        },
+                        {
+                            "type": "element",
+                            "name": "fxrt",
+                            "elements": [{ "type": "text", "text": "138.99" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "currSgn",
+                            "elements": [{ "type": "text", "text": "NOK" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "aplyBgnDt",
+                            "elements": [{ "type": "text", "text": "20220206" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "imexTp",
+                            "elements": [{ "type": "text", "text": "2" }]
+                        }
+                    ]
+                },
+                {
+                    "type": "element",
+                    "name": "trifFxrtInfoQryRsltVo",
+                    "elements": [
+                        {
+                            "type": "element",
+                            "name": "cntySgn",
+                            "elements": [{ "type": "text", "text": "NP" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "mtryUtNm",
+                            "elements": [
+                                { "type": "text", "text": "Nepalese Rupee" }
+                            ]
+                        },
+                        {
+                            "type": "element",
+                            "name": "fxrt",
+                            "elements": [{ "type": "text", "text": "10.19" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "currSgn",
+                            "elements": [{ "type": "text", "text": "NPR" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "aplyBgnDt",
+                            "elements": [{ "type": "text", "text": "20220206" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "imexTp",
+                            "elements": [{ "type": "text", "text": "2" }]
+                        }
+                    ]
+                },
+                {
+                    "type": "element",
+                    "name": "trifFxrtInfoQryRsltVo",
+                    "elements": [
+                        {
+                            "type": "element",
+                            "name": "cntySgn",
+                            "elements": [{ "type": "text", "text": "NZ" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "mtryUtNm",
+                            "elements": [
+                                { "type": "text", "text": "New Zealand Dollar" }
+                            ]
+                        },
+                        {
+                            "type": "element",
+                            "name": "fxrt",
+                            "elements": [{ "type": "text", "text": "809.47" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "currSgn",
+                            "elements": [{ "type": "text", "text": "NZD" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "aplyBgnDt",
+                            "elements": [{ "type": "text", "text": "20220206" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "imexTp",
+                            "elements": [{ "type": "text", "text": "2" }]
+                        }
+                    ]
+                },
+                {
+                    "type": "element",
+                    "name": "trifFxrtInfoQryRsltVo",
+                    "elements": [
+                        {
+                            "type": "element",
+                            "name": "cntySgn",
+                            "elements": [{ "type": "text", "text": "OM" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "mtryUtNm",
+                            "elements": [
+                                { "type": "text", "text": "Rial Omani" }
+                            ]
+                        },
+                        {
+                            "type": "element",
+                            "name": "fxrt",
+                            "elements": [{ "type": "text", "text": "3409.9" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "currSgn",
+                            "elements": [{ "type": "text", "text": "OMR" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "aplyBgnDt",
+                            "elements": [{ "type": "text", "text": "20220206" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "imexTp",
+                            "elements": [{ "type": "text", "text": "2" }]
+                        }
+                    ]
+                },
+                {
+                    "type": "element",
+                    "name": "trifFxrtInfoQryRsltVo",
+                    "elements": [
+                        {
+                            "type": "element",
+                            "name": "cntySgn",
+                            "elements": [{ "type": "text", "text": "PH" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "mtryUtNm",
+                            "elements": [
+                                { "type": "text", "text": "Philippine Peso" }
+                            ]
+                        },
+                        {
+                            "type": "element",
+                            "name": "fxrt",
+                            "elements": [{ "type": "text", "text": "23.88" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "currSgn",
+                            "elements": [{ "type": "text", "text": "PHP" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "aplyBgnDt",
+                            "elements": [{ "type": "text", "text": "20220206" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "imexTp",
+                            "elements": [{ "type": "text", "text": "2" }]
+                        }
+                    ]
+                },
+                {
+                    "type": "element",
+                    "name": "trifFxrtInfoQryRsltVo",
+                    "elements": [
+                        {
+                            "type": "element",
+                            "name": "cntySgn",
+                            "elements": [{ "type": "text", "text": "PK" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "mtryUtNm",
+                            "elements": [
+                                { "type": "text", "text": "Pakistan Rupee" }
+                            ]
+                        },
+                        {
+                            "type": "element",
+                            "name": "fxrt",
+                            "elements": [{ "type": "text", "text": "6.92" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "currSgn",
+                            "elements": [{ "type": "text", "text": "PKR" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "aplyBgnDt",
+                            "elements": [{ "type": "text", "text": "20220206" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "imexTp",
+                            "elements": [{ "type": "text", "text": "2" }]
+                        }
+                    ]
+                },
+                {
+                    "type": "element",
+                    "name": "trifFxrtInfoQryRsltVo",
+                    "elements": [
+                        {
+                            "type": "element",
+                            "name": "cntySgn",
+                            "elements": [{ "type": "text", "text": "PL" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "mtryUtNm",
+                            "elements": [
+                                { "type": "text", "text": "Polish Zloty" }
+                            ]
+                        },
+                        {
+                            "type": "element",
+                            "name": "fxrt",
+                            "elements": [{ "type": "text", "text": "305.16" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "currSgn",
+                            "elements": [{ "type": "text", "text": "PLN" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "aplyBgnDt",
+                            "elements": [{ "type": "text", "text": "20220206" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "imexTp",
+                            "elements": [{ "type": "text", "text": "2" }]
+                        }
+                    ]
+                },
+                {
+                    "type": "element",
+                    "name": "trifFxrtInfoQryRsltVo",
+                    "elements": [
+                        {
+                            "type": "element",
+                            "name": "cntySgn",
+                            "elements": [{ "type": "text", "text": "QA" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "mtryUtNm",
+                            "elements": [
+                                { "type": "text", "text": "Qatari Rial" }
+                            ]
+                        },
+                        {
+                            "type": "element",
+                            "name": "fxrt",
+                            "elements": [{ "type": "text", "text": "334.31" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "currSgn",
+                            "elements": [{ "type": "text", "text": "QAR" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "aplyBgnDt",
+                            "elements": [{ "type": "text", "text": "20220206" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "imexTp",
+                            "elements": [{ "type": "text", "text": "2" }]
+                        }
+                    ]
+                },
+                {
+                    "type": "element",
+                    "name": "trifFxrtInfoQryRsltVo",
+                    "elements": [
+                        {
+                            "type": "element",
+                            "name": "cntySgn",
+                            "elements": [{ "type": "text", "text": "RU" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "mtryUtNm",
+                            "elements": [
+                                { "type": "text", "text": "Russian Rouble" }
+                            ]
+                        },
+                        {
+                            "type": "element",
+                            "name": "fxrt",
+                            "elements": [{ "type": "text", "text": "15.96" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "currSgn",
+                            "elements": [{ "type": "text", "text": "RUB" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "aplyBgnDt",
+                            "elements": [{ "type": "text", "text": "20220206" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "imexTp",
+                            "elements": [{ "type": "text", "text": "2" }]
+                        }
+                    ]
+                },
+                {
+                    "type": "element",
+                    "name": "trifFxrtInfoQryRsltVo",
+                    "elements": [
+                        {
+                            "type": "element",
+                            "name": "cntySgn",
+                            "elements": [{ "type": "text", "text": "SA" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "mtryUtNm",
+                            "elements": [
+                                { "type": "text", "text": "Saudi Riyal" }
+                            ]
+                        },
+                        {
+                            "type": "element",
+                            "name": "fxrt",
+                            "elements": [{ "type": "text", "text": "324.54" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "currSgn",
+                            "elements": [{ "type": "text", "text": "SAR" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "aplyBgnDt",
+                            "elements": [{ "type": "text", "text": "20220206" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "imexTp",
+                            "elements": [{ "type": "text", "text": "2" }]
+                        }
+                    ]
+                },
+                {
+                    "type": "element",
+                    "name": "trifFxrtInfoQryRsltVo",
+                    "elements": [
+                        {
+                            "type": "element",
+                            "name": "cntySgn",
+                            "elements": [{ "type": "text", "text": "SE" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "mtryUtNm",
+                            "elements": [
+                                { "type": "text", "text": "Swedish Krona" }
+                            ]
+                        },
+                        {
+                            "type": "element",
+                            "name": "fxrt",
+                            "elements": [{ "type": "text", "text": "133.11" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "currSgn",
+                            "elements": [{ "type": "text", "text": "SEK" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "aplyBgnDt",
+                            "elements": [{ "type": "text", "text": "20220206" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "imexTp",
+                            "elements": [{ "type": "text", "text": "2" }]
+                        }
+                    ]
+                },
+                {
+                    "type": "element",
+                    "name": "trifFxrtInfoQryRsltVo",
+                    "elements": [
+                        {
+                            "type": "element",
+                            "name": "cntySgn",
+                            "elements": [{ "type": "text", "text": "SG" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "mtryUtNm",
+                            "elements": [
+                                { "type": "text", "text": "Singapore Dollar" }
+                            ]
+                        },
+                        {
+                            "type": "element",
+                            "name": "fxrt",
+                            "elements": [{ "type": "text", "text": "904.97" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "currSgn",
+                            "elements": [{ "type": "text", "text": "SGD" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "aplyBgnDt",
+                            "elements": [{ "type": "text", "text": "20220206" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "imexTp",
+                            "elements": [{ "type": "text", "text": "2" }]
+                        }
+                    ]
+                },
+                {
+                    "type": "element",
+                    "name": "trifFxrtInfoQryRsltVo",
+                    "elements": [
+                        {
+                            "type": "element",
+                            "name": "cntySgn",
+                            "elements": [{ "type": "text", "text": "SK" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "mtryUtNm",
+                            "elements": [
+                                { "type": "text", "text": "Slovak Koruna" }
+                            ]
+                        },
+                        {
+                            "type": "element",
+                            "name": "fxrt",
+                            "elements": [{ "type": "text", "text": "46.04" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "currSgn",
+                            "elements": [{ "type": "text", "text": "SKK" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "aplyBgnDt",
+                            "elements": [{ "type": "text", "text": "20220206" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "imexTp",
+                            "elements": [{ "type": "text", "text": "2" }]
+                        }
+                    ]
+                },
+                {
+                    "type": "element",
+                    "name": "trifFxrtInfoQryRsltVo",
+                    "elements": [
+                        {
+                            "type": "element",
+                            "name": "cntySgn",
+                            "elements": [{ "type": "text", "text": "TH" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "mtryUtNm",
+                            "elements": [{ "type": "text", "text": "Baht" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "fxrt",
+                            "elements": [{ "type": "text", "text": "36.77" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "currSgn",
+                            "elements": [{ "type": "text", "text": "THB" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "aplyBgnDt",
+                            "elements": [{ "type": "text", "text": "20220206" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "imexTp",
+                            "elements": [{ "type": "text", "text": "2" }]
+                        }
+                    ]
+                },
+                {
+                    "type": "element",
+                    "name": "trifFxrtInfoQryRsltVo",
+                    "elements": [
+                        {
+                            "type": "element",
+                            "name": "cntySgn",
+                            "elements": [{ "type": "text", "text": "TR" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "mtryUtNm",
+                            "elements": [
+                                { "type": "text", "text": "Turkish Lira" }
+                            ]
+                        },
+                        {
+                            "type": "element",
+                            "name": "fxrt",
+                            "elements": [{ "type": "text", "text": "90.11" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "currSgn",
+                            "elements": [{ "type": "text", "text": "TRY" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "aplyBgnDt",
+                            "elements": [{ "type": "text", "text": "20220206" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "imexTp",
+                            "elements": [{ "type": "text", "text": "2" }]
+                        }
+                    ]
+                },
+                {
+                    "type": "element",
+                    "name": "trifFxrtInfoQryRsltVo",
+                    "elements": [
+                        {
+                            "type": "element",
+                            "name": "cntySgn",
+                            "elements": [{ "type": "text", "text": "TW" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "mtryUtNm",
+                            "elements": [
+                                { "type": "text", "text": "New Taiwan Dollar" }
+                            ]
+                        },
+                        {
+                            "type": "element",
+                            "name": "fxrt",
+                            "elements": [{ "type": "text", "text": "43.86" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "currSgn",
+                            "elements": [{ "type": "text", "text": "TWD" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "aplyBgnDt",
+                            "elements": [{ "type": "text", "text": "20220206" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "imexTp",
+                            "elements": [{ "type": "text", "text": "2" }]
+                        }
+                    ]
+                },
+                {
+                    "type": "element",
+                    "name": "trifFxrtInfoQryRsltVo",
+                    "elements": [
+                        {
+                            "type": "element",
+                            "name": "cntySgn",
+                            "elements": [{ "type": "text", "text": "US" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "mtryUtNm",
+                            "elements": [
+                                { "type": "text", "text": "US Dollar" }
+                            ]
+                        },
+                        {
+                            "type": "element",
+                            "name": "fxrt",
+                            "elements": [{ "type": "text", "text": "1217.18" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "currSgn",
+                            "elements": [{ "type": "text", "text": "USD" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "aplyBgnDt",
+                            "elements": [{ "type": "text", "text": "20220206" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "imexTp",
+                            "elements": [{ "type": "text", "text": "2" }]
+                        }
+                    ]
+                },
+                {
+                    "type": "element",
+                    "name": "trifFxrtInfoQryRsltVo",
+                    "elements": [
+                        {
+                            "type": "element",
+                            "name": "cntySgn",
+                            "elements": [{ "type": "text", "text": "VN" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "mtryUtNm",
+                            "elements": [{ "type": "text", "text": "Dong" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "fxrt",
+                            "elements": [{ "type": "text", "text": "0.0537" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "currSgn",
+                            "elements": [{ "type": "text", "text": "VND" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "aplyBgnDt",
+                            "elements": [{ "type": "text", "text": "20220206" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "imexTp",
+                            "elements": [{ "type": "text", "text": "2" }]
+                        }
+                    ]
+                },
+                {
+                    "type": "element",
+                    "name": "trifFxrtInfoQryRsltVo",
+                    "elements": [
+                        {
+                            "type": "element",
+                            "name": "cntySgn",
+                            "elements": [{ "type": "text", "text": "ZA" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "mtryUtNm",
+                            "elements": [{ "type": "text", "text": "Rand" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "fxrt",
+                            "elements": [{ "type": "text", "text": "79.68" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "currSgn",
+                            "elements": [{ "type": "text", "text": "ZAR" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "aplyBgnDt",
+                            "elements": [{ "type": "text", "text": "20220206" }]
+                        },
+                        {
+                            "type": "element",
+                            "name": "imexTp",
+                            "elements": [{ "type": "text", "text": "2" }]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
