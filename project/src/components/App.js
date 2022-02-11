@@ -4,7 +4,6 @@ import { DataList } from "../routes/DataList";
 import DataSave from "../routes/DataSave";
 import Home from "../routes/Home";
 import GlobalStyle from "./GlobalStyle";
-import getExchangeRate from "../getExchangeRate";
 function App() {
     const [productList, setProductList] = useState([]);
     return (

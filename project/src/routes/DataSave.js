@@ -147,6 +147,8 @@ const dataRows = (hscodes, setHscodes) => {
                     <Input
                         value={hscodes[i]}
                         onChange={(e) => inputChange(e, hscodes, setHscodes, i)}
+                        maxLength="12"
+                        as="input"
                     ></Input>
                 </td>
             </Row>
@@ -208,6 +210,8 @@ const onClick = async (navigate) => {
                 hscode: hscode,
                 id: id,
                 date: date,
+                number: "",
+                amount: "",
             };
             await setDoc(doc(dbService, "items", id), obj);
             uploadBytes(storageRef, file);
