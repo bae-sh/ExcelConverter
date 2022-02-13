@@ -7,28 +7,7 @@ import { v4 as uuidv4 } from "uuid";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
-let temp = [
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-];
+let temp = Array(20).fill("");
 
 const Main = styled.div`
     display: flex;
@@ -137,7 +116,8 @@ const dataRows = (hscodes, setHscodes) => {
                     <Input></Input>
                 </td>
                 <td>
-                    <Input size={10}></Input>
+                    <Input size={10} as="input"></Input>
+                    <Input size={10} as="input"></Input>
                 </td>
                 <td>
                     <span>¥</span>
@@ -150,6 +130,9 @@ const dataRows = (hscodes, setHscodes) => {
                         maxLength="12"
                         as="input"
                     ></Input>
+                </td>
+                <td>
+                    <Input size={10}></Input>
                 </td>
             </Row>
         );
@@ -194,8 +177,10 @@ const onClick = async (navigate) => {
         let en = rows.childNodes[3].childNodes[0].value;
         let ch = rows.childNodes[4].childNodes[0].value;
         let texture = rows.childNodes[5].childNodes[0].value;
+        let Kotexture = rows.childNodes[5].childNodes[1].value;
         let price = rows.childNodes[6].childNodes[1].value;
         let hscode = rows.childNodes[7].childNodes[0].value;
+        let info = rows.childNodes[7].childNodes[0].value;
         let id = uuidv4();
         let date = new Date();
         const storageRef = ref(storage, id);
@@ -212,6 +197,8 @@ const onClick = async (navigate) => {
                 date: date,
                 number: "",
                 amount: "",
+                info: info,
+                Kotexture: Kotexture,
             };
             await setDoc(doc(dbService, "items", id), obj);
             uploadBytes(storageRef, file);
@@ -245,9 +232,10 @@ const DataSave = () => {
                         <th>제품이름</th>
                         <th>영어이름</th>
                         <th>중국어이름</th>
-                        <th>제질</th>
+                        <th>재질</th>
                         <th>개당단가</th>
                         <th>HS코드</th>
+                        <th>특이사항</th>
                     </Row>
                 </thead>
                 <tbody>{dataRows(hscodes, setHscodes)}</tbody>

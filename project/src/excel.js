@@ -9,7 +9,7 @@ const exceljs = async (productList) => {
 
     if (fileName) {
         worksheet.columns = [
-            { header: "특이사항/特别事项", key: "exception", width: 30 },
+            { header: "특이사항/特别事项", key: "info", width: 30 },
             { header: "사진/照片", key: "png", width: 20 },
             { header: "제품이름/产品名", key: "ko", width: 22 },
             { header: "영어이름/英文名", key: "en", width: 22 },
@@ -84,6 +84,8 @@ const exceljs = async (productList) => {
                 elem.remove();
             });
         });
+        return true;
     }
+    return false;
 };
 export default exceljs;

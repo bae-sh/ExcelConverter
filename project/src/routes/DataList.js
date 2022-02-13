@@ -37,8 +37,19 @@ const Title = styled.div`
 const Table = styled.table`
     width: 90%;
     border: 1px solid #cccccc;
-    margin-top: 30px;
+    margin-top: 330px;
     margin-bottom: 100px;
+`;
+const Header = styled.div`
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
 `;
 const Row = styled.tr`
     border: 1px solid #cccccc;
@@ -212,6 +223,17 @@ const dataRows = (editable, productList, setProductList, rate) => {
                         }
                         id={`texture${i}`}
                         value={productList[i]["texture"]}
+                        as="input"
+                    ></Input>
+                    <Input
+                        size={10}
+                        readOnly={!editable}
+                        onChange={(e) =>
+                            inputChange(e, productList, setProductList, i)
+                        }
+                        id={`Kotexture${i}`}
+                        value={productList[i]["Kotexture"]}
+                        as="input"
                     ></Input>
                 </td>
                 <td>
@@ -252,6 +274,17 @@ const dataRows = (editable, productList, setProductList, rate) => {
                     <RateSpan>
                         {showRate(rate, productList[i]["hscode"])}
                     </RateSpan>
+                </td>
+                <td>
+                    <Input
+                        size={15}
+                        readOnly={!editable}
+                        id={`info${i}`}
+                        onChange={(e) =>
+                            inputChange(e, productList, setProductList, i)
+                        }
+                        value={productList[i]["info"]}
+                    ></Input>
                 </td>
             </Row>
         );
@@ -313,8 +346,12 @@ const inputChange = (e, productList, setProductList, i) => {
         newProductList[i]["amount"] = e.target.value;
     } else if (e.target.id[0] === "t") {
         newProductList[i]["texture"] = e.target.value;
+    } else if (e.target.id[0] === "K") {
+        newProductList[i]["Kotexture"] = e.target.value;
     } else if (e.target.id[0] === "p") {
         newProductList[i]["price"] = e.target.value;
+    } else if (e.target.id[0] === "i") {
+        newProductList[i]["info"] = e.target.value;
     } else if (e.target.id[0] === "h") {
         newProductList[i]["hscode"] = e.target.value;
         if (newProductList[i]["hscode"].length === 5) {
@@ -347,15 +384,18 @@ const onSave = async (productList, reset = false, setProductList) => {
     const storage = getStorage();
     for (let i = 0; i < productList.length; i++) {
         let rows = document.getElementById(i);
+        let check = rows.childNodes[0].childNodes[0].checked;
         let file = rows.childNodes[1].childNodes[2].files[0];
         let ko = rows.childNodes[2].childNodes[0].value;
         let en = rows.childNodes[3].childNodes[0].value;
         let ch = rows.childNodes[4].childNodes[0].value;
         let number = rows.childNodes[5].childNodes[0].value;
         let texture = rows.childNodes[6].childNodes[0].value;
+        let Kotexture = rows.childNodes[6].childNodes[1].value;
         let amount = rows.childNodes[7].childNodes[0].value;
         let price = rows.childNodes[8].childNodes[1].value;
         let hscode = rows.childNodes[9].childNodes[0].value;
+        let info = rows.childNodes[10].childNodes[0].value;
         let id = productList[i].id;
         let date = productList[i].date;
         const storageRef = ref(storage, id);
@@ -371,8 +411,10 @@ const onSave = async (productList, reset = false, setProductList) => {
             hscode: hscode,
             id: id,
             date: date,
+            info: info,
+            Kotexture: Kotexture,
         };
-        if (reset) {
+        if (reset && check) {
             obj["number"] = "";
             obj["amount"] = "";
         }
@@ -414,7 +456,7 @@ const onDelete = async (productList, setProductList, setEditable) => {
         setEditable((prev) => !prev);
     }
 };
-const onClickExcel = (productList, exchange, setProductList) => {
+const onClickExcel = async (productList, exchange, setProductList) => {
     let newObj = [];
     productList.forEach((e, i) => {
         let rows = document.getElementById(i);
@@ -433,8 +475,10 @@ const onClickExcel = (productList, exchange, setProductList) => {
             newObj.push(obj);
         }
     });
-    exceljs(newObj);
-    onSave(productList, true, setProductList);
+    let isExcel = await exceljs(newObj);
+    if (isExcel) {
+        onSave(productList, true, setProductList);
+    }
 };
 const loadRateData = (productList, rate, setRate) => {
     productList.forEach(({ hscode }) => {
@@ -477,71 +521,78 @@ const DataList = ({ productList, setProductList }) => {
     }, [productList, editable]);
     return (
         <Main>
-            <Title>
-                <h1>데이터 목록</h1>
-                <hr></hr>
-                <SaveDiv>
-                    <div>
-                        <button>
-                            <Link to="/">뒤로가기</Link>
-                        </button>
-                    </div>
-
-                    <ExchangeBox>
-                        <div>현재 환율 정보</div>
-                        <div>미국(USD) : {exchange.USD}</div>
-                        <div>중국(CNY) : {exchange.CNY}</div>
-                    </ExchangeBox>
-                    <div>
-                        {editable && (
-                            <button
-                                onClick={() => {
-                                    onDelete(
-                                        productList,
-                                        setProductList,
-                                        setEditable
-                                    );
-                                }}
-                            >
-                                삭제
+            <Header>
+                <Title>
+                    <h1>데이터 목록</h1>
+                    <hr></hr>
+                    <SaveDiv>
+                        <div>
+                            <button>
+                                <Link to="/">뒤로가기</Link>
                             </button>
-                        )}
-                        <button
-                            id="saveBtn"
-                            onClick={() => {
-                                setEditable((prev) => !prev);
-                                if (editable) {
-                                    getObj(setProductList);
-                                }
-                            }}
-                        >
-                            {editable ? "취소" : "수정하기"}
-                        </button>
-                        {editable ? (
+                        </div>
+
+                        <ExchangeBox>
+                            <div>현재 환율 정보</div>
+                            <div>미국(USD) : {exchange.USD}</div>
+                            <div>중국(CNY) : {exchange.CNY}</div>
+                        </ExchangeBox>
+                        <div>
+                            {editable && (
+                                <button
+                                    onClick={() => {
+                                        onDelete(
+                                            productList,
+                                            setProductList,
+                                            setEditable
+                                        );
+                                    }}
+                                >
+                                    삭제
+                                </button>
+                            )}
                             <button
+                                id="saveBtn"
                                 onClick={() => {
                                     setEditable((prev) => !prev);
-                                    onSave(productList, false, setProductList);
+                                    if (editable) {
+                                        getObj(setProductList);
+                                    }
                                 }}
                             >
-                                저장하기
+                                {editable ? "취소" : "수정하기"}
                             </button>
-                        ) : (
-                            <button
-                                onClick={() =>
-                                    onClickExcel(
-                                        productList,
-                                        exchange,
-                                        setProductList
-                                    )
-                                }
-                            >
-                                Excel
-                            </button>
-                        )}
-                    </div>
-                </SaveDiv>
-            </Title>
+                            {editable ? (
+                                <button
+                                    onClick={() => {
+                                        setEditable((prev) => !prev);
+                                        onSave(
+                                            productList,
+                                            false,
+                                            setProductList
+                                        );
+                                    }}
+                                >
+                                    저장하기
+                                </button>
+                            ) : (
+                                <button
+                                    onClick={() =>
+                                        onClickExcel(
+                                            productList,
+                                            exchange,
+                                            setProductList
+                                        )
+                                    }
+                                >
+                                    Excel
+                                </button>
+                            )}
+                        </div>
+                    </SaveDiv>
+                </Title>
+            </Header>
+
             <Table>
                 <thead>
                     <Row>
@@ -551,10 +602,11 @@ const DataList = ({ productList, setProductList }) => {
                         <th>영어이름</th>
                         <th>중국어이름</th>
                         <th>운송장번호</th>
-                        <th>제질</th>
+                        <th>재질</th>
                         <th>수량</th>
                         <th>개당단가</th>
                         <th>HS코드</th>
+                        <th>특이사항</th>
                     </Row>
                 </thead>
                 <tbody>
