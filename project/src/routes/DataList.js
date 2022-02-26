@@ -24,14 +24,12 @@ import { getExchangeRate } from "../getExchangeRate";
 import { getRate } from "../getRate";
 
 const Main = styled.div`
-    /* background-color: tomato; */
     display: flex;
     flex-direction: column;
     align-items: center;
     padding-bottom: 30px;
 `;
 const Title = styled.div`
-    /* background-color: blue; */
     width: 70%;
     margin-top: 100px;
 `;
@@ -40,7 +38,7 @@ const Table = styled.table`
     border: 1px solid #cccccc;
     margin-top: 330px;
     margin-bottom: 100px;
-    z-index: -1;
+    z-index: 0;
 `;
 const Header = styled.div`
     width: 100%;
@@ -51,7 +49,7 @@ const Header = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 0;
+    z-index: 1;
 `;
 const Row = styled.tr`
     border: 1px solid #cccccc;
@@ -104,6 +102,9 @@ const Input = styled.textarea`
         cursor: auto;
     }
 `;
+const InputCost = styled(Input)`
+    width: 100px;
+`;
 const PriceInput = styled.input`
     text-align: center;
     resize: none;
@@ -144,6 +145,29 @@ const SettingBox = styled.div`
     }
     input {
         text-align: center;
+    }
+`;
+const ModalHeader = styled.div`
+    img {
+        width: 150px;
+        height: 150px;
+    }
+    p {
+        font-size: 20px;
+    }
+`;
+const ModalLabel = styled.div`
+    margin-bottom: 10px;
+    label {
+        margin-right: 16px;
+    }
+    input {
+        width: 80px;
+        text-align: center;
+        margin: 0 5px;
+    }
+    button {
+        margin-right: 10px;
     }
 `;
 const dataRows = (editable, productList, setProductList, rate, setIsOpen) => {
@@ -274,8 +298,10 @@ const dataRows = (editable, productList, setProductList, rate, setIsOpen) => {
                     ></Input>
                 </td>
                 <td>
-                    123원
-                    {/* <button onClick={() => setIsOpen(true)}>수정</button> */}
+                    <div>
+                        123원
+                        <button onClick={() => setIsOpen(i)}>수정</button>
+                    </div>
                 </td>
             </Row>
         );
@@ -313,25 +339,25 @@ const downloadImg = (productList, i) => {
 };
 const inputChange = (e, productList, setProductList, i) => {
     let newProductList = [...productList];
-    if (e.target.id[0] === "k") {
+    if (e.target.id === `ko${i}`) {
         newProductList[i]["ko"] = e.target.value;
-    } else if (e.target.id[0] === "e") {
+    } else if (e.target.id === `en${i}`) {
         newProductList[i]["en"] = e.target.value;
-    } else if (e.target.id[0] === "c") {
+    } else if (e.target.id === `ch${i}`) {
         newProductList[i]["ch"] = e.target.value;
-    } else if (e.target.id[0] === "n") {
+    } else if (e.target.id === `number${i}`) {
         newProductList[i]["number"] = e.target.value;
-    } else if (e.target.id[0] === "a") {
+    } else if (e.target.id === `amount${i}`) {
         newProductList[i]["amount"] = e.target.value;
-    } else if (e.target.id[0] === "t") {
+    } else if (e.target.id === `texture${i}`) {
         newProductList[i]["texture"] = e.target.value;
-    } else if (e.target.id[0] === "K") {
+    } else if (e.target.id === `Kotexture${i}`) {
         newProductList[i]["Kotexture"] = e.target.value;
-    } else if (e.target.id[0] === "p") {
+    } else if (e.target.id === `price${i}`) {
         newProductList[i]["price"] = e.target.value;
-    } else if (e.target.id[0] === "i") {
+    } else if (e.target.id === `info${i}`) {
         newProductList[i]["info"] = e.target.value;
-    } else if (e.target.id[0] === "h") {
+    } else if (e.target.id === `hscode${i}`) {
         newProductList[i]["hscode"] = e.target.value;
         if (newProductList[i]["hscode"].length === 5) {
             if (newProductList[i]["hscode"][4] !== ".") {
@@ -504,7 +530,8 @@ const DataList = () => {
         domesticCost: 0,
         serviceCost: 0,
     });
-    const [isOpen, setIsOpen] = useState(false);
+    const [isOpen, setIsOpen] = useState(-1);
+
     useEffect(() => {
         getObj(setProductList);
         getExchangeRate(setExchange);
@@ -526,30 +553,44 @@ const DataList = () => {
     }, [productList, editable]);
     return (
         <Main>
-            <Modal isOpen={false}>
-                <div>
-                    <label for="shippingCost">
+            <Modal
+                isOpen={isOpen !== -1}
+                style={{ overlay: { zIndex: 1000 } }}
+                ariaHideApp={false}
+            >
+                {isOpen !== -1 && (
+                    <ModalHeader>
+                        <img
+                            src={document.getElementById(`img${isOpen}`).src}
+                            alt=""
+                        />
+                        <p>{productList[isOpen]["ko"]}</p>
+                    </ModalHeader>
+                )}
+
+                <ModalLabel>
+                    <label htmlFor="shippingCost">
                         - 개당 현지 배송비는 얼마인가요?
                     </label>
                     ¥<input type={"number"} id="shippingCost"></input>
-                </div>
-                <div>
-                    <label for="countPerOne">
+                </ModalLabel>
+                <ModalLabel>
+                    <label htmlFor="countPerOne">
                         - 한 박스에 몇개가 들어가나요?
                     </label>
                     <input type={"number"} id="countPerOne"></input>EA
-                </div>
-                <div>
+                </ModalLabel>
+                <ModalLabel>
                     <label>- 한 박스의 크기가 어떻게 되나요?</label>
                     <input type={"number"} id="x" />*
                     <input type={"number"} id="y" />*
                     <input type={"number"} id="z" />
                     cm
-                </div>
-                <div>
-                    {/* <button onClick={console.log(1)}>저장</button> */}
-                    {/* <button onClick={setIsOpen(false)}>취소</button> */}
-                </div>
+                </ModalLabel>
+                <ModalLabel>
+                    <button onClick={() => setIsOpen(-1)}>저장</button>
+                    <button onClick={() => setIsOpen(-1)}>취소</button>
+                </ModalLabel>
             </Modal>
             <Header>
                 <Title>
@@ -570,10 +611,9 @@ const DataList = () => {
                         <div>
                             <SettingBox>
                                 <label>CBM당 해운비 설정</label>
-                                <input
+                                <InputCost
                                     type="number"
-                                    id="aboardCost"
-                                    value={shippingCosts.aboardCost}
+                                    readOnly={!editable}
                                     onChange={(e) =>
                                         costInputChange(
                                             e,
@@ -581,14 +621,16 @@ const DataList = () => {
                                             setShippingCosts
                                         )
                                     }
+                                    id="aboardCost"
+                                    value={shippingCosts.aboardCost}
+                                    as="input"
                                 />
                             </SettingBox>
                             <SettingBox>
                                 <label>국내운송비</label>
-                                <input
+                                <InputCost
                                     type="number"
-                                    id="domesticCost"
-                                    value={shippingCosts.domesticCost}
+                                    readOnly={!editable}
                                     onChange={(e) =>
                                         costInputChange(
                                             e,
@@ -596,14 +638,16 @@ const DataList = () => {
                                             setShippingCosts
                                         )
                                     }
+                                    id="domesticCost"
+                                    value={shippingCosts.domesticCost}
+                                    as="input"
                                 />
                             </SettingBox>
                             <SettingBox>
                                 <label>용역비</label>
-                                <input
+                                <InputCost
                                     type="number"
-                                    id="serviceCost"
-                                    value={shippingCosts.serviceCost}
+                                    readOnly={!editable}
                                     onChange={(e) =>
                                         costInputChange(
                                             e,
@@ -611,6 +655,9 @@ const DataList = () => {
                                             setShippingCosts
                                         )
                                     }
+                                    id="serviceCost"
+                                    value={shippingCosts.serviceCost}
+                                    as="input"
                                 />
                             </SettingBox>
                         </div>
@@ -689,7 +736,13 @@ const DataList = () => {
                     </Row>
                 </thead>
                 <tbody>
-                    {dataRows(editable, productList, setProductList, rate)}
+                    {dataRows(
+                        editable,
+                        productList,
+                        setProductList,
+                        rate,
+                        setIsOpen
+                    )}
                 </tbody>
             </Table>
         </Main>
