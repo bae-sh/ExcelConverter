@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const getRate = async (hscode, rate, setRate) => {
+const getRate = async (hscode, setRate) => {
     let url =
         "https://ggjlflldt2.execute-api.ap-northeast-2.amazonaws.com/default/getRate";
     let response = await axios.post(url, JSON.stringify({ hscode: hscode }));

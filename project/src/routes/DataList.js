@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import exceljs from "../excel";
+import Modal from "react-modal";
+
 import {
     collection,
     query,
@@ -15,7 +17,6 @@ import { dbService } from "../firebase";
 import {
     getStorage,
     ref,
-    uploadBytes,
     getDownloadURL,
     deleteObject,
 } from "firebase/storage";
@@ -39,6 +40,7 @@ const Table = styled.table`
     border: 1px solid #cccccc;
     margin-top: 330px;
     margin-bottom: 100px;
+    z-index: -1;
 `;
 const Header = styled.div`
     width: 100%;
@@ -49,7 +51,7 @@ const Header = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 10;
+    z-index: 0;
 `;
 const Row = styled.tr`
     border: 1px solid #cccccc;
@@ -113,23 +115,6 @@ const PriceInput = styled.input`
         cursor: auto;
     }
 `;
-const ImgBtn = styled.input`
-    display: none;
-`;
-const LableForIgmBtn = styled.label`
-    border: 1px solid #767676;
-    border-radius: 5px;
-    padding: 0px 3px;
-    background-color: #efefef;
-    :hover {
-        cursor: pointer;
-    }
-    display: ${(props) => {
-        if (!props.editable) {
-            return "none";
-        }
-    }};
-`;
 const ExchangeBox = styled.div`
     display: flex;
     flex-direction: column;
@@ -149,7 +134,19 @@ const ExchangeBox = styled.div`
 const RateSpan = styled.span`
     font-size: 12px;
 `;
-const dataRows = (editable, productList, setProductList, rate) => {
+const SettingBox = styled.div`
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+
+    label {
+        margin-right: 10px;
+    }
+    input {
+        text-align: center;
+    }
+`;
+const dataRows = (editable, productList, setProductList, rate, setIsOpen) => {
     let rows = [];
     for (let i = 0; i < productList.length; i++) {
         rows.push(
@@ -161,16 +158,6 @@ const dataRows = (editable, productList, setProductList, rate) => {
                     <ImgBox>
                         <img src="" alt="" id={`img${i}`} />
                     </ImgBox>
-                    <LableForIgmBtn htmlFor={`file${i}`} editable={editable}>
-                        업로드
-                    </LableForIgmBtn>
-                    <ImgBtn
-                        type="file"
-                        id={`file${i}`}
-                        onChange={(e) => {
-                            selectImg(e, i);
-                        }}
-                    ></ImgBtn>
                 </td>
                 <td>
                     <Input
@@ -286,24 +273,16 @@ const dataRows = (editable, productList, setProductList, rate) => {
                         value={productList[i]["info"]}
                     ></Input>
                 </td>
+                <td>
+                    123원
+                    {/* <button onClick={() => setIsOpen(true)}>수정</button> */}
+                </td>
             </Row>
         );
-        if (!editable) {
-            downloadImg(productList, i);
-        }
     }
     return rows;
 };
 
-const selectImg = (img, idx) => {
-    let preview = new FileReader();
-    preview.onload = (e) => {
-        document.getElementById(`img${idx}`).src = e.target.result;
-    };
-    if (img.target.files[0]) {
-        preview.readAsDataURL(img.target.files[0]);
-    }
-};
 const getObj = async (setProductList) => {
     const q = query(collection(dbService, "items"), orderBy("date"));
     const querySnapshot = await getDocs(q);
@@ -381,11 +360,9 @@ const inputChange = (e, productList, setProductList, i) => {
     setProductList(newProductList);
 };
 const onSave = async (productList, reset = false, setProductList) => {
-    const storage = getStorage();
     for (let i = 0; i < productList.length; i++) {
         let rows = document.getElementById(i);
         let check = rows.childNodes[0].childNodes[0].checked;
-        let file = rows.childNodes[1].childNodes[2].files[0];
         let ko = rows.childNodes[2].childNodes[0].value;
         let en = rows.childNodes[3].childNodes[0].value;
         let ch = rows.childNodes[4].childNodes[0].value;
@@ -398,7 +375,6 @@ const onSave = async (productList, reset = false, setProductList) => {
         let info = rows.childNodes[10].childNodes[0].value;
         let id = productList[i].id;
         let date = productList[i].date;
-        const storageRef = ref(storage, id);
 
         let obj = {
             ko: ko,
@@ -413,17 +389,16 @@ const onSave = async (productList, reset = false, setProductList) => {
             date: date,
             info: info,
             Kotexture: Kotexture,
+            shippingCost: 0,
+            countPerOne: 0,
+            size: { x: 0, y: 0, z: 0 },
         };
         if (reset && check) {
             obj["number"] = "";
             obj["amount"] = "";
         }
-        if (file) {
-            uploadBytes(storageRef, file);
-        }
 
         await setDoc(doc(dbService, "items", id), obj);
-        downloadImg(productList, i);
     }
     getObj(setProductList);
     if (!reset) {
@@ -480,14 +455,14 @@ const onClickExcel = async (productList, exchange, setProductList) => {
         onSave(productList, true, setProductList);
     }
 };
-const loadRateData = (productList, rate, setRate) => {
+const loadRateData = (productList, setRate) => {
     productList.forEach(({ hscode }) => {
         let code =
             hscode.substring(0, 4) +
             hscode.substring(5, 7) +
             hscode.substring(8);
         if (hscode.length === 12) {
-            getRate(code, rate, setRate);
+            getRate(code, setRate);
         }
     });
 };
@@ -502,25 +477,80 @@ const showRate = (rate, hscode) => {
     });
     return res;
 };
-const DataList = ({ productList, setProductList }) => {
+const costInputChange = (e, shippingCosts, setShippingCosts) => {
+    let id = e.target.id;
+    let newCosts = {
+        aboardCost: shippingCosts.aboardCost,
+        domesticCost: shippingCosts.domesticCost,
+        serviceCost: shippingCosts.serviceCost,
+    };
+    if (id === "aboardCost") {
+        newCosts.aboardCost = e.target.value;
+    } else if (id === "domesticCost") {
+        newCosts.domesticCost = e.target.value;
+    } else if (id === "serviceCost") {
+        newCosts.serviceCost = e.target.value;
+    }
+    setShippingCosts(newCosts);
+};
+const DataList = () => {
     const [editable, setEditable] = useState(false);
     const [exchange, setExchange] = useState({ CNY: 0, USD: 0 });
     const [rate, setRate] = useState([]);
+    const [loadingImg, setLoadingImg] = useState(false);
+    const [productList, setProductList] = useState([]);
+    const [shippingCosts, setShippingCosts] = useState({
+        aboardCost: 0,
+        domesticCost: 0,
+        serviceCost: 0,
+    });
+    const [isOpen, setIsOpen] = useState(false);
     useEffect(() => {
         getObj(setProductList);
-        loadRateData(productList, rate, setRate);
+        getExchangeRate(setExchange);
     }, []);
     useEffect(() => {
-        if (!editable) {
+        if (!loadingImg) {
             for (let i = 0; i < productList.length; i++) {
                 downloadImg(productList, i);
             }
-            loadRateData(productList, rate, setRate);
+            if (productList.length !== 0) {
+                setLoadingImg(true);
+            }
         }
-        getExchangeRate(setExchange);
+    }, [productList, loadingImg]);
+    useEffect(() => {
+        if (!editable) {
+            loadRateData(productList, setRate);
+        }
     }, [productList, editable]);
     return (
         <Main>
+            <Modal isOpen={false}>
+                <div>
+                    <label for="shippingCost">
+                        - 개당 현지 배송비는 얼마인가요?
+                    </label>
+                    ¥<input type={"number"} id="shippingCost"></input>
+                </div>
+                <div>
+                    <label for="countPerOne">
+                        - 한 박스에 몇개가 들어가나요?
+                    </label>
+                    <input type={"number"} id="countPerOne"></input>EA
+                </div>
+                <div>
+                    <label>- 한 박스의 크기가 어떻게 되나요?</label>
+                    <input type={"number"} id="x" />*
+                    <input type={"number"} id="y" />*
+                    <input type={"number"} id="z" />
+                    cm
+                </div>
+                <div>
+                    {/* <button onClick={console.log(1)}>저장</button> */}
+                    {/* <button onClick={setIsOpen(false)}>취소</button> */}
+                </div>
+            </Modal>
             <Header>
                 <Title>
                     <h1>데이터 목록</h1>
@@ -537,6 +567,54 @@ const DataList = ({ productList, setProductList }) => {
                             <div>미국(USD) : {exchange.USD}</div>
                             <div>중국(CNY) : {exchange.CNY}</div>
                         </ExchangeBox>
+                        <div>
+                            <SettingBox>
+                                <label>CBM당 해운비 설정</label>
+                                <input
+                                    type="number"
+                                    id="aboardCost"
+                                    value={shippingCosts.aboardCost}
+                                    onChange={(e) =>
+                                        costInputChange(
+                                            e,
+                                            shippingCosts,
+                                            setShippingCosts
+                                        )
+                                    }
+                                />
+                            </SettingBox>
+                            <SettingBox>
+                                <label>국내운송비</label>
+                                <input
+                                    type="number"
+                                    id="domesticCost"
+                                    value={shippingCosts.domesticCost}
+                                    onChange={(e) =>
+                                        costInputChange(
+                                            e,
+                                            shippingCosts,
+                                            setShippingCosts
+                                        )
+                                    }
+                                />
+                            </SettingBox>
+                            <SettingBox>
+                                <label>용역비</label>
+                                <input
+                                    type="number"
+                                    id="serviceCost"
+                                    value={shippingCosts.serviceCost}
+                                    onChange={(e) =>
+                                        costInputChange(
+                                            e,
+                                            shippingCosts,
+                                            setShippingCosts
+                                        )
+                                    }
+                                />
+                            </SettingBox>
+                        </div>
+
                         <div>
                             {editable && (
                                 <button
@@ -607,6 +685,7 @@ const DataList = ({ productList, setProductList }) => {
                         <th>개당단가</th>
                         <th>HS코드</th>
                         <th>특이사항</th>
+                        <th>예상원가</th>
                     </Row>
                 </thead>
                 <tbody>

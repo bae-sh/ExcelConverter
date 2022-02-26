@@ -5,39 +5,14 @@ import DataSave from "../routes/DataSave";
 import Home from "../routes/Home";
 import GlobalStyle from "./GlobalStyle";
 function App() {
-    const [productList, setProductList] = useState([]);
     return (
         <div>
             <GlobalStyle />
             <BrowserRouter>
                 <Routes>
-                    <Route
-                        path="/"
-                        element={
-                            <Home
-                                productList={productList}
-                                setProductList={setProductList}
-                            />
-                        }
-                    ></Route>
-                    <Route
-                        path="/datalist"
-                        element={
-                            <DataList
-                                productList={productList}
-                                setProductList={setProductList}
-                            />
-                        }
-                    ></Route>
-                    <Route
-                        path="/datasave"
-                        element={
-                            <DataSave
-                                productList={productList}
-                                setProductList={setProductList}
-                            />
-                        }
-                    ></Route>
+                    <Route path="/" element={<Home />}></Route>
+                    <Route path="/datalist" element={<DataList />}></Route>
+                    <Route path="/datasave" element={<DataSave />}></Route>
                 </Routes>
             </BrowserRouter>
         </div>
