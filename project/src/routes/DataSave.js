@@ -199,9 +199,9 @@ const onClick = async (navigate) => {
                 amount: "",
                 info: info,
                 Kotexture: Kotexture,
-                shippingCost: 0,
-                countPerOne: 0,
-                size: { x: 0, y: 0, z: 0 },
+                shippingCost: 1,
+                countPerOne: 1,
+                size: { x: 1, y: 1, z: 1 },
             };
             await setDoc(doc(dbService, "items", id), obj);
             uploadBytes(storageRef, file);
