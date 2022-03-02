@@ -188,7 +188,9 @@ const dataRows = (
                 productList[i].size.y *
                 productList[i].size.z);
         let predictCost =
-            ((A * (Number(productList[i].price) + productList[i].shippingCost) +
+            ((A *
+                (Number(productList[i].price) +
+                    Number(productList[i].shippingCost)) +
                 (5 * Number(shippingCosts.aboardCost) + 400) +
                 ((Number(productList[i].price) * A) / 10) *
                     (1 + 0.11 * getMaxRate(rate, productList[i].hscode))) *
@@ -479,7 +481,6 @@ const onSave = async (
     }
     getObj(setProductList);
     getCost(setShippingCosts);
-    console.log(1234);
     if (!reset) {
         alert("저장되었습니다.");
     }
@@ -510,7 +511,12 @@ const onDelete = async (productList, setProductList, setEditable) => {
         setEditable((prev) => !prev);
     }
 };
-const onClickExcel = async (productList, exchange, setProductList) => {
+const onClickExcel = async (
+    productList,
+    exchange,
+    setProductList,
+    setShippingCosts
+) => {
     let newObj = [];
     productList.forEach((e, i) => {
         let rows = document.getElementById(i);
@@ -531,17 +537,18 @@ const onClickExcel = async (productList, exchange, setProductList) => {
     });
     let isExcel = await exceljs(newObj);
     if (isExcel) {
-        onSave(productList, true, setProductList);
+        onSave(productList, true, setProductList, setShippingCosts);
     }
 };
-const loadRateData = (productList, setRate) => {
+const loadRateData = (productList, setRate, hscodes) => {
     productList.forEach(({ hscode }) => {
         let code =
             hscode.substring(0, 4) +
             hscode.substring(5, 7) +
             hscode.substring(8);
-        if (hscode.length === 12) {
+        if (hscode.length === 12 && !hscodes.includes(code)) {
             getRate(code, setRate);
+            hscodes.push(code);
         }
     });
 };
@@ -610,6 +617,7 @@ const DataList = () => {
         serviceCost: 0,
     });
     const [isOpen, setIsOpen] = useState(-1);
+    let hscodes = [];
     useEffect(() => {
         getObj(setProductList);
         getCost(setShippingCosts);
@@ -627,7 +635,7 @@ const DataList = () => {
     }, [productList, loadingImg]);
     useEffect(() => {
         if (!editable && isOpen === -1) {
-            loadRateData(productList, setRate);
+            loadRateData(productList, setRate, hscodes);
         }
     }, [productList, editable, isOpen]);
     return (
@@ -857,7 +865,8 @@ const DataList = () => {
                                         onSave(
                                             productList,
                                             false,
-                                            setProductList
+                                            setProductList,
+                                            setShippingCosts
                                         );
                                     }}
                                 >
@@ -869,7 +878,8 @@ const DataList = () => {
                                         onClickExcel(
                                             productList,
                                             exchange,
-                                            setProductList
+                                            setProductList,
+                                            setShippingCosts
                                         )
                                     }
                                 >
