@@ -471,11 +471,10 @@ const onDelete = async (productList, setProductList, setEditable) => {
 
     for (let i = 0; i < productList.length; i++) {
       let rows = document.getElementById(i);
-      let check = rows.childNodes[0].childNodes[0].checked;
+      let check = rows.childNodes[0].childNodes[0].value;
       let id = productList[i].id;
-      if (check) {
+      if (check === 'x') {
         const desertRef = ref(storage, id);
-        rows.childNodes[0].childNodes[0].checked = false;
         deleteObject(desertRef)
           .then(() => {
             console.log('delete');
