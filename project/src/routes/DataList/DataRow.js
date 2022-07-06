@@ -1,7 +1,7 @@
 import { ImgBox, Input, PriceInput, RateSpan, Row } from './style';
 
 function DataRow({
-  i,
+  index,
   editable,
   inputChange,
   productList,
@@ -13,59 +13,59 @@ function DataRow({
   setIsOpenNumber,
 }) {
   let A =
-    (5 * productList[i].countPerOne * 1000000) /
-    (productList[i].size.x * productList[i].size.y * productList[i].size.z);
+    (5 * productList[index].countPerOne * 1000000) /
+    (productList[index].size.x * productList[index].size.y * productList[index].size.z);
   let predictCost =
-    ((A * (Number(productList[i].price) + Number(productList[i].shippingCost)) +
+    ((A * (Number(productList[index].price) + Number(productList[index].shippingCost)) +
       (5 * Number(shippingCosts.aboardCost) + 400) +
-      ((Number(productList[i].price) * A) / 10) *
-        (1 + 0.11 * getMaxRate(rate, productList[i].hscode))) *
+      ((Number(productList[index].price) * A) / 10) *
+        (1 + 0.11 * getMaxRate(rate, productList[index].hscode))) *
       Number(exchange.CNY) +
       33000 +
       Number(shippingCosts.domesticCost) +
       Number(shippingCosts.serviceCost)) /
     A;
   return (
-    <Row key={i} id={i}>
+    <Row key={index} id={index}>
       <td>
         <Input
           type="text"
           readOnly={!editable}
-          onChange={e => inputChange(e, i)}
+          onChange={e => inputChange(e, index)}
           id="indexNumber"
           size={5}
           as="input"
-          value={productList[i]['indexNumber']}
+          value={productList[index]['indexNumber']}
         />
       </td>
       <td>
         <ImgBox>
-          <img src="" alt="" id={`img${i}`} />
+          <img src="" alt="" id={`img${index}`} />
         </ImgBox>
       </td>
       <td>
         <Input
           type="text"
           readOnly={!editable}
-          onChange={e => inputChange(e, i)}
+          onChange={e => inputChange(e, index)}
           id="ko"
-          value={productList[i]['ko']}
+          value={productList[index]['ko']}
         ></Input>
       </td>
       <td>
         <Input
           readOnly={!editable}
-          onChange={e => inputChange(e, i)}
+          onChange={e => inputChange(e, index)}
           id="en"
-          value={productList[i]['en']}
+          value={productList[index]['en']}
         ></Input>
       </td>
       <td>
         <Input
           readOnly={!editable}
-          onChange={e => inputChange(e, i)}
+          onChange={e => inputChange(e, index)}
           id="ch"
-          value={productList[i]['ch']}
+          value={productList[index]['ch']}
         ></Input>
       </td>
       <td>
@@ -73,25 +73,25 @@ function DataRow({
           size={15}
           readOnly={!editable}
           id="number"
-          onChange={e => inputChange(e, i)}
-          value={productList[i]['number']}
+          onChange={e => inputChange(e, index)}
+          value={productList[index]['number']}
         ></Input>
       </td>
       <td>
         <Input
           size={10}
           readOnly={!editable}
-          onChange={e => inputChange(e, i)}
+          onChange={e => inputChange(e, index)}
           id="texture"
-          value={productList[i]['texture']}
+          value={productList[index]['texture']}
           as="input"
         ></Input>
         <Input
           size={10}
           readOnly={!editable}
-          onChange={e => inputChange(e, i)}
+          onChange={e => inputChange(e, index)}
           id="Kotexture"
-          value={productList[i]['Kotexture']}
+          value={productList[index]['Kotexture']}
           as="input"
         ></Input>
       </td>
@@ -99,9 +99,9 @@ function DataRow({
         <Input
           size={10}
           readOnly={!editable}
-          onChange={e => inputChange(e, i)}
+          onChange={e => inputChange(e, index)}
           id="amount"
-          value={productList[i]['amount']}
+          value={productList[index]['amount']}
           as="input"
         ></Input>
       </td>
@@ -110,35 +110,35 @@ function DataRow({
         <PriceInput
           size={10}
           readOnly={!editable}
-          onChange={e => inputChange(e, i)}
+          onChange={e => inputChange(e, index)}
           id="price"
-          value={productList[i]['price']}
+          value={productList[index]['price']}
         ></PriceInput>
       </td>
       <td>
         <Input
           readOnly={!editable}
-          onChange={e => inputChange(e, i)}
+          onChange={e => inputChange(e, index)}
           id="hscode"
-          value={productList[i]['hscode']}
+          value={productList[index]['hscode']}
           as="input"
           maxLength="12"
         ></Input>
-        <RateSpan>{showRate(rate, productList[i]['hscode'])}</RateSpan>
+        <RateSpan>{showRate(rate, productList[index]['hscode'])}</RateSpan>
       </td>
       <td>
         <Input
           size={15}
           readOnly={!editable}
           id="info"
-          onChange={e => inputChange(e, i)}
-          value={productList[i]['info']}
+          onChange={e => inputChange(e, index)}
+          value={productList[index]['info']}
         ></Input>
       </td>
       <td>
         <div>
           <p>{isNaN(predictCost) ? 'X' : `${Math.round(predictCost)} 원`}</p>
-          <button onClick={() => setIsOpenNumber(i)}>수정</button>
+          <button onClick={() => setIsOpenNumber(index)}>수정</button>
         </div>
       </td>
     </Row>

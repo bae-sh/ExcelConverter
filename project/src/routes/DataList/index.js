@@ -35,6 +35,8 @@ import useShippingCost from '../../hooks/useShippingCost';
 import ModalBox from './ModalBox';
 import DataRow from './DataRow';
 import useProductList from '../../hooks/useProductList';
+import { HEADER_TITLE } from '../../constant';
+import DataListHeader from './DataListHeader';
 
 const getObj = async setProductList => {
   const q = query(collection(dbService, 'items'), orderBy('indexNumber'), orderBy('date', 'desc'));
@@ -231,13 +233,14 @@ const DataList = () => {
   const [isOpenNumber, setIsOpenNumber] = useState(-1);
   const [running, setRunning] = useState(false);
   const { shippingCosts, setShippingCosts, costInputChange } = useShippingCost();
-  const { productList, setProductList, inputChange } = useProductList();
+  const { productList, setProductList, changedProduct, inputChange } = useProductList();
   let hscodes = [];
   useEffect(() => {
     getObj(setProductList);
     getCost(setShippingCosts);
     getExchangeRate(setExchange);
   }, []);
+  console.log(productList);
   useEffect(() => {
     if (!loadingImg) {
       for (let i = 0; i < productList.length; i++) {
@@ -254,140 +257,60 @@ const DataList = () => {
     }
   }, [productList, editable, isOpenNumber]);
   console.log(editable);
+
   const dataRows = () => {
-    let rows = [];
-    for (let i = 0; i < productList.length; i++) {
-      rows.push(
-        <DataRow
-          i={i}
-          editable={editable}
-          inputChange={inputChange}
-          productList={productList}
-          setProductList={setProductList}
-          shippingCosts={shippingCosts}
-          getMaxRate={getMaxRate}
-          rate={rate}
-          exchange={exchange}
-          showRate={showRate}
-          setIsOpenNumber={setIsOpenNumber}
-        />,
-      );
-    }
-    return rows;
+    return productList.map((_, index) => {
+      const props = {
+        index,
+        editable,
+        inputChange,
+        productList,
+        setProductList,
+        shippingCosts,
+        getMaxRate,
+        rate,
+        exchange,
+        showRate,
+        setIsOpenNumber,
+        key: index,
+      };
+      return <DataRow {...props} />;
+    });
   };
+
   return (
     <>
       <Main running={running}>
-        <ModalBox
-          isOpenNumber={isOpenNumber}
-          setIsOpenNumber={setIsOpenNumber}
+        <DataListHeader
+          exchange={exchange}
+          editable={editable}
+          shippingCosts={shippingCosts}
+          costInputChange={costInputChange}
           productList={productList}
-          inputChange={inputChange}
           setProductList={setProductList}
+          setEditable={setEditable}
+          setShippingCosts={setShippingCosts}
+          setRunning={setRunning}
+          changedProduct={changedProduct}
         />
-        <Header>
-          <Title>
-            <h1>데이터 목록</h1>
-            <hr></hr>
-            <SaveDiv>
-              <div>
-                <button>
-                  <Link to="/">뒤로가기</Link>
-                </button>
-              </div>
-
-              <ExchangeBox>
-                <div>현재 환율 정보</div>
-                <div>미국(USD) : {exchange.USD}</div>
-                <div>중국(CNY) : {exchange.CNY}</div>
-              </ExchangeBox>
-              <ShippingWarpper
-                editable={editable}
-                shippingCosts={shippingCosts}
-                costInputChange={costInputChange}
-              />
-              <div>
-                {editable && (
-                  <button
-                    onClick={() => {
-                      onDelete(productList, setProductList, setEditable);
-                    }}
-                  >
-                    삭제
-                  </button>
-                )}
-                <button
-                  id="saveBtn"
-                  onClick={() => {
-                    setEditable(prev => !prev);
-                    if (editable) {
-                      getObj(setProductList);
-                      getCost(setShippingCosts);
-                    }
-                  }}
-                >
-                  {editable ? '취소' : '수정하기'}
-                </button>
-                {editable ? (
-                  <button
-                    onClick={() => {
-                      saveShippingCosts(shippingCosts);
-                      setEditable(prev => !prev);
-                      onSave(productList, false, setProductList, setShippingCosts, setRunning);
-                    }}
-                  >
-                    저장하기
-                  </button>
-                ) : (
-                  <button
-                    onClick={() =>
-                      onClickExcel(
-                        productList,
-                        exchange,
-                        setProductList,
-                        setShippingCosts,
-                        setRunning,
-                      )
-                    }
-                  >
-                    Excel
-                  </button>
-                )}
-              </div>
-            </SaveDiv>
-          </Title>
-        </Header>
-
         <Table>
           <thead>
             <Row>
-              <th>넘버</th>
-              <th>사진</th>
-              <th>제품이름</th>
-              <th>영어이름</th>
-              <th>중국어이름</th>
-              <th>운송장번호</th>
-              <th>재질</th>
-              <th>수량</th>
-              <th>개당단가</th>
-              <th>HS코드</th>
-              <th>특이사항</th>
-              <th>예상원가</th>
+              {HEADER_TITLE.map(title => (
+                <th>{title}</th>
+              ))}
             </Row>
           </thead>
-          <tbody>
-            {dataRows(
-              editable,
-              productList,
-              setProductList,
-              rate,
-              setIsOpenNumber,
-              shippingCosts,
-              exchange,
-            )}
-          </tbody>
+          <tbody>{dataRows()}</tbody>
         </Table>
       </Main>
+      <ModalBox
+        isOpenNumber={isOpenNumber}
+        setIsOpenNumber={setIsOpenNumber}
+        productList={productList}
+        inputChange={inputChange}
+        setProductList={setProductList}
+      />
       <Spinner running={running}>잠시만 기다려주세요.</Spinner>
     </>
   );

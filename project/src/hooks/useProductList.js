@@ -3,6 +3,7 @@ import { exchangeHscodeFormat } from '../utils';
 
 function useProductList() {
   const [productList, setProductList] = useState([]);
+  const [changedProduct, setChangedProduct] = useState([]);
 
   const inputChange = (e, i) => {
     const newProductList = [...productList];
@@ -10,7 +11,6 @@ function useProductList() {
     const isSize = target === 'x' || target === 'y' || target === 'z';
     let value = e.target.value;
 
-    console.log(newProductList[i], i);
     if (target === 'hscode') {
       value = exchangeHscodeFormat({ hscode: value });
     }
@@ -20,6 +20,7 @@ function useProductList() {
       newProductList[i][target] = value;
     }
     setProductList(newProductList);
+    setChangedProduct(prev => prev.push(i));
   };
 
   return { productList, setProductList, inputChange };
