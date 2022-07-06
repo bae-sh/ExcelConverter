@@ -1,3 +1,4 @@
+import { getMaxRate, showRate } from '../../utils';
 import { ImgBox, Input, PriceInput, RateSpan, Row } from './style';
 
 function DataRow({
@@ -6,10 +7,8 @@ function DataRow({
   inputChange,
   productList,
   shippingCosts,
-  getMaxRate,
   rate,
   exchange,
-  showRate,
   setIsOpenNumber,
 }) {
   let A =

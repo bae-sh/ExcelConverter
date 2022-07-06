@@ -1,10 +1,13 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { exchangeHscodeFormat } from '../utils';
 
 function useProductList() {
   const [productList, setProductList] = useState([]);
   const [changedProduct, setChangedProduct] = useState([]);
 
+  useEffect(() => {
+    console.log(changedProduct);
+  }, [changedProduct]);
   const inputChange = (e, i) => {
     const newProductList = [...productList];
     const target = e.target.id;
@@ -20,10 +23,10 @@ function useProductList() {
       newProductList[i][target] = value;
     }
     setProductList(newProductList);
-    setChangedProduct(prev => prev.push(i));
+    setChangedProduct(prev => [...prev, i]);
   };
 
-  return { productList, setProductList, inputChange };
+  return { changedProduct, productList, setProductList, inputChange };
 }
 
 export default useProductList;

@@ -22,7 +22,7 @@ const onDelete = ({ productList, setProductList, setEditable }) => {
           .catch(error => {
             // Uh-oh, an error occurred!
           });
-        await deleteDoc(doc(dbService, 'items', id));
+        // await deleteDoc(doc(dbService, 'items', id));
       }
     });
 
@@ -32,7 +32,7 @@ const onDelete = ({ productList, setProductList, setEditable }) => {
   }
 };
 
-export const onClickExcel = async (
+const onClickExcel = async (
   productList,
   exchange,
   setProductList,
@@ -56,9 +56,10 @@ export const onClickExcel = async (
   setRunning(true);
   const isExcel = await exceljs(newObj);
   if (isExcel) {
-    onSave(productList, true, setProductList, setShippingCosts, setRunning);
+    onSave(productList, true, setProductList, setShippingCosts, setRunning, newObj);
   }
 };
+
 const onSave = async (
   productList,
   reset = false,
@@ -67,6 +68,7 @@ const onSave = async (
   setRunning,
   changedProduct,
 ) => {
+  console.log(changedProduct);
   changedProduct.forEach(async index => {
     const obj = { ...productList[index] };
     if (reset && obj['number']) {
@@ -75,7 +77,7 @@ const onSave = async (
     }
 
     setRunning(true);
-    await setDoc(doc(dbService, 'items', obj['id']), obj);
+    // await setDoc(doc(dbService, 'items', obj['id']), obj);
     setRunning(false);
   });
 
