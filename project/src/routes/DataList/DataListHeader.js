@@ -3,15 +3,15 @@ import { deleteObject, getStorage, ref } from 'firebase/storage';
 import { Link } from 'react-router-dom';
 import exceljs from '../../excel';
 import { dbService } from '../../firebase';
-import { getCost, getObj, saveShippingCosts } from './firebaseFns';
+import { saveShippingCosts } from './firebaseFns';
 import ShippingWarpper from './ShippingWrapper';
 import { ExchangeBox, Header, SaveDiv, Title } from './style';
 
-const onDelete = ({ productList, setProductList, setEditable }) => {
+const onDelete = async ({ productList, setEditable, setRunning }) => {
   if (window.confirm('삭제하시겠습니까?')) {
     const storage = getStorage();
-
-    productList.forEach(async product => {
+    setRunning(true);
+    for (const product of productList) {
       const { indexNumber, id } = product;
       if (indexNumber === 'x') {
         const desertRef = ref(storage, id);
@@ -22,24 +22,19 @@ const onDelete = ({ productList, setProductList, setEditable }) => {
           .catch(error => {
             // Uh-oh, an error occurred!
           });
-        // await deleteDoc(doc(dbService, 'items', id));
+        await deleteDoc(doc(dbService, 'items', id));
       }
-    });
-
-    getObj(setProductList);
+    }
+    setRunning(false);
     alert('삭제되었습니다.');
     setEditable(prev => !prev);
   }
 };
 
-const onClickExcel = async (
-  productList,
-  exchange,
-  setProductList,
-  setShippingCosts,
-  setRunning,
-) => {
+const onClickExcel = async ({ productList, exchange, setRunning }) => {
   const newObj = [];
+  const changedProduct = [];
+
   productList.forEach((product, i) => {
     const { number, price } = product;
     const obj = { ...product };
@@ -51,40 +46,39 @@ const onClickExcel = async (
       ).toFixed(2)}`;
       obj['idx'] = i;
       newObj.push(obj);
+      changedProduct.push(i);
     }
   });
-  setRunning(true);
+
   const isExcel = await exceljs(newObj);
   if (isExcel) {
-    onSave(productList, true, setProductList, setShippingCosts, setRunning, newObj);
+    onSave({ productList, reset: true, setRunning, changedProduct });
+  } else {
+    setRunning(false);
   }
 };
 
-const onSave = async (
-  productList,
-  reset = false,
-  setProductList,
-  setShippingCosts,
-  setRunning,
-  changedProduct,
-) => {
-  console.log(changedProduct);
-  changedProduct.forEach(async index => {
+const onSave = async ({ productList, reset = false, setRunning, changedProduct }) => {
+  setRunning(true);
+
+  for (const index of changedProduct) {
     const obj = { ...productList[index] };
-    if (reset && obj['number']) {
-      obj['number'] = '';
-      obj['amount'] = '';
+
+    if (reset) {
+      if (obj['number']) {
+        obj['number'] = '';
+        obj['amount'] = '';
+      }
     }
+    await setDoc(doc(dbService, 'items', obj['id']), obj);
+  }
 
-    setRunning(true);
-    // await setDoc(doc(dbService, 'items', obj['id']), obj);
-    setRunning(false);
-  });
+  setRunning(false);
 
-  getObj(setProductList);
-  getCost(setShippingCosts);
   if (!reset) {
     alert('저장되었습니다.');
+  } else {
+    alert('완료하였습니다.');
   }
 };
 function DataListHeader({
@@ -95,7 +89,6 @@ function DataListHeader({
   productList,
   setProductList,
   setEditable,
-  setShippingCosts,
   setRunning,
   changedProduct,
 }) {
@@ -123,7 +116,11 @@ function DataListHeader({
           />
           <div>
             {editable && (
-              <button onClick={() => onDelete({ productList, setProductList, setEditable })}>
+              <button
+                onClick={() => {
+                  onDelete({ productList, setProductList, setEditable, setRunning });
+                }}
+              >
                 삭제
               </button>
             )}
@@ -131,10 +128,6 @@ function DataListHeader({
               id="saveBtn"
               onClick={() => {
                 setEditable(prev => !prev);
-                if (editable) {
-                  getObj(setProductList);
-                  getCost(setShippingCosts);
-                }
               }}
             >
               {editable ? '취소' : '수정하기'}
@@ -144,23 +137,16 @@ function DataListHeader({
                 onClick={() => {
                   saveShippingCosts(shippingCosts);
                   setEditable(prev => !prev);
-                  onSave(
-                    productList,
-                    false,
-                    setProductList,
-                    setShippingCosts,
-                    setRunning,
-                    changedProduct,
-                  );
+                  onSave({ productList, reset: false, setRunning, changedProduct });
                 }}
               >
                 저장하기
               </button>
             ) : (
               <button
-                onClick={() =>
-                  onClickExcel(productList, exchange, setProductList, setShippingCosts, setRunning)
-                }
+                onClick={() => {
+                  onClickExcel({ productList, exchange, setRunning });
+                }}
               >
                 Excel
               </button>

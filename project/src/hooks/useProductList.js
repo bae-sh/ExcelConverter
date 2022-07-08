@@ -5,9 +5,6 @@ function useProductList() {
   const [productList, setProductList] = useState([]);
   const [changedProduct, setChangedProduct] = useState([]);
 
-  useEffect(() => {
-    console.log(changedProduct);
-  }, [changedProduct]);
   const inputChange = (e, i) => {
     const newProductList = [...productList];
     const target = e.target.id;
@@ -23,10 +20,10 @@ function useProductList() {
       newProductList[i][target] = value;
     }
     setProductList(newProductList);
-    setChangedProduct(prev => [...prev, i]);
+    setChangedProduct(prev => new Set([...prev, i]));
   };
 
-  return { changedProduct, productList, setProductList, inputChange };
+  return { changedProduct, productList, setProductList, inputChange, setChangedProduct };
 }
 
 export default useProductList;

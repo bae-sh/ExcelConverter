@@ -10,6 +10,7 @@ import useProductList from '../../hooks/useProductList';
 import { HEADER_TITLE } from '../../constant';
 import DataListHeader from './DataListHeader';
 import { getCost, getObj } from './firebaseFns';
+const hscodes = [];
 
 const downloadImg = (productList, i) => {
   const storage = getStorage();
@@ -32,16 +33,18 @@ const downloadImg = (productList, i) => {
 };
 
 const loadRateData = async (productList, setRate) => {
-  const hscodes = [];
+  const promises = [];
   productList.forEach(async ({ hscode }) => {
     const code = hscode.substring(0, 4) + hscode.substring(5, 7) + hscode.substring(8);
     if (hscode.length === 12 && !hscodes.includes(code)) {
       hscodes.push(code);
+      promises.push(getRate(code));
     }
   });
-  hscodes.forEach(code => {
-    getRate(code, setRate);
-  });
+
+  const result = await Promise.all(promises);
+  const newRates = result.filter(rate => rate);
+  setRate(newRates);
 };
 
 const DataList = () => {
@@ -52,17 +55,15 @@ const DataList = () => {
   const [isOpenNumber, setIsOpenNumber] = useState(-1);
   const [running, setRunning] = useState(false);
   const { shippingCosts, setShippingCosts, costInputChange } = useShippingCost();
-  const { productList, setProductList, changedProduct, inputChange } = useProductList();
+  const { productList, setProductList, changedProduct, inputChange, setChangedProduct } =
+    useProductList();
 
   useEffect(() => {
+    setChangedProduct([]);
     getObj(setProductList);
     getCost(setShippingCosts);
     getExchangeRate(setExchange);
-  }, [setShippingCosts, setExchange, setProductList]);
-
-  useEffect(() => {
-    console.log(productList);
-  }, [productList]);
+  }, [setShippingCosts, setExchange, setProductList, setChangedProduct, running]);
 
   useEffect(() => {
     if (!loadingImg) {
@@ -78,7 +79,6 @@ const DataList = () => {
   useEffect(() => {
     if (!editable && isOpenNumber === -1) {
       loadRateData(productList, setRate);
-      console.log(1);
     }
   }, [productList, editable, isOpenNumber]);
 
