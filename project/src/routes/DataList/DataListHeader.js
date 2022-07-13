@@ -60,10 +60,8 @@ const onClickExcel = async ({ productList, exchange, setRunning }) => {
 
 const onSave = async ({ productList, reset = false, setRunning, changedProduct }) => {
   setRunning(true);
-
   for (const index of changedProduct) {
     const obj = { ...productList[index] };
-
     if (reset) {
       if (obj['number']) {
         obj['number'] = '';

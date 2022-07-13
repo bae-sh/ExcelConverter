@@ -28,13 +28,13 @@ function DataRow({
     <Row key={index} id={index}>
       <td>
         <Input
-          type="text"
+          type="number"
           readOnly={!editable}
           onChange={e => inputChange(e, index)}
           id="indexNumber"
-          size={5}
           as="input"
           value={productList[index]['indexNumber']}
+          style={{ width: '40px' }}
         />
       </td>
       <td>

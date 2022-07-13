@@ -13,7 +13,10 @@ function useProductList() {
 
     if (target === 'hscode') {
       value = exchangeHscodeFormat({ hscode: value });
+    } else if (target === 'indexNumber') {
+      value = Number(value);
     }
+
     if (isSize) {
       newProductList[i]['size'][target] = value;
     } else {
