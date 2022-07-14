@@ -65,6 +65,12 @@ function DataSaveRow({ index, hscodes, setHscodes }) {
       <td>
         <Input size={10}></Input>
       </td>
+      <td>
+        <select>
+          <option>전체</option>
+          <option>더이브닝</option>
+        </select>
+      </td>
     </Row>
   );
 }

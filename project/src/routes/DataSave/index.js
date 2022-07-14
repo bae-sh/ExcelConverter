@@ -26,10 +26,10 @@ const onClick = async navigate => {
     let price = rows.childNodes[8].childNodes[1].value;
     let hscode = rows.childNodes[9].childNodes[0].value;
     let info = rows.childNodes[10].childNodes[0].value;
+    let sort = rows.childNodes[11].childNodes[0].value;
     let id = uuidv4();
     let date = new Date();
     const storageRef = ref(storage, id);
-
     if (file) {
       let obj = {
         ko: ko,
@@ -48,6 +48,7 @@ const onClick = async navigate => {
         countPerOne: 1,
         size: { x: 1, y: 1, z: 1 },
         indexNumber: 0,
+        sort: sort,
       };
       await setDoc(doc(dbService, 'items', id), obj);
       uploadBytes(storageRef, file);

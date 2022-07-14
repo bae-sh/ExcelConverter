@@ -12,6 +12,7 @@ function DataSaveHeader() {
     '개당단가',
     'HS코드',
     '특이사항',
+    '종류',
   ];
   return (
     <Row>
