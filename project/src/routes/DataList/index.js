@@ -11,19 +11,18 @@ import { HEADER_TITLE } from '../../constant';
 import DataListHeader from './DataListHeader';
 import { getCost, getObj } from './firebaseFns';
 const hscodes = [];
-
-const downloadImg = (productList, i) => {
+const downloadImg = async (productList, i) => {
   const storage = getStorage();
   const starsRef = ref(storage, productList[i].id);
-  getDownloadURL(starsRef)
+  return getDownloadURL(starsRef)
     .then(async url => {
       const response = await fetch(url);
       const data = await response.blob();
       let f = new File([data], 'null', { type: data.type });
       let preview = new FileReader();
       preview.onload = e => {
-        document.getElementById(`img${i}`).src = e.target.result;
-        i += 1;
+        if (document.getElementById(`img${i}`))
+          document.getElementById(`img${i}`).src = e.target.result;
       };
       preview.readAsDataURL(f);
     })
@@ -51,30 +50,30 @@ const DataList = () => {
   const [editable, setEditable] = useState(false);
   const [exchange, setExchange] = useState({ CNY: 0, USD: 0 });
   const [rate, setRate] = useState([]);
-  const [loadingImg, setLoadingImg] = useState(false);
   const [isOpenNumber, setIsOpenNumber] = useState(-1);
   const [running, setRunning] = useState(false);
+  const [currentOption, setCurrentOption] = useState('전체');
+  const [eveningNumber, setEveningNumber] = useState([]);
   const { shippingCosts, setShippingCosts, costInputChange } = useShippingCost();
   const { productList, setProductList, changedProduct, inputChange, setChangedProduct } =
     useProductList();
 
   useEffect(() => {
     setChangedProduct([]);
-    getObj(setProductList);
+    getObj({ setProductList, setEveningNumber });
     getCost(setShippingCosts);
     getExchangeRate(setExchange);
-  }, [setShippingCosts, setExchange, setProductList, setChangedProduct, running]);
+    console.log('product 불러오기');
+  }, [setShippingCosts, setExchange, setProductList, setChangedProduct, running, editable]);
 
   useEffect(() => {
-    if (!loadingImg) {
+    if (!editable) {
       for (let i = 0; i < productList.length; i++) {
         downloadImg(productList, i);
       }
-      if (productList.length !== 0) {
-        setLoadingImg(true);
-      }
+      console.log('이미지 불러오기');
     }
-  }, [productList, loadingImg]);
+  }, [productList, editable, currentOption]);
 
   useEffect(() => {
     if (!editable && isOpenNumber === -1) {
@@ -93,7 +92,9 @@ const DataList = () => {
         rate,
         exchange,
         setIsOpenNumber,
+        currentOption,
         key: index,
+        eveningNumber: eveningNumber,
       };
       return <DataRow {...props} />;
     });
@@ -113,6 +114,7 @@ const DataList = () => {
           setShippingCosts={setShippingCosts}
           setRunning={setRunning}
           changedProduct={changedProduct}
+          setCurrentOption={setCurrentOption}
         />
         <Table>
           <thead>

@@ -1,14 +1,21 @@
 import { collection, doc, getDoc, getDocs, orderBy, query, setDoc } from 'firebase/firestore';
 import { dbService } from '../../firebase';
 
-export const getObj = async setProductList => {
+export const getObj = async ({ setProductList, setEveningNumber }) => {
   const q = query(collection(dbService, 'items'), orderBy('indexNumber'), orderBy('date', 'desc'));
   const querySnapshot = await getDocs(q);
   const obj = [];
+  const eveningObj = [];
   querySnapshot.forEach(doc => {
-    obj.push(doc.data());
+    const data = doc.data();
+    obj.push(data);
+    if (data.sort === '더이브닝') {
+      eveningObj.push(data.id);
+      console.log(data.id);
+    }
   });
   setProductList(obj);
+  setEveningNumber(eveningObj);
 };
 
 export const getCost = async setShippingCosts => {

@@ -12,8 +12,8 @@ const onDelete = async ({ productList, setEditable, setRunning }) => {
     const storage = getStorage();
     setRunning(true);
     for (const product of productList) {
-      const { indexNumber, id } = product;
-      if (indexNumber === 'x') {
+      const { sort, id } = product;
+      if (sort === '삭제') {
         const desertRef = ref(storage, id);
         deleteObject(desertRef)
           .then(() => {
@@ -89,6 +89,7 @@ function DataListHeader({
   setEditable,
   setRunning,
   changedProduct,
+  setCurrentOption,
 }) {
   return (
     <Header>
@@ -100,6 +101,10 @@ function DataListHeader({
             <button>
               <Link to="/">뒤로가기</Link>
             </button>
+            <select onChange={e => setCurrentOption(e.target.value)}>
+              <option>전체</option>
+              <option>더이브닝</option>
+            </select>
           </div>
 
           <ExchangeBox>

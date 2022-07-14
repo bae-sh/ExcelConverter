@@ -10,7 +10,6 @@ function useProductList() {
     const target = e.target.id;
     const isSize = target === 'x' || target === 'y' || target === 'z';
     let value = e.target.value;
-
     if (target === 'hscode') {
       value = exchangeHscodeFormat({ hscode: value });
     } else if (target === 'indexNumber') {

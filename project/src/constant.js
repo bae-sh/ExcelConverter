@@ -17,4 +17,5 @@ export const HEADER_TITLE = [
   'HS코드',
   '특이사항',
   '예상원가',
+  '종류',
 ];
