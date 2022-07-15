@@ -8,7 +8,6 @@ const Login = ({ setIsLoggedIn }) => {
   const [errorName, setErrorName] = useState('');
   const { register, handleSubmit } = useForm();
   const onChange = e => {
-    console.log(account);
     setAccount(prev => {
       return { ...prev, [e.target.name]: e.target.value };
     });
