@@ -10,6 +10,9 @@ const Home = () => {
       <NavBox>
         <Link to="/datalist">데이터 목록</Link>
       </NavBox>
+      <NavBox>
+        <Link to="/progress">수입화물 진행정보</Link>
+      </NavBox>
     </Main>
   );
 };

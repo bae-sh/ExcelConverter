@@ -7,6 +7,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { useEffect, useState } from 'react';
 import { authService } from '../firebase';
 import Login from '../routes/Login';
+import Progress from '../routes/Progress';
 
 function App() {
   const queryClient = new QueryClient();
@@ -32,6 +33,7 @@ function App() {
                 <Route path="/" element={<Home />}></Route>
                 <Route path="/datalist" element={<DataList />}></Route>
                 <Route path="/datasave" element={<DataSave />}></Route>
+                <Route path="/progress" element={<Progress />}></Route>
               </>
             ) : (
               <Route path="/" element={<Login setIsLoggedIn={setIsLoggedIn} />}></Route>
