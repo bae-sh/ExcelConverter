@@ -1,20 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
 import { getNumber, saveNumber } from './firebaseFn';
-import { Main, Table, Row } from './style';
+import { Main, Table, Row, Header, NumberInput, Title } from './style';
 
-const Header = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 20px;
-`;
-const NumberInput = styled.input`
-  font-size: 43px;
-  height: 52px;
-  width: 400px;
-`;
 const Progress = () => {
   const [change, setChange] = useState(false);
   const [number, setNumber] = useState('');
@@ -32,10 +20,13 @@ const Progress = () => {
   }, []);
   return (
     <Main>
+      <Title>
+        <h1>수입화물 진행정보</h1>
+        <hr></hr>
+      </Title>
       <Header>
         <h1>M B/L - H B/L : {change || number}</h1>
         {change && <NumberInput id="input" />}
-
         <button onClick={onClick}>{change ? '변경' : '수정'}</button>
       </Header>
       <Table>

@@ -4,7 +4,7 @@ const Main = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 120px;
+  padding: 20px;
   height: 100vh;
 `;
 
@@ -32,15 +32,23 @@ const Row = styled.tr`
     }
   }
 `;
+
 const Header = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
   font-size: 20px;
 `;
+
 const NumberInput = styled.input`
   font-size: 43px;
   height: 52px;
   width: 400px;
 `;
-export { Main, Table, Row, Header, NumberInput };
+
+const Title = styled.div`
+  width: 70%;
+  margin-top: 100px;
+`;
+
+export { Main, Table, Row, Header, NumberInput, Title };
