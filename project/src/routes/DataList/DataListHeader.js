@@ -1,35 +1,10 @@
 import { deleteDoc, doc, setDoc } from 'firebase/firestore';
-import { deleteObject, getStorage, ref } from 'firebase/storage';
 import { Link } from 'react-router-dom';
 import exceljs from '../../excel';
 import { dbService } from '../../firebase';
 import { saveShippingCosts } from './firebaseFns';
 import ShippingWarpper from './ShippingWrapper';
 import { ExchangeBox, Header, SaveDiv, Title } from './style';
-
-const onDelete = async ({ productList, setEditable, setRunning }) => {
-  if (window.confirm('삭제하시겠습니까?')) {
-    const storage = getStorage();
-    setRunning(true);
-    for (const product of productList) {
-      const { sort, id } = product;
-      if (sort === '삭제') {
-        const desertRef = ref(storage, id);
-        deleteObject(desertRef)
-          .then(() => {
-            console.log('delete');
-          })
-          .catch(error => {
-            // Uh-oh, an error occurred!
-          });
-        await deleteDoc(doc(dbService, 'items', id));
-      }
-    }
-    setRunning(false);
-    alert('삭제되었습니다.');
-    setEditable(prev => !prev);
-  }
-};
 
 const onClickExcel = async ({ productList, exchange, setRunning }) => {
   const newObj = [];
@@ -62,15 +37,18 @@ const onSave = async ({ productList, reset = false, setRunning, changedProduct }
   setRunning(true);
   for (const index of changedProduct) {
     const obj = { ...productList[index] };
-    if (reset) {
-      if (obj['number']) {
-        obj['number'] = '';
-        obj['amount'] = '';
+    if (obj['sort'] === '삭제') {
+      await deleteDoc(doc(dbService, 'items', obj['id']));
+    } else {
+      if (reset) {
+        if (obj['number']) {
+          obj['number'] = '';
+          obj['amount'] = '';
+        }
       }
+      await setDoc(doc(dbService, 'items', obj['id']), obj);
     }
-    await setDoc(doc(dbService, 'items', obj['id']), obj);
   }
-
   setRunning(false);
 
   if (!reset) {
@@ -85,7 +63,6 @@ function DataListHeader({
   shippingCosts,
   costInputChange,
   productList,
-  setProductList,
   setEditable,
   setRunning,
   changedProduct,
@@ -119,15 +96,6 @@ function DataListHeader({
             costInputChange={costInputChange}
           />
           <div>
-            {editable && (
-              <button
-                onClick={() => {
-                  onDelete({ productList, setProductList, setEditable, setRunning });
-                }}
-              >
-                삭제
-              </button>
-            )}
             <button
               id="saveBtn"
               onClick={() => {

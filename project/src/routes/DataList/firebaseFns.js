@@ -11,7 +11,6 @@ export const getObj = async ({ setProductList, setEveningNumber }) => {
     obj.push(data);
     if (data.sort === '더이브닝') {
       eveningObj.push(data.id);
-      console.log(data.id);
     }
   });
   setProductList(obj);
