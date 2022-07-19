@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { getNumber, saveNumber } from './firebaseFn';
 import { Main, Table, Row, Header, NumberInput, Title } from './style';
 

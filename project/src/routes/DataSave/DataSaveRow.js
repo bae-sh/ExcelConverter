@@ -67,7 +67,7 @@ function DataSaveRow({ index, hscodes, setHscodes }) {
       </td>
       <td>
         <select>
-          <option>전체</option>
+          <option>루시아이</option>
           <option>더이브닝</option>
         </select>
       </td>
