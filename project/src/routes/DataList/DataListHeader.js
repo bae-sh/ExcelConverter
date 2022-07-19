@@ -103,6 +103,7 @@ function DataListHeader({
             </button>
             <select onChange={e => setCurrentOption(e.target.value)}>
               <option>전체</option>
+              <option>루시아이</option>
               <option>더이브닝</option>
             </select>
           </div>

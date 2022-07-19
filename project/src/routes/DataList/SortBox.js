@@ -3,7 +3,7 @@ function SortBox({ editable, inputChange, index, productList }) {
 
   return editable ? (
     <select onChange={e => inputChange(e, index)} id="sort" defaultValue={sortValue}>
-      <option value="전체">전체</option>
+      <option value="루시아이">루시아이</option>
       <option value="더이브닝">더이브닝</option>
       <option value="삭제">삭제</option>
     </select>

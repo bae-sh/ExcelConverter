@@ -27,7 +27,11 @@ function DataRow({
       Number(shippingCosts.domesticCost) +
       Number(shippingCosts.serviceCost)) /
     A;
-  const isView = currentOption === '전체' || eveningNumber.includes(productList[index].id);
+  const isEvening = eveningNumber.includes(productList[index].id);
+  const isView =
+    currentOption === '전체' ||
+    (currentOption === '루시아이' && !isEvening) ||
+    (currentOption === '더이브닝' && isEvening);
   return (
     isView && (
       <Row key={index} id={index}>
