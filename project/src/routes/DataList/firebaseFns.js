@@ -1,3 +1,4 @@
+import { async } from '@firebase/util';
 import { collection, doc, getDoc, getDocs, orderBy, query, setDoc } from 'firebase/firestore';
 import { dbService } from '../../firebase';
 
@@ -6,6 +7,8 @@ export const getObj = async ({ setProductList, setEveningNumber }) => {
   const querySnapshot = await getDocs(q);
   const obj = [];
   const eveningObj = [];
+
+  const orderObj = () => {};
   querySnapshot.forEach(doc => {
     const data = doc.data();
     obj.push(data);
@@ -25,4 +28,12 @@ export const getCost = async setShippingCosts => {
 
 export const saveShippingCosts = async shippingCosts => {
   await setDoc(doc(dbService, 'cost', 'shippingCosts'), shippingCosts);
+};
+
+export const saveOrder = async productList => {
+  const orderObj = {};
+  productList.forEach((item, idx) => {
+    orderObj[item.id] = idx;
+  });
+  console.log(orderObj);
 };

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { getStorage, ref, getDownloadURL } from 'firebase/storage';
 import { getExchangeRate } from '../../getExchangeRate';
 import { getRate } from '../../getRate';
@@ -10,25 +10,37 @@ import useProductList from '../../hooks/useProductList';
 import { HEADER_TITLE } from '../../constant';
 import DataListHeader from './DataListHeader';
 import { getCost, getObj } from './firebaseFns';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+
 const hscodes = [];
+const itemImg = {};
+
 const downloadImg = async (productList, i) => {
-  const storage = getStorage();
-  const starsRef = ref(storage, productList[i].id);
-  return getDownloadURL(starsRef)
-    .then(async url => {
-      const response = await fetch(url);
-      const data = await response.blob();
-      let f = new File([data], 'null', { type: data.type });
-      let preview = new FileReader();
-      preview.onload = e => {
-        if (document.getElementById(`img${i}`))
-          document.getElementById(`img${i}`).src = e.target.result;
-      };
-      preview.readAsDataURL(f);
-    })
-    .catch(error => {
-      // console.log(error);
-    });
+  if (!itemImg[productList[i].id]) {
+    const storage = getStorage();
+    const starsRef = ref(storage, productList[i].id);
+    return getDownloadURL(starsRef)
+      .then(async url => {
+        const response = await fetch(url);
+        const data = await response.blob();
+        let f = new File([data], 'null', { type: data.type });
+        let preview = new FileReader();
+        preview.onload = e => {
+          if (document.getElementById(`img${i}`)) {
+            document.getElementById(`img${i}`).src = e.target.result;
+            itemImg[productList[i].id] = e.target.result;
+          }
+        };
+        preview.readAsDataURL(f);
+      })
+      .catch(error => {
+        // console.log(error);
+      });
+  } else {
+    if (document.getElementById(`img${i}`)) {
+      document.getElementById(`img${i}`).src = itemImg[productList[i].id];
+    }
+  }
 };
 
 const loadRateData = async (productList, setRate) => {
@@ -67,11 +79,8 @@ const DataList = () => {
   }, [setShippingCosts, setExchange, setProductList, setChangedProduct, running, editable]);
 
   useEffect(() => {
-    if (!editable) {
-      for (let i = 0; i < productList.length; i++) {
-        downloadImg(productList, i);
-      }
-      console.log('이미지 불러오기');
+    for (let i = 0; i < productList.length; i++) {
+      downloadImg(productList, i);
     }
   }, [productList, editable, currentOption]);
 
@@ -100,6 +109,19 @@ const DataList = () => {
     });
   };
 
+  const onDragEnd = useCallback(
+    result => {
+      if (!result.destination) return;
+      console.log(result);
+      const items = [...productList];
+      const [reorderedItem] = items.splice(result.source.index, 1);
+      items.splice(result.destination.index, 0, reorderedItem);
+
+      setProductList(items);
+    },
+    [productList, setProductList],
+  );
+
   return (
     <>
       <Main running={running}>
@@ -124,7 +146,16 @@ const DataList = () => {
               ))}
             </Row>
           </thead>
-          <tbody>{dataRows()}</tbody>
+          <DragDropContext onDragEnd={onDragEnd}>
+            <Droppable droppableId="datas">
+              {provided => (
+                <tbody className="datas" {...provided.droppableProps} ref={provided.innerRef}>
+                  {dataRows()}
+                  {provided.placeholder}
+                </tbody>
+              )}
+            </Droppable>
+          </DragDropContext>
         </Table>
       </Main>
       <ModalBox

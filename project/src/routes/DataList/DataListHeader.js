@@ -2,7 +2,7 @@ import { deleteDoc, doc, setDoc } from 'firebase/firestore';
 import { Link } from 'react-router-dom';
 import exceljs from '../../excel';
 import { dbService } from '../../firebase';
-import { saveShippingCosts } from './firebaseFns';
+import { saveOrder, saveShippingCosts } from './firebaseFns';
 import ShippingWarpper from './ShippingWrapper';
 import { ExchangeBox, Header, SaveDiv, Title } from './style';
 
@@ -35,6 +35,7 @@ const onClickExcel = async ({ productList, exchange, setRunning }) => {
 
 const onSave = async ({ productList, reset = false, setRunning, changedProduct }) => {
   setRunning(true);
+  saveOrder(productList);
   for (const index of changedProduct) {
     const obj = { ...productList[index] };
     if (obj['sort'] === '삭제') {
