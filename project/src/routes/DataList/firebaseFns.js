@@ -2,13 +2,18 @@ import { async } from '@firebase/util';
 import { collection, doc, getDoc, getDocs, orderBy, query, setDoc } from 'firebase/firestore';
 import { dbService } from '../../firebase';
 
+const getOrder = async () => {
+  const docRef = doc(dbService, 'order', 'order');
+  const orderObj = await getDoc(docRef);
+  return orderObj.data();
+};
 export const getObj = async ({ setProductList, setEveningNumber }) => {
-  const q = query(collection(dbService, 'items'), orderBy('indexNumber'), orderBy('date', 'desc'));
+  const q = query(collection(dbService, 'items'));
   const querySnapshot = await getDocs(q);
   const obj = [];
   const eveningObj = [];
+  const orderObj = await getOrder();
 
-  const orderObj = () => {};
   querySnapshot.forEach(doc => {
     const data = doc.data();
     obj.push(data);
@@ -16,6 +21,14 @@ export const getObj = async ({ setProductList, setEveningNumber }) => {
       eveningObj.push(data.id);
     }
   });
+
+  obj.sort((a, b) => {
+    return orderObj[a.id] - orderObj[b.id];
+  });
+  eveningObj.sort((a, b) => {
+    return orderObj[a.id] - orderObj[b.id];
+  });
+
   setProductList(obj);
   setEveningNumber(eveningObj);
 };
@@ -35,5 +48,5 @@ export const saveOrder = async productList => {
   productList.forEach((item, idx) => {
     orderObj[item.id] = idx;
   });
-  console.log(orderObj);
+  await setDoc(doc(dbService, 'order', 'order'), orderObj);
 };
