@@ -23,7 +23,6 @@ function useProductList() {
     }
     setProductList(newProductList);
     setChangedProduct(prev => new Set([...prev, i]));
-    console.log(1234);
   };
 
   return { changedProduct, productList, setProductList, inputChange, setChangedProduct };

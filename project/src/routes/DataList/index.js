@@ -112,7 +112,6 @@ const DataList = () => {
   const onDragEnd = useCallback(
     result => {
       if (!result.destination) return;
-      console.log(result);
       const items = [...productList];
       const [reorderedItem] = items.splice(result.source.index, 1);
       items.splice(result.destination.index, 0, reorderedItem);

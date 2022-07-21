@@ -6,6 +6,7 @@ export const getOrder = async () => {
   const orderObj = await getDoc(docRef);
   return orderObj.data();
 };
+
 export const getObj = async ({ setProductList, setEveningNumber }) => {
   const q = query(collection(dbService, 'items'));
   const querySnapshot = await getDocs(q);
