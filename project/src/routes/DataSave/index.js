@@ -7,11 +7,13 @@ import { v4 as uuidv4 } from 'uuid';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import DataSaveTable from './DataSaveTable';
+import { getOrder } from '../DataList/firebaseFns';
 
 const initialCode = Array(20).fill('');
 
 const onClick = async navigate => {
   const storage = getStorage();
+  const orderObj = await getOrder();
 
   for (let i = 0; i < 20; i++) {
     let rows = document.getElementById(i);
@@ -50,10 +52,12 @@ const onClick = async navigate => {
         indexNumber: 0,
         sort: sort,
       };
+      orderObj[id] = -1;
       await setDoc(doc(dbService, 'items', id), obj);
       uploadBytes(storageRef, file);
     }
   }
+  await setDoc(doc(dbService, 'order', 'order'), orderObj);
   alert('저장되었습니다.');
   navigate('/');
 };

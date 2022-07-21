@@ -1,8 +1,7 @@
-import { async } from '@firebase/util';
-import { collection, doc, getDoc, getDocs, orderBy, query, setDoc } from 'firebase/firestore';
+import { collection, doc, getDoc, getDocs, query, setDoc } from 'firebase/firestore';
 import { dbService } from '../../firebase';
 
-const getOrder = async () => {
+export const getOrder = async () => {
   const docRef = doc(dbService, 'order', 'order');
   const orderObj = await getDoc(docRef);
   return orderObj.data();
