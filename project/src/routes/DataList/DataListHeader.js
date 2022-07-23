@@ -1,10 +1,12 @@
 import { deleteDoc, doc, setDoc } from 'firebase/firestore';
 import { Link } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
 import exceljs from '../../excel';
 import { dbService } from '../../firebase';
 import { saveOrder, saveShippingCosts } from './firebaseFns';
 import ShippingWarpper from './ShippingWrapper';
 import { ExchangeBox, Header, SaveDiv, Title } from './style';
+import { changedProductRecoil } from '../../atom';
 
 const onClickExcel = async ({ productList, exchange, setRunning }) => {
   const newObj = [];
@@ -66,9 +68,9 @@ function DataListHeader({
   productList,
   setEditable,
   setRunning,
-  changedProduct,
   setCurrentOption,
 }) {
+  const changedProduct = useRecoilValue(changedProductRecoil);
   return (
     <Header>
       <Title>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Draggable } from 'react-beautiful-dnd';
+import useProduct from '../../hooks/useProduct';
 import { getMaxRate, showRate } from '../../utils';
 import SortBox from './SortBox';
 import { ImgBox, Input, PriceInput, RateSpan, Row } from './style';
@@ -7,8 +8,7 @@ import { ImgBox, Input, PriceInput, RateSpan, Row } from './style';
 function DataRow({
   index,
   editable,
-  inputChange,
-  product,
+  productList,
   shippingCosts,
   rate,
   exchange,
@@ -17,6 +17,10 @@ function DataRow({
   eveningNumber,
   itemImg,
 }) {
+  const { product, inputChange } = useProduct({
+    productDefault: productList[index],
+    index,
+  });
   const A =
     (5 * product.countPerOne * 1000000) / (product.size.x * product.size.y * product.size.z);
   const predictCost =
@@ -34,6 +38,7 @@ function DataRow({
     (currentOption === '루시아이' && !isEvening) ||
     (currentOption === '더이브닝' && isEvening);
   console.log('row');
+
   return (
     isView && (
       <Draggable key={product.id} draggableId={product.id} index={index} isDragDisabled={!editable}>
@@ -55,7 +60,7 @@ function DataRow({
               <Input
                 type="text"
                 readOnly={!editable}
-                onChange={e => inputChange(e, index)}
+                onChange={e => inputChange(e)}
                 id="ko"
                 value={product['ko']}
               ></Input>
@@ -63,7 +68,7 @@ function DataRow({
             <td>
               <Input
                 readOnly={!editable}
-                onChange={e => inputChange(e, index)}
+                onChange={e => inputChange(e)}
                 id="en"
                 value={product['en']}
               ></Input>
@@ -71,7 +76,7 @@ function DataRow({
             <td>
               <Input
                 readOnly={!editable}
-                onChange={e => inputChange(e, index)}
+                onChange={e => inputChange(e)}
                 id="ch"
                 value={product['ch']}
               ></Input>
@@ -81,7 +86,7 @@ function DataRow({
                 size={15}
                 readOnly={!editable}
                 id="number"
-                onChange={e => inputChange(e, index)}
+                onChange={e => inputChange(e)}
                 value={product['number']}
               ></Input>
             </td>
@@ -89,7 +94,7 @@ function DataRow({
               <Input
                 size={10}
                 readOnly={!editable}
-                onChange={e => inputChange(e, index)}
+                onChange={e => inputChange(e)}
                 id="texture"
                 value={product['texture']}
                 as="input"
@@ -97,7 +102,7 @@ function DataRow({
               <Input
                 size={10}
                 readOnly={!editable}
-                onChange={e => inputChange(e, index)}
+                onChange={e => inputChange(e)}
                 id="Kotexture"
                 value={product['Kotexture']}
                 as="input"
@@ -107,7 +112,7 @@ function DataRow({
               <Input
                 size={10}
                 readOnly={!editable}
-                onChange={e => inputChange(e, index)}
+                onChange={e => inputChange(e)}
                 id="amount"
                 value={product['amount']}
                 as="input"
@@ -118,7 +123,7 @@ function DataRow({
               <PriceInput
                 size={10}
                 readOnly={!editable}
-                onChange={e => inputChange(e, index)}
+                onChange={e => inputChange(e)}
                 id="price"
                 value={product['price']}
               ></PriceInput>
@@ -126,7 +131,7 @@ function DataRow({
             <td>
               <Input
                 readOnly={!editable}
-                onChange={e => inputChange(e, index)}
+                onChange={e => inputChange(e)}
                 id="hscode"
                 value={product['hscode']}
                 as="input"
@@ -139,7 +144,7 @@ function DataRow({
                 size={15}
                 readOnly={!editable}
                 id="info"
-                onChange={e => inputChange(e, index)}
+                onChange={e => inputChange(e)}
                 value={product['info']}
               ></Input>
             </td>

@@ -24,6 +24,7 @@
     "react-query": "^3.39.1",
     "react-router-dom": "^6.2.1",
     "react-scripts": "5.0.0",
+    "recoil": "^0.7.4",
     "request": "^2.88.2",
     "styled-components": "^5.3.3",
     "url-to-image": "^1.0.0",

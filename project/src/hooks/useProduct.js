@@ -1,12 +1,15 @@
 import { useState } from 'react';
+import { useSetRecoilState } from 'recoil';
+import { changedProductRecoil } from '../atom';
 import { exchangeHscodeFormat } from '../utils';
 
-function useProduct() {
-  const [productList, setProductList] = useState([]);
-  const [changedProduct, setChangedProduct] = useState([]);
+function useProduct({ productDefault, index }) {
+  const [product, setProduct] = useState(productDefault);
 
-  const inputChange = (e, i) => {
-    const newProductList = [...productList];
+  const setChangedProduct = useSetRecoilState(changedProductRecoil);
+
+  const inputChange = e => {
+    const newProduct = { ...product };
     const target = e.target.id;
     const isSize = target === 'x' || target === 'y' || target === 'z';
     let value = e.target.value;
@@ -17,15 +20,21 @@ function useProduct() {
     }
 
     if (isSize) {
-      newProductList[i]['size'][target] = value;
+      newProduct['size'][target] = value;
     } else {
-      newProductList[i][target] = value;
+      newProduct[target] = value;
     }
-    setProductList(newProductList);
-    // setChangedProduct(prev => new Set([...prev, i]));
+    setProduct(newProduct);
+    setChangedProduct(prev => {
+      const newProducts = [newProduct];
+      prev.forEach(curItem => {
+        if (curItem.id !== newProduct.id) newProducts.push(curItem);
+      });
+      return newProducts;
+    });
   };
 
-  return { changedProduct, productList, setProductList, inputChange, setChangedProduct };
+  return { product, inputChange };
 }
 
 export default useProduct;

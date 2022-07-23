@@ -6,13 +6,15 @@ import { Main, Row, Spinner, Table } from './style';
 import useShippingCost from '../../hooks/useShippingCost';
 import ModalBox from './ModalBox';
 import DataRow from './DataRow';
-import useProductList from '../../hooks/useProductList';
 import { HEADER_TITLE } from '../../constant';
 import DataListHeader from './DataListHeader';
 import { getCost, getObj } from './firebaseFns';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import { useSetRecoilState } from 'recoil';
+import { changedProductRecoil } from '../../atom';
 
 const hscodes = [];
+// new Set([...prev, i]);
 
 const downloadImg = async ({ productList, setItemImg }) => {
   const storage = getStorage();
@@ -65,8 +67,9 @@ const DataList = () => {
   const [eveningNumber, setEveningNumber] = useState([]);
   const [itemImg, setItemImg] = useState({});
   const { shippingCosts, setShippingCosts, costInputChange } = useShippingCost();
-  const { productList, setProductList, changedProduct, inputChange, setChangedProduct } =
-    useProductList();
+  const [productList, setProductList] = useState([]);
+
+  const setChangedProduct = useSetRecoilState(changedProductRecoil);
 
   useEffect(() => {
     setChangedProduct([]);
@@ -85,24 +88,21 @@ const DataList = () => {
     }
   }, [productList, itemImg]);
 
-  useEffect(() => {
-    if (productList.length !== 0) {
-      if (rate.length === 0) {
-        console.log('loadRateData');
-        loadRateData(productList, setRate);
-      }
-    }
-  }, [productList, rate]);
+  // useEffect(() => {
+  //   if (productList.length !== 0) {
+  //     if (rate.length === 0) {
+  //       console.log('loadRateData');
+  //       loadRateData(productList, setRate);
+  //     }
+  //   }
+  // }, [productList, rate]);
 
   const dataRows = ({ itemImg }) => {
     return productList.map((_, index) => {
-      const product = productList[index];
-
       const props = {
         index,
         editable,
-        inputChange,
-        product,
+        productList,
         shippingCosts,
         rate,
         exchange,
@@ -140,7 +140,6 @@ const DataList = () => {
           setEditable={setEditable}
           setShippingCosts={setShippingCosts}
           setRunning={setRunning}
-          changedProduct={changedProduct}
           setCurrentOption={setCurrentOption}
         />
         <Table>
@@ -163,13 +162,13 @@ const DataList = () => {
           </DragDropContext>
         </Table>
       </Main>
-      <ModalBox
+      {/* <ModalBox
         isOpenNumber={isOpenNumber}
         setIsOpenNumber={setIsOpenNumber}
         productList={productList}
         inputChange={inputChange}
         setProductList={setProductList}
-      />
+      /> */}
       <Spinner running={running}>잠시만 기다려주세요.</Spinner>
     </>
   );
