@@ -3,7 +3,7 @@ import { useSetRecoilState } from 'recoil';
 import { changedProductRecoil } from '../atom';
 import { exchangeHscodeFormat } from '../utils';
 
-function useProduct({ productDefault, index }) {
+function useProduct({ productDefault }) {
   const [product, setProduct] = useState(productDefault);
 
   const setChangedProduct = useSetRecoilState(changedProductRecoil);

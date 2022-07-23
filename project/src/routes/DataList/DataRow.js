@@ -7,10 +7,10 @@ import { ImgBox, Input, PriceInput, RateSpan, Row } from './style';
 
 function DataRow({
   index,
+  rate,
   editable,
   productList,
   shippingCosts,
-  rate,
   exchange,
   currentOption,
   setIsOpenNumber,
@@ -19,8 +19,8 @@ function DataRow({
 }) {
   const { product, inputChange } = useProduct({
     productDefault: productList[index],
-    index,
   });
+
   const A =
     (5 * product.countPerOne * 1000000) / (product.size.x * product.size.y * product.size.z);
   const predictCost =

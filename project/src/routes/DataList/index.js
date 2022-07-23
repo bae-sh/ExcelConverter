@@ -14,7 +14,6 @@ import { useSetRecoilState } from 'recoil';
 import { changedProductRecoil } from '../../atom';
 
 const hscodes = [];
-// new Set([...prev, i]);
 
 const downloadImg = async ({ productList, setItemImg }) => {
   const storage = getStorage();
@@ -88,14 +87,14 @@ const DataList = () => {
     }
   }, [productList, itemImg]);
 
-  // useEffect(() => {
-  //   if (productList.length !== 0) {
-  //     if (rate.length === 0) {
-  //       console.log('loadRateData');
-  //       loadRateData(productList, setRate);
-  //     }
-  //   }
-  // }, [productList, rate]);
+  useEffect(() => {
+    if (productList.length !== 0) {
+      if (rate.length === 0) {
+        console.log('loadRateData');
+        loadRateData(productList, setRate);
+      }
+    }
+  }, [productList, rate]);
 
   const dataRows = ({ itemImg }) => {
     return productList.map((_, index) => {
