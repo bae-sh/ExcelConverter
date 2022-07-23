@@ -82,7 +82,8 @@ const DataList = () => {
     for (let i = 0; i < productList.length; i++) {
       downloadImg(productList, i);
     }
-  }, [productList, editable, currentOption]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [editable, currentOption]);
 
   useEffect(() => {
     if (!editable && isOpenNumber === -1) {

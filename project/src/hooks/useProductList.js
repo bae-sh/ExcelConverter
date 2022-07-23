@@ -21,8 +21,9 @@ function useProductList() {
     } else {
       newProductList[i][target] = value;
     }
+    console.log(11);
     setProductList(newProductList);
-    setChangedProduct(prev => new Set([...prev, i]));
+    // setChangedProduct(prev => new Set([...prev, i]));
   };
 
   return { changedProduct, productList, setProductList, inputChange, setChangedProduct };
