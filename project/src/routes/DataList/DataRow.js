@@ -1,3 +1,4 @@
+import React from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import { getMaxRate, showRate } from '../../utils';
 import SortBox from './SortBox';
@@ -7,41 +8,35 @@ function DataRow({
   index,
   editable,
   inputChange,
-  productList,
+  product,
   shippingCosts,
   rate,
   exchange,
   currentOption,
   setIsOpenNumber,
   eveningNumber,
+  itemImg,
 }) {
   const A =
-    (5 * productList[index].countPerOne * 1000000) /
-    (productList[index].size.x * productList[index].size.y * productList[index].size.z);
+    (5 * product.countPerOne * 1000000) / (product.size.x * product.size.y * product.size.z);
   const predictCost =
-    ((A * (Number(productList[index].price) + Number(productList[index].shippingCost)) +
+    ((A * (Number(product.price) + Number(product.shippingCost)) +
       (5 * Number(shippingCosts.aboardCost) + 400) +
-      ((Number(productList[index].price) * A) / 10) *
-        (1 + 0.11 * getMaxRate(rate, productList[index].hscode))) *
+      ((Number(product.price) * A) / 10) * (1 + 0.11 * getMaxRate(rate, product.hscode))) *
       Number(exchange.CNY) +
       33000 +
       Number(shippingCosts.domesticCost) +
       Number(shippingCosts.serviceCost)) /
     A;
-  const isEvening = eveningNumber.includes(productList[index].id);
+  const isEvening = eveningNumber.includes(product.id);
   const isView =
     currentOption === '전체' ||
     (currentOption === '루시아이' && !isEvening) ||
     (currentOption === '더이브닝' && isEvening);
-
+  console.log('row');
   return (
     isView && (
-      <Draggable
-        key={productList[index].id}
-        draggableId={productList[index].id}
-        index={index}
-        isDragDisabled={!editable}
-      >
+      <Draggable key={product.id} draggableId={product.id} index={index} isDragDisabled={!editable}>
         {provided => (
           <Row
             key={index}
@@ -53,7 +48,7 @@ function DataRow({
             <td>{index + 1}</td>
             <td>
               <ImgBox>
-                <img src="" alt="" id={`img${index}`} />
+                <img src={itemImg[product.id]} alt="" id={`img${index}`} />
               </ImgBox>
             </td>
             <td>
@@ -62,7 +57,7 @@ function DataRow({
                 readOnly={!editable}
                 onChange={e => inputChange(e, index)}
                 id="ko"
-                value={productList[index]['ko']}
+                value={product['ko']}
               ></Input>
             </td>
             <td>
@@ -70,7 +65,7 @@ function DataRow({
                 readOnly={!editable}
                 onChange={e => inputChange(e, index)}
                 id="en"
-                value={productList[index]['en']}
+                value={product['en']}
               ></Input>
             </td>
             <td>
@@ -78,7 +73,7 @@ function DataRow({
                 readOnly={!editable}
                 onChange={e => inputChange(e, index)}
                 id="ch"
-                value={productList[index]['ch']}
+                value={product['ch']}
               ></Input>
             </td>
             <td>
@@ -87,7 +82,7 @@ function DataRow({
                 readOnly={!editable}
                 id="number"
                 onChange={e => inputChange(e, index)}
-                value={productList[index]['number']}
+                value={product['number']}
               ></Input>
             </td>
             <td>
@@ -96,7 +91,7 @@ function DataRow({
                 readOnly={!editable}
                 onChange={e => inputChange(e, index)}
                 id="texture"
-                value={productList[index]['texture']}
+                value={product['texture']}
                 as="input"
               ></Input>
               <Input
@@ -104,7 +99,7 @@ function DataRow({
                 readOnly={!editable}
                 onChange={e => inputChange(e, index)}
                 id="Kotexture"
-                value={productList[index]['Kotexture']}
+                value={product['Kotexture']}
                 as="input"
               ></Input>
             </td>
@@ -114,7 +109,7 @@ function DataRow({
                 readOnly={!editable}
                 onChange={e => inputChange(e, index)}
                 id="amount"
-                value={productList[index]['amount']}
+                value={product['amount']}
                 as="input"
               ></Input>
             </td>
@@ -125,7 +120,7 @@ function DataRow({
                 readOnly={!editable}
                 onChange={e => inputChange(e, index)}
                 id="price"
-                value={productList[index]['price']}
+                value={product['price']}
               ></PriceInput>
             </td>
             <td>
@@ -133,11 +128,11 @@ function DataRow({
                 readOnly={!editable}
                 onChange={e => inputChange(e, index)}
                 id="hscode"
-                value={productList[index]['hscode']}
+                value={product['hscode']}
                 as="input"
                 maxLength="12"
               ></Input>
-              <RateSpan>{showRate(rate, productList[index]['hscode'])}</RateSpan>
+              <RateSpan>{showRate(rate, product['hscode'])}</RateSpan>
             </td>
             <td>
               <Input
@@ -145,7 +140,7 @@ function DataRow({
                 readOnly={!editable}
                 id="info"
                 onChange={e => inputChange(e, index)}
-                value={productList[index]['info']}
+                value={product['info']}
               ></Input>
             </td>
             <td>
@@ -159,7 +154,7 @@ function DataRow({
                 editable={editable}
                 inputChange={inputChange}
                 index={index}
-                productList={productList}
+                product={product}
               />
             </td>
           </Row>
@@ -169,4 +164,4 @@ function DataRow({
   );
 }
 
-export default DataRow;
+export default React.memo(DataRow);

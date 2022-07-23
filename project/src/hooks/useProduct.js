@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { exchangeHscodeFormat } from '../utils';
 
-function useProductList() {
+function useProduct() {
   const [productList, setProductList] = useState([]);
   const [changedProduct, setChangedProduct] = useState([]);
 
@@ -28,4 +28,4 @@ function useProductList() {
   return { changedProduct, productList, setProductList, inputChange, setChangedProduct };
 }
 
-export default useProductList;
+export default useProduct;

@@ -1,5 +1,5 @@
-function SortBox({ editable, inputChange, index, productList }) {
-  const sortValue = productList[index]['sort'] ? productList[index]['sort'] : '루시아이';
+function SortBox({ editable, inputChange, index, product }) {
+  const sortValue = product['sort'] ? product['sort'] : '루시아이';
 
   return editable ? (
     <select onChange={e => inputChange(e, index)} id="sort" defaultValue={sortValue}>

@@ -13,22 +13,23 @@ import { getCost, getObj } from './firebaseFns';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 
 const hscodes = [];
-const itemImg = {};
 
-const downloadImg = async (productList, i) => {
-  if (!itemImg[productList[i].id]) {
-    const storage = getStorage();
-    const starsRef = ref(storage, productList[i].id);
-    return getDownloadURL(starsRef)
+const downloadImg = async ({ productList, setItemImg }) => {
+  const storage = getStorage();
+  const newItemImgs = {};
+  productList.forEach(product => {
+    const starsRef = ref(storage, product.id);
+    getDownloadURL(starsRef)
       .then(async url => {
         const response = await fetch(url);
         const data = await response.blob();
         let f = new File([data], 'null', { type: data.type });
         let preview = new FileReader();
         preview.onload = e => {
-          if (document.getElementById(`img${i}`)) {
-            document.getElementById(`img${i}`).src = e.target.result;
-            itemImg[productList[i].id] = e.target.result;
+          newItemImgs[product.id] = e.target.result;
+
+          if (Object.keys(newItemImgs).length === productList.length) {
+            setItemImg(newItemImgs);
           }
         };
         preview.readAsDataURL(f);
@@ -36,11 +37,7 @@ const downloadImg = async (productList, i) => {
       .catch(error => {
         // console.log(error);
       });
-  } else {
-    if (document.getElementById(`img${i}`)) {
-      document.getElementById(`img${i}`).src = itemImg[productList[i].id];
-    }
-  }
+  });
 };
 
 const loadRateData = async (productList, setRate) => {
@@ -66,6 +63,7 @@ const DataList = () => {
   const [running, setRunning] = useState(false);
   const [currentOption, setCurrentOption] = useState('전체');
   const [eveningNumber, setEveningNumber] = useState([]);
+  const [itemImg, setItemImg] = useState({});
   const { shippingCosts, setShippingCosts, costInputChange } = useShippingCost();
   const { productList, setProductList, changedProduct, inputChange, setChangedProduct } =
     useProductList();
@@ -79,25 +77,32 @@ const DataList = () => {
   }, [setShippingCosts, setExchange, setProductList, setChangedProduct, running, editable]);
 
   useEffect(() => {
-    for (let i = 0; i < productList.length; i++) {
-      downloadImg(productList, i);
+    if (productList.length !== 0) {
+      if (Object.keys(itemImg).length === 0) {
+        console.log('itemImg');
+        downloadImg({ productList, setItemImg });
+      }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [editable, currentOption]);
+  }, [productList, itemImg]);
 
   useEffect(() => {
-    if (!editable && isOpenNumber === -1) {
-      loadRateData(productList, setRate);
+    if (productList.length !== 0) {
+      if (rate.length === 0) {
+        console.log('loadRateData');
+        loadRateData(productList, setRate);
+      }
     }
-  }, [productList, editable, isOpenNumber]);
+  }, [productList, rate]);
 
-  const dataRows = () => {
+  const dataRows = ({ itemImg }) => {
     return productList.map((_, index) => {
+      const product = productList[index];
+
       const props = {
         index,
         editable,
         inputChange,
-        productList,
+        product,
         shippingCosts,
         rate,
         exchange,
@@ -105,6 +110,7 @@ const DataList = () => {
         currentOption,
         key: index,
         eveningNumber: eveningNumber,
+        itemImg,
       };
       return <DataRow {...props} />;
     });
@@ -121,7 +127,6 @@ const DataList = () => {
     },
     [productList, setProductList],
   );
-
   return (
     <>
       <Main running={running}>
@@ -150,7 +155,7 @@ const DataList = () => {
             <Droppable droppableId="datas">
               {provided => (
                 <tbody className="datas" {...provided.droppableProps} ref={provided.innerRef}>
-                  {dataRows()}
+                  {dataRows({ itemImg })}
                   {provided.placeholder}
                 </tbody>
               )}
