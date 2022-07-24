@@ -38,8 +38,8 @@ const onClickExcel = async ({ productList, exchange, setRunning }) => {
 const onSave = async ({ productList, reset = false, setRunning, changedProduct }) => {
   setRunning(true);
   saveOrder(productList);
-  for (const index of changedProduct) {
-    const obj = { ...productList[index] };
+  for (const product of changedProduct) {
+    const obj = { ...product };
     if (obj['sort'] === '삭제') {
       await deleteDoc(doc(dbService, 'items', obj['id']));
     } else {

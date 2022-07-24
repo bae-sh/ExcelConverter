@@ -13,8 +13,6 @@ import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import { useSetRecoilState } from 'recoil';
 import { changedProductRecoil } from '../../atom';
 
-const hscodes = [];
-
 const downloadImg = async ({ productList, setItemImg }) => {
   const storage = getStorage();
   const newItemImgs = {};
@@ -42,17 +40,22 @@ const downloadImg = async ({ productList, setItemImg }) => {
 };
 
 const loadRateData = async (productList, setRate) => {
-  const promises = [];
+  const hscodes = new Set();
+  const newRates = [];
   productList.forEach(async ({ hscode }) => {
     const code = hscode.substring(0, 4) + hscode.substring(5, 7) + hscode.substring(8);
-    if (hscode.length === 12 && !hscodes.includes(code)) {
-      hscodes.push(code);
-      promises.push(getRate(code));
+    if (hscode.length === 12) {
+      hscodes.add(code);
     }
   });
 
-  const result = await Promise.all(promises);
-  const newRates = result.filter(rate => rate);
+  for await (const code of hscodes) {
+    const res = await getRate(code);
+    if (res) {
+      newRates.push(res);
+    }
+  }
+  console.log(newRates);
   setRate(newRates);
 };
 
@@ -88,11 +91,9 @@ const DataList = () => {
   }, [productList, itemImg]);
 
   useEffect(() => {
-    if (productList.length !== 0) {
-      if (rate.length === 0) {
-        console.log('loadRateData');
-        loadRateData(productList, setRate);
-      }
+    if (productList.length !== 0 && rate.length === 0) {
+      console.log('loadRateData');
+      loadRateData(productList, setRate);
     }
   }, [productList, rate]);
 
