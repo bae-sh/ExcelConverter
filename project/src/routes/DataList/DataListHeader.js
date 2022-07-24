@@ -8,24 +8,24 @@ import { ExchangeBox, Header, SaveDiv, Title } from './style';
 
 const onClickExcel = async ({ productList, exchange, setRunning }) => {
   const newObj = [];
-
-  productList.forEach((product, i) => {
+  const changedProduct = [];
+  productList.forEach(product => {
     const { number, price } = product;
     const obj = { ...product };
-
     if (number) {
+      changedProduct.push({ ...product });
+
       obj['price'] = `$ ${(
         (Number(price) * Number(exchange['CNY'])) /
         Number(exchange['USD'])
       ).toFixed(2)}`;
-      obj['idx'] = i;
       newObj.push(obj);
     }
   });
 
   const isExcel = await exceljs(newObj);
   if (isExcel) {
-    onSave({ productList, reset: true, setRunning, changedProduct: newObj });
+    onSave({ productList, reset: true, setRunning, changedProduct });
   } else {
     setRunning(false);
   }
