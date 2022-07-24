@@ -10,8 +10,8 @@ import { HEADER_TITLE } from '../../constant';
 import DataListHeader from './DataListHeader';
 import { getCost, getObj } from './firebaseFns';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
-import { useSetRecoilState } from 'recoil';
-import { changedProductRecoil } from '../../atom';
+
+let changedProduct = {};
 
 const downloadImg = async ({ productList, setItemImg }) => {
   const storage = getStorage();
@@ -55,7 +55,6 @@ const loadRateData = async (productList, setRate) => {
       newRates.push(res);
     }
   }
-  console.log(newRates);
   setRate(newRates);
 };
 
@@ -71,15 +70,13 @@ const DataList = () => {
   const { shippingCosts, setShippingCosts, costInputChange } = useShippingCost();
   const [productList, setProductList] = useState([]);
 
-  const setChangedProduct = useSetRecoilState(changedProductRecoil);
-
   useEffect(() => {
-    setChangedProduct([]);
+    changedProduct = [];
     getObj({ setProductList, setEveningNumber });
     getCost(setShippingCosts);
     getExchangeRate(setExchange);
     console.log('product 불러오기');
-  }, [setShippingCosts, setExchange, setProductList, setChangedProduct, running, editable]);
+  }, [setShippingCosts, setExchange, setProductList, running, editable]);
 
   useEffect(() => {
     if (productList.length !== 0) {
@@ -97,8 +94,8 @@ const DataList = () => {
     }
   }, [productList, rate]);
 
-  const dataRows = ({ itemImg }) => {
-    return productList.map((_, index) => {
+  const dataRows = ({ itemImg }) =>
+    productList.map((_, index) => {
       const props = {
         index,
         editable,
@@ -111,10 +108,10 @@ const DataList = () => {
         key: index,
         eveningNumber: eveningNumber,
         itemImg,
+        changedProduct,
       };
       return <DataRow {...props} />;
     });
-  };
 
   const onDragEnd = useCallback(
     result => {
@@ -122,7 +119,6 @@ const DataList = () => {
       const items = [...productList];
       const [reorderedItem] = items.splice(result.source.index, 1);
       items.splice(result.destination.index, 0, reorderedItem);
-
       setProductList(items);
     },
     [productList, setProductList],
@@ -141,6 +137,7 @@ const DataList = () => {
           setShippingCosts={setShippingCosts}
           setRunning={setRunning}
           setCurrentOption={setCurrentOption}
+          changedProduct={changedProduct}
         />
         <Table>
           <thead>

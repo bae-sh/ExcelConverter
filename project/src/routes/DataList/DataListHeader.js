@@ -1,16 +1,13 @@
 import { deleteDoc, doc, setDoc } from 'firebase/firestore';
 import { Link } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
 import exceljs from '../../excel';
 import { dbService } from '../../firebase';
 import { saveOrder, saveShippingCosts } from './firebaseFns';
 import ShippingWarpper from './ShippingWrapper';
 import { ExchangeBox, Header, SaveDiv, Title } from './style';
-import { changedProductRecoil } from '../../atom';
 
 const onClickExcel = async ({ productList, exchange, setRunning }) => {
   const newObj = [];
-  const changedProduct = [];
 
   productList.forEach((product, i) => {
     const { number, price } = product;
@@ -23,13 +20,12 @@ const onClickExcel = async ({ productList, exchange, setRunning }) => {
       ).toFixed(2)}`;
       obj['idx'] = i;
       newObj.push(obj);
-      changedProduct.push(i);
     }
   });
 
   const isExcel = await exceljs(newObj);
   if (isExcel) {
-    onSave({ productList, reset: true, setRunning, changedProduct });
+    onSave({ productList, reset: true, setRunning, changedProduct: newObj });
   } else {
     setRunning(false);
   }
@@ -37,7 +33,10 @@ const onClickExcel = async ({ productList, exchange, setRunning }) => {
 
 const onSave = async ({ productList, reset = false, setRunning, changedProduct }) => {
   setRunning(true);
-  saveOrder(productList);
+  if (!reset) {
+    saveOrder(productList);
+  }
+
   for (const product of changedProduct) {
     const obj = { ...product };
     if (obj['sort'] === '삭제') {
@@ -69,8 +68,8 @@ function DataListHeader({
   setEditable,
   setRunning,
   setCurrentOption,
+  changedProduct,
 }) {
-  const changedProduct = useRecoilValue(changedProductRecoil);
   return (
     <Header>
       <Title>
@@ -112,7 +111,12 @@ function DataListHeader({
                 onClick={() => {
                   saveShippingCosts(shippingCosts);
                   setEditable(prev => !prev);
-                  onSave({ productList, reset: false, setRunning, changedProduct });
+                  onSave({
+                    productList,
+                    reset: false,
+                    setRunning,
+                    changedProduct: Object.values(changedProduct),
+                  });
                 }}
               >
                 저장하기

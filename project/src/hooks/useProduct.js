@@ -1,12 +1,8 @@
 import { useState } from 'react';
-import { useSetRecoilState } from 'recoil';
-import { changedProductRecoil } from '../atom';
 import { exchangeHscodeFormat } from '../utils';
 
-function useProduct({ productDefault }) {
+function useProduct({ productDefault, changedProduct }) {
   const [product, setProduct] = useState(productDefault);
-
-  const setChangedProduct = useSetRecoilState(changedProductRecoil);
 
   const inputChange = e => {
     const newProduct = { ...product };
@@ -25,16 +21,10 @@ function useProduct({ productDefault }) {
       newProduct[target] = value;
     }
     setProduct(newProduct);
-    setChangedProduct(prev => {
-      const newProducts = [newProduct];
-      prev.forEach(curItem => {
-        if (curItem.id !== newProduct.id) newProducts.push(curItem);
-      });
-      return newProducts;
-    });
+    changedProduct[newProduct.id] = newProduct;
   };
 
-  return { product, inputChange };
+  return { product, inputChange, setProduct };
 }
 
 export default useProduct;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import useProduct from '../../hooks/useProduct';
 import { getMaxRate, showRate } from '../../utils';
@@ -16,29 +16,36 @@ function DataRow({
   setIsOpenNumber,
   eveningNumber,
   itemImg,
+  changedProduct,
 }) {
-  const { product, inputChange } = useProduct({
-    productDefault: productList[index],
+  const { product, inputChange, setProduct } = useProduct({
+    productDefault: { ...productList[index] },
+    changedProduct,
   });
+  useEffect(() => {
+    if (changedProduct[productList[index].id]) {
+      setProduct(changedProduct[productList[index].id]);
+    } else {
+      setProduct(productList[index]);
+    }
+  }, [productList, index, setProduct, changedProduct]);
 
-  // const A =
-  //   (5 * product.countPerOne * 1000000) / (product.size.x * product.size.y * product.size.z);
-  // const predictCost =
-  //   ((A * (Number(product.price) + Number(product.shippingCost)) +
-  //     (5 * Number(shippingCosts.aboardCost) + 400) +
-  //     ((Number(product.price) * A) / 10) * (1 + 0.11 * getMaxRate(rate, product.hscode))) *
-  //     Number(exchange.CNY) +
-  //     33000 +
-  //     Number(shippingCosts.domesticCost) +
-  //     Number(shippingCosts.serviceCost)) /
-  //   A;
+  const A =
+    (5 * product.countPerOne * 1000000) / (product.size.x * product.size.y * product.size.z);
+  const predictCost =
+    ((A * (Number(product.price) + Number(product.shippingCost)) +
+      (5 * Number(shippingCosts.aboardCost) + 400) +
+      ((Number(product.price) * A) / 10) * (1 + 0.11 * getMaxRate(rate, product.hscode))) *
+      Number(exchange.CNY) +
+      33000 +
+      Number(shippingCosts.domesticCost) +
+      Number(shippingCosts.serviceCost)) /
+    A;
   const isEvening = eveningNumber.includes(product.id);
   const isView =
     currentOption === '전체' ||
     (currentOption === '루시아이' && !isEvening) ||
     (currentOption === '더이브닝' && isEvening);
-  console.log('row');
-
   return (
     isView && (
       <Draggable key={product.id} draggableId={product.id} index={index} isDragDisabled={!editable}>
@@ -148,12 +155,12 @@ function DataRow({
                 value={product['info']}
               ></Input>
             </td>
-            {/* <td>
+            <td>
               <div>
                 <p>{isNaN(predictCost) ? 'X' : `${Math.round(predictCost)} 원`}</p>
                 <button onClick={() => setIsOpenNumber(index)}>수정</button>
               </div>
-            </td> */}
+            </td>
             <td>
               <SortBox
                 editable={editable}
@@ -169,4 +176,4 @@ function DataRow({
   );
 }
 
-export default React.memo(DataRow);
+export default DataRow;
