@@ -138,6 +138,7 @@ const DataList = () => {
           setRunning={setRunning}
           setCurrentOption={setCurrentOption}
           changedProduct={changedProduct}
+          currentOption={currentOption}
         />
         <Table>
           <thead>

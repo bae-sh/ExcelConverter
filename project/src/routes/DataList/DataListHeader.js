@@ -6,20 +6,25 @@ import { saveOrder, saveShippingCosts } from './firebaseFns';
 import ShippingWarpper from './ShippingWrapper';
 import { ExchangeBox, Header, SaveDiv, Title } from './style';
 
-const onClickExcel = async ({ productList, exchange, setRunning }) => {
+const onClickExcel = async ({ productList, exchange, setRunning, currentOption }) => {
   const newObj = [];
   const changedProduct = [];
-  productList.forEach(product => {
+
+  productList.forEach((product, i) => {
     const { number, price } = product;
     const obj = { ...product };
-    if (number) {
-      changedProduct.push({ ...product });
 
-      obj['price'] = `$ ${(
-        (Number(price) * Number(exchange['CNY'])) /
-        Number(exchange['USD'])
-      ).toFixed(2)}`;
-      newObj.push(obj);
+    if (currentOption === '전체' || currentOption === obj.sort) {
+      if (number) {
+        changedProduct.push({ ...product });
+
+        obj['price'] = `$ ${(
+          (Number(price) * Number(exchange['CNY'])) /
+          Number(exchange['USD'])
+        ).toFixed(2)}`;
+        obj['idx'] = i;
+        newObj.push(obj);
+      }
     }
   });
 
@@ -69,6 +74,7 @@ function DataListHeader({
   setRunning,
   setCurrentOption,
   changedProduct,
+  currentOption,
 }) {
   return (
     <Header>
@@ -124,7 +130,7 @@ function DataListHeader({
             ) : (
               <button
                 onClick={() => {
-                  onClickExcel({ productList, exchange, setRunning });
+                  onClickExcel({ productList, exchange, setRunning, currentOption });
                 }}
               >
                 Excel
