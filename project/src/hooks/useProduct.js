@@ -17,6 +17,8 @@ function useProduct({ productDefault, changedProduct }) {
 
     if (isSize) {
       newProduct['size'][target] = value;
+    } else if (isArray) {
+      newProduct[target][idx] = value;
     } else {
       newProduct[target] = value;
     }

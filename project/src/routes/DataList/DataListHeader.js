@@ -50,7 +50,7 @@ const onSave = async ({ productList, reset = false, setRunning, changedProduct }
       if (reset) {
         if (obj['number']) {
           obj['number'] = '';
-          obj['amount'] = '';
+          obj['amount'] = obj['amount'].map(() => '');
         }
       }
       await setDoc(doc(dbService, 'items', obj['id']), obj);

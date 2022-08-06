@@ -116,34 +116,45 @@ function DataRow({
               ></Input>
             </td>
             <td>
-              <Input
-                size={10}
-                readOnly={!editable}
-                onChange={e => inputChange(e)}
-                id="amount"
-                value={product['amount']}
-                as="input"
-              ></Input>
+              {product['amount'].map((amount, idx) => (
+                <Input
+                  size={10}
+                  readOnly={!editable}
+                  onChange={e => inputChange(e)}
+                  id="amount"
+                  value={amount}
+                  key={amount + 'key' + idx}
+                  as="input"
+                ></Input>
+              ))}
             </td>
             <td>
-              <span>¥</span>
-              <PriceInput
-                size={10}
-                readOnly={!editable}
-                onChange={e => inputChange(e)}
-                id="price"
-                value={product['price']}
-              ></PriceInput>
+              {product['price'].map((price, idx) => (
+                <div key={product['id'] + price}>
+                  <span>¥</span>
+                  <PriceInput
+                    size={10}
+                    readOnly={!editable}
+                    onChange={e => inputChange(e, idx)}
+                    id="price"
+                    value={price}
+                  ></PriceInput>
+                </div>
+              ))}
             </td>
             <td>
-              <Input
-                size={1}
-                readOnly={!editable}
-                onChange={e => inputChange(e)}
-                id="sortOfSize"
-                value={product['sortOfSize']}
-                as="input"
-              ></Input>
+              {product['sortOfSize'].map((size, idx) => (
+                <Input
+                  size={1}
+                  readOnly={!editable}
+                  onChange={e => inputChange(e, idx)}
+                  id="sortOfSize"
+                  value={size}
+                  key={size + 'key' + idx}
+                  as="input"
+                ></Input>
+              ))}
+
               {editable && (
                 <>
                   <button>+</button>
