@@ -9,62 +9,54 @@ import { useState } from 'react';
 import DataSaveTable from './DataSaveTable';
 import { getOrder } from '../DataList/firebaseFns';
 
-const initialCode = Array(20).fill('');
-
+const dataArr = new Array(20).fill({});
 const onClick = async navigate => {
   const storage = getStorage();
   const orderObj = await getOrder();
 
   for (let i = 0; i < 20; i++) {
-    let rows = document.getElementById(i);
-    let file = rows.childNodes[1].childNodes[2].files[0];
-    let ko = rows.childNodes[2].childNodes[0].value;
-    let en = rows.childNodes[3].childNodes[0].value;
-    let ch = rows.childNodes[4].childNodes[0].value;
-    let number = rows.childNodes[5].childNodes[0].value;
-    let texture = rows.childNodes[6].childNodes[0].value;
-    let Kotexture = rows.childNodes[6].childNodes[1].value;
-    let amount = rows.childNodes[7].childNodes[0].value;
-    let price = rows.childNodes[8].childNodes[1].value;
-    let hscode = rows.childNodes[9].childNodes[0].value;
-    let info = rows.childNodes[10].childNodes[0].value;
-    let sort = rows.childNodes[11].childNodes[0].value;
-    let id = uuidv4();
-    let date = new Date();
+    const rows = document.getElementById(i);
+    const file = rows.childNodes[1].childNodes[2].files[0];
+    const { ko, en, ch, number, texture, Kotexture, amount, price, hscode, info, sortOfSize } =
+      dataArr[i];
+    const sort = rows.childNodes[11].childNodes[0].value;
+    const id = uuidv4();
+    const date = new Date();
+
     const storageRef = ref(storage, id);
     if (file) {
-      let obj = {
-        ko: ko,
-        en: en,
-        ch: ch,
-        texture: texture,
-        price: price,
-        hscode: hscode,
-        id: id,
-        date: date,
-        number: number,
-        amount: amount,
-        info: info,
-        Kotexture: Kotexture,
+      const obj = {
+        ko,
+        en,
+        ch,
+        texture,
+        price,
+        hscode,
+        id,
+        date,
+        number,
+        amount,
+        info,
+        Kotexture,
+        sort,
+        sortOfSize,
         shippingCost: 1,
         countPerOne: 1,
         size: { x: 1, y: 1, z: 1 },
-        sort: sort,
       };
       orderObj[id] = -1;
-      await setDoc(doc(dbService, 'items', id), obj);
-      uploadBytes(storageRef, file);
+      console.log(obj);
+      // await setDoc(doc(dbService, 'items', id), obj);
+      // uploadBytes(storageRef, file);
     }
   }
-  await setDoc(doc(dbService, 'order', 'order'), orderObj);
+  // await setDoc(doc(dbService, 'order', 'order'), orderObj);
   alert('저장되었습니다.');
-  navigate('/');
+  // navigate('/');
 };
 
 const DataSave = () => {
   const navigate = useNavigate();
-  const [hscodes, setHscodes] = useState(initialCode);
-  const [countSize, setCountSize] = useState(new Array(20).fill(0));
   return (
     <Main>
       <Title>
@@ -78,12 +70,7 @@ const DataSave = () => {
           <button onClick={() => onClick(navigate)}>저장</button>
         </SaveDiv>
       </Title>
-      <DataSaveTable
-        hscodes={hscodes}
-        setHscodes={setHscodes}
-        countSize={countSize}
-        setCountSize={setCountSize}
-      />
+      <DataSaveTable dataArr={dataArr} />
     </Main>
   );
 };
