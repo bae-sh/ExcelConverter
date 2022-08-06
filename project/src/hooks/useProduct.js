@@ -13,8 +13,6 @@ function useProduct({ productDefault, changedProduct }) {
     let value = e.target.value;
     if (target === 'hscode') {
       value = exchangeHscodeFormat({ hscode: value });
-    } else if (target === 'indexNumber') {
-      value = Number(value);
     }
 
     if (isSize) {

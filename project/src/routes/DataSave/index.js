@@ -49,7 +49,6 @@ const onClick = async navigate => {
         shippingCost: 1,
         countPerOne: 1,
         size: { x: 1, y: 1, z: 1 },
-        indexNumber: 0,
         sort: sort,
       };
       orderObj[id] = -1;
