@@ -18,11 +18,10 @@ function DataRow({
   itemImg,
   changedProduct,
 }) {
-  const { product, inputChange, setProduct, onClickPlusBtn, onClickMinusBtn, lengthOfSize } =
-    useProduct({
-      productDefault: { ...productList[index] },
-      changedProduct,
-    });
+  const { product, inputChange, setProduct, onClickPlusBtn, onClickMinusBtn } = useProduct({
+    productDefault: { ...productList[index] },
+    changedProduct,
+  });
   useEffect(() => {
     if (changedProduct[productList[index].id]) {
       setProduct(changedProduct[productList[index].id]);

@@ -11,7 +11,7 @@ const onClickExcel = async ({ productList, exchange, setRunning, currentOption }
   const changedProduct = [];
 
   productList.forEach((product, i) => {
-    const { number, price } = product;
+    const { number } = product;
     const obj = { ...product };
 
     if (currentOption === '전체' || currentOption === obj.sort) {
