@@ -144,8 +144,12 @@ function DataRow({
                 value={product['sortOfSize']}
                 as="input"
               ></Input>
-              <button>+</button>
-              <button>-</button>
+              {editable && (
+                <>
+                  <button>+</button>
+                  <button>-</button>
+                </>
+              )}
             </td>
             <td>
               <Input
