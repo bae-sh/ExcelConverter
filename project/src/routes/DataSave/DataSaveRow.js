@@ -50,11 +50,14 @@ function DataSaveRow({ index: rowIndex, dataArr }) {
     const newProduct = { ...product };
     const target = e.target.id;
     const isArray = target === 'amount' || target === 'price' || target === 'sortOfSize';
-    const value = e.target.value;
+    let value = e.target.value;
 
     if (isArray) {
       newProduct[target][index] = value;
     } else {
+      if (target === 'hscode') {
+        value = exchangeHscodeFormat({ hscode: value });
+      }
       newProduct[target] = value;
     }
     setProduct(newProduct);
