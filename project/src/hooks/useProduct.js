@@ -6,6 +6,7 @@ function useProduct({ productDefault, changedProduct }) {
 
   const inputChange = e => {
     const newProduct = { ...product };
+    console.log(newProduct);
     const target = e.target.id;
     const isSize = target === 'x' || target === 'y' || target === 'z';
     let value = e.target.value;

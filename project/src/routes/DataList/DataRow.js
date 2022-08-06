@@ -137,6 +137,18 @@ function DataRow({
             </td>
             <td>
               <Input
+                size={1}
+                readOnly={!editable}
+                onChange={e => inputChange(e)}
+                id="sortOfSize"
+                value={product['sortOfSize']}
+                as="input"
+              ></Input>
+              <button>+</button>
+              <button>-</button>
+            </td>
+            <td>
+              <Input
                 readOnly={!editable}
                 onChange={e => inputChange(e)}
                 id="hscode"
