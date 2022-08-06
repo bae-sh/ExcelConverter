@@ -18,10 +18,11 @@ function DataRow({
   itemImg,
   changedProduct,
 }) {
-  const { product, inputChange, setProduct } = useProduct({
-    productDefault: { ...productList[index] },
-    changedProduct,
-  });
+  const { product, inputChange, setProduct, onClickPlusBtn, onClickMinusBtn, lengthOfSize } =
+    useProduct({
+      productDefault: { ...productList[index] },
+      changedProduct,
+    });
   useEffect(() => {
     if (changedProduct[productList[index].id]) {
       setProduct(changedProduct[productList[index].id]);
@@ -51,7 +52,7 @@ function DataRow({
       <Draggable key={product.id} draggableId={product.id} index={index} isDragDisabled={!editable}>
         {provided => (
           <Row
-            key={index}
+            key={product.id + index}
             id={index}
             ref={provided.innerRef}
             {...provided.dragHandleProps}
@@ -117,20 +118,21 @@ function DataRow({
             </td>
             <td>
               {product['amount'].map((amount, idx) => (
-                <Input
-                  size={10}
-                  readOnly={!editable}
-                  onChange={e => inputChange(e)}
-                  id="amount"
-                  value={amount}
-                  key={amount + 'key' + idx}
-                  as="input"
-                ></Input>
+                <div key={'amount' + idx}>
+                  <Input
+                    size={10}
+                    readOnly={!editable}
+                    onChange={e => inputChange(e, idx)}
+                    id="amount"
+                    value={amount}
+                    as="input"
+                  ></Input>
+                </div>
               ))}
             </td>
             <td>
               {product['price'].map((price, idx) => (
-                <div key={product['id'] + price}>
+                <div key={'price' + idx}>
                   <span>¥</span>
                   <PriceInput
                     size={10}
@@ -150,16 +152,16 @@ function DataRow({
                   onChange={e => inputChange(e, idx)}
                   id="sortOfSize"
                   value={size}
-                  key={size + 'key' + idx}
+                  key={'sortOfSize' + idx}
                   as="input"
                 ></Input>
               ))}
 
               {editable && (
-                <>
-                  <button>+</button>
-                  <button>-</button>
-                </>
+                <div>
+                  <button onClick={onClickPlusBtn}>+</button>
+                  <button onClick={onClickMinusBtn}>-</button>
+                </div>
               )}
             </td>
             <td>

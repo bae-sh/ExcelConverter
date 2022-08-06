@@ -3,10 +3,9 @@ import { exchangeHscodeFormat } from '../utils';
 
 function useProduct({ productDefault, changedProduct }) {
   const [product, setProduct] = useState(productDefault);
-
+  const [lengthOfSize, setLengthOfSize] = useState(product.amount.length);
   const inputChange = (e, idx) => {
     const newProduct = { ...product };
-    console.log(newProduct);
     const target = e.target.id;
     const isSize = target === 'x' || target === 'y' || target === 'z';
     const isArray = target === 'amount' || target === 'price' || target === 'sortOfSize';
@@ -14,7 +13,6 @@ function useProduct({ productDefault, changedProduct }) {
     if (target === 'hscode') {
       value = exchangeHscodeFormat({ hscode: value });
     }
-
     if (isSize) {
       newProduct['size'][target] = value;
     } else if (isArray) {
@@ -33,6 +31,7 @@ function useProduct({ productDefault, changedProduct }) {
     newProduct['price'].push('');
     newProduct['sortOfSize'].push('');
     setProduct(newProduct);
+    setLengthOfSize(prev => prev + 1);
     changedProduct[newProduct.id] = newProduct;
   };
   const onClickMinusBtn = () => {
@@ -42,10 +41,11 @@ function useProduct({ productDefault, changedProduct }) {
       newProduct['price'].pop();
       newProduct['sortOfSize'].pop();
       setProduct(newProduct);
+      setLengthOfSize(prev => prev - 1);
       changedProduct[newProduct.id] = newProduct;
     }
   };
-  return { product, inputChange, setProduct };
+  return { product, inputChange, setProduct, onClickPlusBtn, onClickMinusBtn, lengthOfSize };
 }
 
 export default useProduct;

@@ -16,10 +16,18 @@ const onClickExcel = async ({ productList, exchange, setRunning, currentOption }
 
     if (currentOption === '전체' || currentOption === obj.sort) {
       if (number) {
+        const countOfSize = obj.amount.length;
+        let [newAmount, newPrice] = [0, 0];
         changedProduct.push({ ...product });
 
+        for (let i = 0; i < countOfSize; i++) {
+          newAmount += Number(obj['amount'][i]);
+          newPrice += Number(obj['price'][i]) * Number(obj['amount'][i]);
+        }
+        newPrice /= newAmount;
+        obj['amount'] = newAmount;
         obj['price'] = `$ ${(
-          (Number(price) * Number(exchange['CNY'])) /
+          (newPrice * Number(exchange['CNY'])) /
           Number(exchange['USD'])
         ).toFixed(2)}`;
         obj['idx'] = i;

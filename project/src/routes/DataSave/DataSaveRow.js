@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { exchangeHscodeFormat } from '../../utils';
 import { ImgBox, ImgBtn, Input, LableForIgmBtn, PriceInput, Row } from './style';
 
@@ -18,7 +19,25 @@ const inputChange = ({ e, hscodes, setHscodes, index }) => {
   setHscodes(newcodes);
 };
 
-function DataSaveRow({ index, hscodes, setHscodes }) {
+function DataSaveRow({ index, hscodes, setHscodes, countSize, setCountSize }) {
+  const [product, setProduct] = useState({});
+  const onClickPlusBtn = () => {
+    const newProduct = { ...product };
+
+    newProduct['amount'].push('');
+    newProduct['price'].push('');
+    newProduct['sortOfSize'].push('');
+    setProduct(newProduct);
+  };
+  const onClickMinusBtn = () => {
+    const newProduct = { ...product };
+    if (newProduct['sortOfSize'].length !== 1) {
+      newProduct['amount'].pop();
+      newProduct['price'].pop();
+      newProduct['sortOfSize'].pop();
+      setProduct(newProduct);
+    }
+  };
   return (
     <Row id={index} key={index}>
       <td>{index + 1}</td>
@@ -31,39 +50,47 @@ function DataSaveRow({ index, hscodes, setHscodes }) {
       </td>
 
       <td>
-        <Input></Input>
+        <Input id="ko"></Input>
       </td>
       <td>
-        <Input></Input>
+        <Input id="en"></Input>
       </td>
       <td>
-        <Input></Input>
+        <Input id="ch"></Input>
       </td>
 
       <td>
-        <Input></Input>
+        <Input id="number"></Input>
       </td>
       <td>
-        <Input size={10} as="input"></Input>
-        <Input size={10} as="input"></Input>
+        <Input size={10} id="texture" as="input"></Input>
+        <Input size={10} id="Kotexture" as="input"></Input>
       </td>
       <td>
-        <Input></Input>
+        <Input id="amount" as="input" type="number"></Input>
       </td>
       <td>
         <span>¥</span>
-        <PriceInput size={10}></PriceInput>
+        <PriceInput size={10} id="price" type="number"></PriceInput>
+      </td>
+      <td>
+        <Input id="sizeOfSort" as="input"></Input>
+        <div>
+          <button onClick={onClickPlusBtn}>+</button>
+          <button onClick={onClickMinusBtn}>-</button>
+        </div>
       </td>
       <td>
         <Input
           value={hscodes[index]}
+          id="hscode"
           onChange={e => inputChange({ e, hscodes, setHscodes, index })}
           maxLength="12"
           as="input"
         ></Input>
       </td>
       <td>
-        <Input size={10}></Input>
+        <Input size={10} id="info"></Input>
       </td>
       <td>
         <select>

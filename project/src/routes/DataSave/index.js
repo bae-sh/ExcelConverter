@@ -64,6 +64,7 @@ const onClick = async navigate => {
 const DataSave = () => {
   const navigate = useNavigate();
   const [hscodes, setHscodes] = useState(initialCode);
+  const [countSize, setCountSize] = useState(new Array(20).fill(0));
   return (
     <Main>
       <Title>
@@ -77,7 +78,12 @@ const DataSave = () => {
           <button onClick={() => onClick(navigate)}>저장</button>
         </SaveDiv>
       </Title>
-      <DataSaveTable hscodes={hscodes} setHscodes={setHscodes} />
+      <DataSaveTable
+        hscodes={hscodes}
+        setHscodes={setHscodes}
+        countSize={countSize}
+        setCountSize={setCountSize}
+      />
     </Main>
   );
 };
