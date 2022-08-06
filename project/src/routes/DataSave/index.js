@@ -19,7 +19,7 @@ const onClick = async navigate => {
     const file = rows.childNodes[1].childNodes[2].files[0];
     const { ko, en, ch, number, texture, Kotexture, amount, price, hscode, info, sortOfSize } =
       dataArr[i];
-    const sort = rows.childNodes[11].childNodes[0].value;
+    const sort = rows.childNodes[12].childNodes[0].value;
     const id = uuidv4();
     const date = new Date();
 
@@ -45,14 +45,13 @@ const onClick = async navigate => {
         size: { x: 1, y: 1, z: 1 },
       };
       orderObj[id] = -1;
-      console.log(obj);
-      // await setDoc(doc(dbService, 'items', id), obj);
-      // uploadBytes(storageRef, file);
+      await setDoc(doc(dbService, 'items', id), obj);
+      uploadBytes(storageRef, file);
     }
   }
-  // await setDoc(doc(dbService, 'order', 'order'), orderObj);
+  await setDoc(doc(dbService, 'order', 'order'), orderObj);
   alert('저장되었습니다.');
-  // navigate('/');
+  navigate('/');
 };
 
 const DataSave = () => {
