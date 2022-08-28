@@ -22,8 +22,8 @@ const downloadImg = async ({ productList, setItemImg }) => {
       .then(async url => {
         const response = await fetch(url);
         const data = await response.blob();
-        let f = new File([data], 'null', { type: data.type });
-        let preview = new FileReader();
+        const f = new File([data], 'null', { type: data.type });
+        const preview = new FileReader();
         preview.onload = e => {
           newItemImgs[product.id] = e.target.result;
 
