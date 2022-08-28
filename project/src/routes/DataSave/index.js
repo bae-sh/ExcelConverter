@@ -5,7 +5,6 @@ import { dbService } from '../../firebase';
 import { getStorage, ref, uploadBytes } from 'firebase/storage';
 import { v4 as uuidv4 } from 'uuid';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
 import DataSaveTable from './DataSaveTable';
 import { getOrder } from '../DataList/firebaseFns';
 

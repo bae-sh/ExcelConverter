@@ -71,7 +71,7 @@ const DataList = () => {
   const [productList, setProductList] = useState([]);
 
   useEffect(() => {
-    changedProduct = [];
+    changedProduct = {};
     getObj({ setProductList, setEveningNumber });
     getCost(setShippingCosts);
     getExchangeRate(setExchange);
